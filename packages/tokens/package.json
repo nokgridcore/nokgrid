@@ -1,0 +1,16 @@
+{
+	"name": "@nokgridcore/tokens",
+	"version": "0.1.0",
+	"private": false,
+	"description": "Design tokens for NokGridCore",
+	"type": "module",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"tokens:pull": "node scripts/extract.js",
+		"build": "style-dictionary build"
+	},
+	"devDependencies": {
+		"style-dictionary": "^4.4.0"
+	}
+}
