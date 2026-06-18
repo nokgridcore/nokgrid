@@ -1,7 +1,12 @@
 /**
  * convert.js
- * Converts Figma DTCG exports into Style Dictionary compatible tokens.json
- * Handles: primitives, semantic light/dark, alias chain resolution
+ * Transforms tokens.raw.json (Token Studio / Figma DTCG format)
+ * into three Style Dictionary-compatible JSON files:
+ *   src/primitives.json
+ *   src/semantic-light.json
+ *   src/semantic-dark.json
+ *
+ * Usage: node scripts/convert.js
  */
 
 import { readFileSync, writeFileSync, mkdirSync } from 'fs';
@@ -10,17 +15,10 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
+const RAW = join(ROOT, 'tokens.raw.json');
+const OUT = join(ROOT, 'src');
 
-// --- Load raw files ---
-const primitives = JSON.parse(
-	readFileSync(join(ROOT, 'src/raw/primitives.json'), 'utf8'),
-);
-const semanticLight = JSON.parse(
-	readFileSync(join(ROOT, 'src/raw/semantic-light.json'), 'utf8'),
-);
-const semanticDark = JSON.parse(
-	readFileSync(join(ROOT, 'src/raw/semantic-dark.json'), 'utf8'),
-);
+const raw = JSON.parse(readFileSync(RAW, 'utf8'));
 
 // --- Helpers ---
 
@@ -28,112 +26,173 @@ function isToken(obj) {
 	return obj && typeof obj === 'object' && '$type' in obj;
 }
 
-function extractHex(value) {
-	if (typeof value === 'string') return value;
-	if (value && typeof value === 'object' && value.hex) return value.hex;
-	return value;
-}
-
-function toCamelKey(str) {
-	return str.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-}
-
 function toSdKey(str) {
-	// Convert Figma key (may have spaces, dashes) to SD-friendly camelCase
-	return toCamelKey(str.replace(/\s+/g, '-').toLowerCase());
+	// Normalise keys: lowercase, spaces to hyphens, keep hyphens
+	return str.replace(/\s+/g, '-').toLowerCase();
 }
 
 /**
- * Build alias reference string from aliasData targetVariableName
- * e.g. "colour/NokFlame/500" -> "{color.nokFlame.500}"
+ * Convert a Token Studio alias reference to Style Dictionary format.
+ * Token Studio uses: {colour.NokFlame.500}
+ * We need:           {color.nokflame.500}
+ *
+ * Also handles cross-section refs like {space.1}, {radius.50} etc.
  */
-function buildAlias(targetVariableName) {
-	const parts = targetVariableName.split('/').map((p) => toSdKey(p));
-	// Normalise "colour" -> "color"
-	if (parts[0] === 'colour') parts[0] = 'color';
-	return `{${parts.join('.')}}`;
+function convertAlias(value) {
+	if (typeof value !== 'string') return value;
+
+	return value.replace(/\{([^}]+)\}/g, (_, path) => {
+		const parts = path.split('.').map((p) => toSdKey(p));
+		// Normalise "colour" -> "color"
+		if (parts[0] === 'colour') parts[0] = 'color';
+		return `{${parts.join('.')}}`;
+	});
 }
 
 /**
- * Walk a DTCG object and emit Style Dictionary tokens
- * parentPath: array of keys leading to this node
- * isSemanticAlias: if true, emit alias refs instead of raw hex
+ * Check if a value contains an alias reference
  */
-function walkTokens(obj, out = {}, parentPath = [], useAlias = false) {
+function isAlias(value) {
+	if (typeof value === 'string') return value.includes('{');
+	if (typeof value === 'object' && value !== null) {
+		return Object.values(value).some(
+			(v) => typeof v === 'string' && v.includes('{'),
+		);
+	}
+	return false;
+}
+
+/**
+ * Walk a token group and build a Style Dictionary compatible object.
+ * Handles composite typography tokens by flattening them.
+ */
+function walkTokens(obj, out = {}, parentPath = []) {
 	for (const [key, value] of Object.entries(obj)) {
-		if (key.startsWith('$')) continue; // skip $extensions etc
+		if (key.startsWith('$')) continue;
 
 		const sdKey = toSdKey(key === 'colour' ? 'color' : key);
 		const path = [...parentPath, sdKey];
 
 		if (isToken(value)) {
-			const alias = value.$extensions?.['com.figma.aliasData'];
-			const rawValue = extractHex(value.$value);
+			const rawValue = value.$value;
 
-			let sdValue;
-			if (useAlias && alias) {
-				sdValue = buildAlias(alias.targetVariableName);
+			// Handle composite typography tokens — flatten to individual properties
+			if (value.$type === 'typography' && typeof rawValue === 'object') {
+				const typographyTokens = {
+					fontFamily: { value: convertAlias(rawValue.fontFamily) },
+					fontSize: { value: convertAlias(rawValue.fontSize) },
+					fontWeight: { value: convertAlias(rawValue.fontWeight) },
+					lineHeight: { value: convertAlias(rawValue.lineHeight) },
+				};
+				setNested(out, path, typographyTokens);
 			} else {
-				sdValue = typeof rawValue === 'number' ? rawValue : rawValue;
+				// Scalar or alias token
+				const sdValue =
+					typeof rawValue === 'string' ? convertAlias(rawValue) : rawValue;
+				setNested(out, [...path], { value: sdValue });
 			}
-
-			// Navigate/create nested object
-			let cursor = out;
-			for (let i = 0; i < path.length - 1; i++) {
-				cursor[path[i]] = cursor[path[i]] || {};
-				cursor = cursor[path[i]];
-			}
-			cursor[path[path.length - 1]] = { value: sdValue };
 		} else if (value && typeof value === 'object') {
-			walkTokens(value, out, path, useAlias);
+			walkTokens(value, out, path);
 		}
 	}
 	return out;
 }
 
-// --- Build tokens ---
+/**
+ * Set a value at a nested path in an object,
+ * but if the final key already exists as a group, assign properties directly.
+ */
+function setNested(obj, path, value) {
+	let cursor = obj;
+	for (let i = 0; i < path.length - 1; i++) {
+		if (!cursor[path[i]]) cursor[path[i]] = {};
+		cursor = cursor[path[i]];
+	}
+	const lastKey = path[path.length - 1];
+	if (typeof value === 'object' && !('value' in value)) {
+		// Composite — merge properties
+		cursor[lastKey] = cursor[lastKey] || {};
+		Object.assign(cursor[lastKey], value);
+	} else {
+		cursor[lastKey] = value;
+	}
+}
 
-// 1. Primitives (raw hex values, no aliases)
-const primitiveTokens = walkTokens(primitives, {}, [], false);
+// --- Extract the three sections ---
+const primitiveRaw = raw['primitive tokens/mode'];
+const lightRaw = raw['semantic tokens/light'];
+const darkRaw = raw['semantic tokens/dark'];
 
-// 2. Semantic light (with alias refs back to primitives)
-const semanticLightTokens = walkTokens(semanticLight, {}, [], true);
+if (!primitiveRaw)
+	throw new Error('Missing "primitive tokens/mode" in tokens.raw.json');
+if (!lightRaw) throw new Error('Missing "semantic tokens/light" in tokens.raw.json');
+if (!darkRaw) throw new Error('Missing "semantic tokens/dark" in tokens.raw.json');
 
-// 3. Semantic dark (with alias refs back to primitives)
-const semanticDarkTokens = walkTokens(semanticDark, {}, [], true);
+const primitives = walkTokens(primitiveRaw);
+const light = walkTokens(lightRaw);
+const dark = walkTokens(darkRaw);
 
 // --- Write output ---
-mkdirSync(join(ROOT, 'src/tokens'), { recursive: true });
+mkdirSync(OUT, { recursive: true });
 
-writeFileSync(
-	join(ROOT, 'src/tokens/primitives.json'),
-	JSON.stringify(primitiveTokens, null, 2),
-);
-writeFileSync(
-	join(ROOT, 'src/tokens/semantic-light.json'),
-	JSON.stringify(semanticLightTokens, null, 2),
-);
-writeFileSync(
-	join(ROOT, 'src/tokens/semantic-dark.json'),
-	JSON.stringify(semanticDarkTokens, null, 2),
-);
+writeFileSync(join(OUT, 'primitives.json'), JSON.stringify(primitives, null, 2));
+writeFileSync(join(OUT, 'semantic-light.json'), JSON.stringify(light, null, 2));
+writeFileSync(join(OUT, 'semantic-dark.json'), JSON.stringify(dark, null, 2));
 
-console.log('✓ primitives.json');
-console.log('✓ semantic-light.json');
-console.log('✓ semantic-dark.json');
+// --- Sanity check ---
+console.log('✓ src/primitives.json');
+console.log('✓ src/semantic-light.json');
+console.log('✓ src/semantic-dark.json');
+console.log();
 
-// --- Quick sanity check ---
-const p = primitiveTokens;
-console.log('\nSample primitives:');
-console.log('  color.nokFlame.500 =', p?.color?.nokFlame?.['500']?.value);
-console.log('  space.1 =', p?.space?.['1']?.value);
-console.log('  radius.50 =', p?.radius?.['50']?.value);
+function countTokens(obj) {
+	let n = 0;
+	for (const v of Object.values(obj)) {
+		if (v && typeof v === 'object') {
+			'value' in v ? n++ : (n += countTokens(v));
+		}
+	}
+	return n;
+}
 
-const l = semanticLightTokens;
-console.log('\nSample semantic (light):');
-console.log('  color.background.canvas =', l?.color?.background?.canvas?.value);
+console.log(`Primitive tokens:     ${countTokens(primitives)}`);
+console.log(`Semantic light tokens: ${countTokens(light)}`);
+console.log(`Semantic dark tokens:  ${countTokens(dark)}`);
+console.log();
+
+// Spot checks
+console.log('Spot checks:');
 console.log(
-	'  color.action.primaryDefault =',
-	l?.color?.action?.primaryDefault?.value,
+	'  color.nokflame.500      =',
+	primitives?.color?.nokflame?.['500']?.value,
 );
-console.log('  spacing.component.xs =', l?.spacing?.component?.xs?.value);
+console.log('  space.4                 =', primitives?.space?.['4']?.value);
+console.log('  radius.50               =', primitives?.radius?.['50']?.value);
+console.log(
+	'  typography.font-family.brand =',
+	primitives?.typography?.['font-family']?.brand?.value,
+);
+console.log(
+	'  [light] color.background.canvas =',
+	light?.color?.background?.canvas?.value,
+);
+console.log(
+	'  [light] color.action.primary-default =',
+	light?.color?.action?.['primary-default']?.value,
+);
+console.log(
+	'  [light] spacing.component.xs =',
+	light?.spacing?.component?.xs?.value,
+);
+console.log(
+	'  [light] typography.display.2xl.fontFamily =',
+	light?.typography?.display?.['2xl']?.fontFamily?.value,
+);
+console.log(
+	'  [dark]  color.background.canvas =',
+	dark?.color?.background?.canvas?.value,
+);
+console.log(
+	'  [dark]  color.action.primary-hover =',
+	dark?.color?.action?.['primary-hover']?.value,
+);
