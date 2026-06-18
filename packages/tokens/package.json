@@ -7,8 +7,9 @@
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"tokens:pull": "node scripts/extract.js",
-		"build": "node config.js"
+		"convert": "node scripts/convert.js",
+		"build": "node config.js",
+		"tokens": "node scripts/convert.js && node config.js"
 	},
 	"devDependencies": {
 		"style-dictionary": "^4.4.0"
