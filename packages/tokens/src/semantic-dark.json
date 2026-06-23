@@ -80,6 +80,12 @@
       },
       "info": {
         "value": "{color.blue.300}"
+      },
+      "primary": {
+        "value": "{color.neutral.0}"
+      },
+      "secondary": {
+        "value": "{color.neutral.400}"
       }
     },
     "border": {
@@ -221,6 +227,35 @@
       },
       "axis": {
         "value": "{color.neutral.700}"
+      }
+    },
+    "icon": {
+      "default": {
+        "value": "{color.neutral.300}"
+      },
+      "secondary": {
+        "value": "{color.neutral.500}"
+      },
+      "brand": {
+        "value": "{color.nokflame.400}"
+      },
+      "inverse": {
+        "value": "{color.neutral.0}"
+      },
+      "disabled": {
+        "value": "{color.neutral.700}"
+      },
+      "success": {
+        "value": "{color.green.400}"
+      },
+      "warning": {
+        "value": "{color.nokbanana.400}"
+      },
+      "error": {
+        "value": "{color.red.400}"
+      },
+      "info": {
+        "value": "{color.blue.400}"
       }
     }
   },

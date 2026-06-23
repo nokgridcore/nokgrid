@@ -1,4 +1,7 @@
+import 'dotenv/config';
+
 import StyleDictionary from 'style-dictionary';
+const PREFIX = process.env.NOK_TOKEN_PREFIX ?? 'nok';
 
 // --- Light build ---
 const light = new StyleDictionary({
@@ -7,7 +10,7 @@ const light = new StyleDictionary({
 	platforms: {
 		css: {
 			transformGroup: 'css',
-			prefix: 'nok',
+			prefix: PREFIX,
 			buildPath: 'dist/css/',
 			files: [
 				{
@@ -55,7 +58,7 @@ const dark = new StyleDictionary({
 	platforms: {
 		css: {
 			transformGroup: 'css',
-			prefix: 'nok',
+			prefix: PREFIX,
 			buildPath: 'dist/css/',
 			files: [
 				{
@@ -72,12 +75,10 @@ const dark = new StyleDictionary({
 dark.registerFormat({
 	name: 'css/variables-dark',
 	format: ({ dictionary }) => {
-		const vars = dictionary.allTokens
-			.map(
-				(token) =>
-					`  --nok-${token.path.join('-')}: ${token.$value ?? token.value};`,
-			)
-			.join('\n');
+		const vars = dictionary.allTokens.map(
+			(token) =>
+				`  --${PREFIX}-${token.path.join('-')}: ${token.$value ?? token.value};`,
+		);
 		return `[data-theme="dark"] {\n${vars}\n}\n`;
 	},
 });

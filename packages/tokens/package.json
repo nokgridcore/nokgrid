@@ -13,5 +13,8 @@
 	},
 	"devDependencies": {
 		"style-dictionary": "^4.4.0"
+	},
+	"dependencies": {
+		"dotenv": "^17.4.2"
 	}
 }

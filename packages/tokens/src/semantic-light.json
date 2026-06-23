@@ -2,10 +2,10 @@
   "color": {
     "background": {
       "canvas": {
-        "value": "{color.neutral.0}"
+        "value": "{color.neutral.50}"
       },
       "surface": {
-        "value": "{color.neutral.50}"
+        "value": "{color.neutral.0}"
       },
       "overlay": {
         "value": "{color.neutral.100}"
@@ -80,6 +80,12 @@
       },
       "info": {
         "value": "{color.blue.700}"
+      },
+      "primary": {
+        "value": "{color.neutral.900}"
+      },
+      "secondary": {
+        "value": "{color.neutral.600}"
       }
     },
     "border": {
@@ -221,6 +227,35 @@
       },
       "axis": {
         "value": "{color.neutral.300}"
+      }
+    },
+    "icon": {
+      "default": {
+        "value": "{color.neutral.700}"
+      },
+      "secondary": {
+        "value": "{color.neutral.500}"
+      },
+      "brand": {
+        "value": "{color.nokflame.500}"
+      },
+      "inverse": {
+        "value": "{color.neutral.950}"
+      },
+      "disabled": {
+        "value": "{color.neutral.300}"
+      },
+      "success": {
+        "value": "{color.green.500}"
+      },
+      "warning": {
+        "value": "{color.nokbanana.600}"
+      },
+      "error": {
+        "value": "{color.red.600}"
+      },
+      "info": {
+        "value": "{color.blue.600}"
       }
     }
   },
