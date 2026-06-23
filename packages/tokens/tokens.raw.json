@@ -1715,6 +1715,44 @@
           "$type": "color",
           "$value": "{colour.Neutral.300}"
         }
+      },
+      "icon": {
+        "default": {
+          "$type": "color",
+          "$value": "{colour.Neutral.700}"
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{colour.Neutral.500}"
+        },
+        "brand": {
+          "$type": "color",
+          "$value": "{colour.NokFlame.500}"
+        },
+        "inverse": {
+          "$type": "color",
+          "$value": "{colour.Neutral.950}"
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{colour.Neutral.300}"
+        },
+        "success": {
+          "$type": "color",
+          "$value": "{colour.Green.500}"
+        },
+        "warning": {
+          "$type": "color",
+          "$value": "{colour.NokBanana.600}"
+        },
+        "error": {
+          "$type": "color",
+          "$value": "{colour.Red.600}"
+        },
+        "info": {
+          "$type": "color",
+          "$value": "{colour.Blue.600}"
+        }
       }
     },
     "spacing": {
@@ -2985,6 +3023,44 @@
           },
           "$type": "color",
           "$value": "{colour.Neutral.700}"
+        }
+      },
+      "icon": {
+        "default": {
+          "$type": "color",
+          "$value": "{colour.Neutral.300}"
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{colour.Neutral.500}"
+        },
+        "brand": {
+          "$type": "color",
+          "$value": "{colour.NokFlame.400}"
+        },
+        "inverse": {
+          "$type": "color",
+          "$value": "{colour.Neutral.0}"
+        },
+        "disabled": {
+          "$type": "color",
+          "$value": "{colour.Neutral.700}"
+        },
+        "success": {
+          "$type": "color",
+          "$value": "{colour.Green.400}"
+        },
+        "warning": {
+          "$type": "color",
+          "$value": "{colour.NokBanana.400}"
+        },
+        "error": {
+          "$type": "color",
+          "$value": "{colour.Red.400}"
+        },
+        "info": {
+          "$type": "color",
+          "$value": "{colour.Blue.400}"
         }
       }
     },
