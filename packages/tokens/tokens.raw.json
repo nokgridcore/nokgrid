@@ -997,7 +997,7 @@
             "com.figma.hiddenFromPublishing": false
           },
           "$type": "color",
-          "$value": "{colour.Neutral.0}"
+          "$value": "{colour.Neutral.50}"
         },
         "surface": {
           "$extensions": {
@@ -1007,7 +1007,7 @@
             "com.figma.hiddenFromPublishing": false
           },
           "$type": "color",
-          "$value": "{colour.Neutral.50}"
+          "$value": "{colour.Neutral.0}"
         },
         "overlay": {
           "$extensions": {
