@@ -1250,6 +1250,14 @@
           },
           "$type": "color",
           "$value": "{colour.Blue.700}"
+        },
+        "primary": {
+          "$type": "color",
+          "$value": "{colour.Neutral.900}"
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{colour.Neutral.600}"
         }
       },
       "border": {
@@ -2513,6 +2521,14 @@
           },
           "$type": "color",
           "$value": "{colour.Blue.300}"
+        },
+        "primary": {
+          "$type": "color",
+          "$value": "{colour.Neutral.0}"
+        },
+        "secondary": {
+          "$type": "color",
+          "$value": "{colour.Neutral.400}"
         }
       },
       "border": {
