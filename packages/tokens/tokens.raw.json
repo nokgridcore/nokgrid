@@ -1252,10 +1252,22 @@
           "$value": "{colour.Blue.700}"
         },
         "primary": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.900}"
         },
         "secondary": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.600}"
         }
@@ -1718,38 +1730,92 @@
       },
       "icon": {
         "default": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.700}"
         },
         "secondary": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.500}"
         },
         "brand": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.NokFlame.500}"
         },
         "inverse": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.950}"
         },
         "disabled": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.300}"
         },
         "success": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Green.500}"
         },
         "warning": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.NokBanana.600}"
         },
         "error": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Red.600}"
         },
         "info": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Blue.600}"
         }
@@ -2561,10 +2627,22 @@
           "$value": "{colour.Blue.300}"
         },
         "primary": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.0}"
         },
         "secondary": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.400}"
         }
@@ -3027,38 +3105,92 @@
       },
       "icon": {
         "default": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.300}"
         },
         "secondary": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.500}"
         },
         "brand": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.NokFlame.400}"
         },
         "inverse": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.0}"
         },
         "disabled": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Neutral.700}"
         },
         "success": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Green.400}"
         },
         "warning": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.NokBanana.400}"
         },
         "error": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Red.400}"
         },
         "info": {
+          "$extensions": {
+            "com.figma.scopes": [
+              "ALL_SCOPES"
+            ],
+            "com.figma.hiddenFromPublishing": false
+          },
           "$type": "color",
           "$value": "{colour.Blue.400}"
         }
