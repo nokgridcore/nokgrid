@@ -42,7 +42,7 @@
             "com.figma.hiddenFromPublishing": true
           },
           "$type": "color",
-          "$value": "#f05d23",
+          "$value": "#F05D23",
           "$description": "Brand primary"
         },
         "600": {
@@ -2798,7 +2798,7 @@
             "com.figma.hiddenFromPublishing": false
           },
           "$type": "color",
-          "$value": "{colour.NokFlame.500}"
+          "$value": "{colour.NokMoss.200}"
         },
         "secondary-text": {
           "$extensions": {
