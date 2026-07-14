@@ -134,7 +134,7 @@
         "value": "{color.nokmoss.300}"
       },
       "secondary-pressed": {
-        "value": "{color.nokflame.500}"
+        "value": "{color.nokmoss.200}"
       },
       "secondary-text": {
         "value": "{color.neutral.0}"
