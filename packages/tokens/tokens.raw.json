@@ -1270,6 +1270,10 @@
           },
           "$type": "color",
           "$value": "{colour.Neutral.600}"
+        },
+        "white": {
+          "$type": "color",
+          "$value": "{colour.Neutral.0}"
         }
       },
       "border": {
@@ -1413,7 +1417,7 @@
             "com.figma.hiddenFromPublishing": false
           },
           "$type": "color",
-          "$value": "{colour.NokMoss.600}"
+          "$value": "{colour.NokMoss.400}"
         },
         "secondary-pressed": {
           "$extensions": {
@@ -1818,6 +1822,10 @@
           },
           "$type": "color",
           "$value": "{colour.Blue.600}"
+        },
+        "white": {
+          "$type": "color",
+          "$value": "{colour.Neutral.0}"
         }
       }
     },
@@ -2645,6 +2653,10 @@
           },
           "$type": "color",
           "$value": "{colour.Neutral.400}"
+        },
+        "white": {
+          "$type": "color",
+          "$value": "{colour.Neutral.0}"
         }
       },
       "border": {
@@ -3193,6 +3205,10 @@
           },
           "$type": "color",
           "$value": "{colour.Blue.400}"
+        },
+        "white": {
+          "$type": "color",
+          "$value": "{colour.Neutral.0}"
         }
       }
     },
