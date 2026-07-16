@@ -1417,7 +1417,7 @@
             "com.figma.hiddenFromPublishing": false
           },
           "$type": "color",
-          "$value": "{colour.NokMoss.600}"
+          "$value": "{colour.NokMoss.400}"
         },
         "secondary-pressed": {
           "$extensions": {
