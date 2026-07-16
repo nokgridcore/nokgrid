@@ -86,6 +86,9 @@
       },
       "secondary": {
         "value": "{color.neutral.400}"
+      },
+      "white": {
+        "value": "{color.neutral.0}"
       }
     },
     "border": {
@@ -256,6 +259,9 @@
       },
       "info": {
         "value": "{color.blue.400}"
+      },
+      "white": {
+        "value": "{color.neutral.0}"
       }
     }
   },

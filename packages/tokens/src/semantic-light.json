@@ -86,6 +86,9 @@
       },
       "secondary": {
         "value": "{color.neutral.600}"
+      },
+      "white": {
+        "value": "{color.neutral.0}"
       }
     },
     "border": {
@@ -131,7 +134,7 @@
         "value": "{color.nokmoss.500}"
       },
       "secondary-hover": {
-        "value": "{color.nokmoss.600}"
+        "value": "{color.nokmoss.400}"
       },
       "secondary-pressed": {
         "value": "{color.nokmoss.700}"
@@ -256,6 +259,9 @@
       },
       "info": {
         "value": "{color.blue.600}"
+      },
+      "white": {
+        "value": "{color.neutral.0}"
       }
     }
   },
