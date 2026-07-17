@@ -14,7 +14,10 @@
 		"./tailwind-theme": "./dist/js/tailwind-theme.js",
 		"./css/primitives.css": "./dist/css/primitives.css",
 		"./css/semantic-light.css": "./dist/css/semantic-light.css",
-		"./css/semantic-dark.css": "./dist/css/semantic-dark.css"
+		"./css/semantic-dark.css": "./dist/css/semantic-dark.css",
+		"./dist/css/primitives.css": "./dist/css/primitives.css",
+		"./dist/css/semantic-light.css": "./dist/css/semantic-light.css",
+		"./dist/css/semantic-dark.css": "./dist/css/semantic-dark.css"
 	},
 	"scripts": {
 		"convert": "node scripts/convert.js",
