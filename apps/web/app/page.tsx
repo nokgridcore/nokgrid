@@ -8,8 +8,20 @@ export default function Home() {
 				<Button variant='primary'>Primary</Button>
 				<Button variant='secondary'>Secondary</Button>
 				<Button variant='tertiary'>Tertiary</Button>
-				<Button variant='destructive' disabled>
-					Destructive
+				<Button variant='destructive'>Destructive</Button>
+			</div>
+			<div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+				<Button disabled variant='primary'>
+					Primary Disabled
+				</Button>
+				<Button disabled variant='secondary'>
+					Secondary Disabled
+				</Button>
+				<Button disabled variant='tertiary'>
+					Tertiary Disabled
+				</Button>
+				<Button disabled variant='destructive'>
+					Destructive Disabled
 				</Button>
 			</div>
 		</div>
