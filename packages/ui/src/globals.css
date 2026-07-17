@@ -1,0 +1,7 @@
+@import "@nokgridcore/tokens/dist/css/primitives.css";
+@import "@nokgridcore/tokens/dist/css/semantic-light.css";
+@import "@nokgridcore/tokens/dist/css/semantic-dark.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

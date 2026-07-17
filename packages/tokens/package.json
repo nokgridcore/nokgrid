@@ -4,8 +4,18 @@
 	"private": false,
 	"description": "Design tokens for NokGridCore",
 	"type": "module",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
+	"main": "dist/js/tokens.js",
+	"types": "dist/ts/tokens.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/js/tokens.js",
+			"types": "./dist/ts/tokens.d.ts"
+		},
+		"./tailwind-theme": "./dist/js/tailwind-theme.js",
+		"./css/primitives.css": "./dist/css/primitives.css",
+		"./css/semantic-light.css": "./dist/css/semantic-light.css",
+		"./css/semantic-dark.css": "./dist/css/semantic-dark.css"
+	},
 	"scripts": {
 		"convert": "node scripts/convert.js",
 		"build": "node config.js",
