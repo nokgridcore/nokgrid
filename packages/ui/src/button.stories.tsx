@@ -14,8 +14,9 @@ const meta = {
 			control: 'select',
 			options: ['xs', 'sm', 'md', 'lg'],
 		},
-		disabled: {
-			control: 'boolean',
+		state: {
+			control: 'select',
+			options: ['default', 'hovered', 'pressed', 'disabled'],
 		},
 		children: {
 			control: 'text',
@@ -24,7 +25,7 @@ const meta = {
 	args: {
 		variant: 'primary',
 		size: 'md',
-		disabled: false,
+		state: 'default',
 		children: 'Button',
 	},
 } satisfies Meta<typeof Button>;
