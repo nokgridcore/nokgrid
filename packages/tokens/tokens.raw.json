@@ -1335,7 +1335,7 @@
             "com.figma.hiddenFromPublishing": false
           },
           "$type": "color",
-          "$value": "{colour.Red.300}"
+          "$value": "{colour.Red.600}"
         },
         "info": {
           "$extensions": {
