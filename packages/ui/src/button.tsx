@@ -4,10 +4,19 @@ import { ButtonHTMLAttributes, forwardRef } from 'react';
 
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'destructive';
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
+type ButtonState = 'default' | 'hovered' | 'pressed' | 'disabled';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends Omit<
+	ButtonHTMLAttributes<HTMLButtonElement>,
+	'disabled'
+> {
 	variant?: ButtonVariant;
 	size?: ButtonSize;
+	/**
+	 * Storybook/preview only: force a visual state without real interaction.
+	 * "disabled" also sets the real disabled attribute.
+	 */
+	state?: ButtonState;
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
@@ -28,10 +37,45 @@ const sizeClasses: Record<ButtonSize, string> = {
 	lg: 'h-control-lg py-component-lg px-component-xl gap-component-lg text-base',
 };
 
+// Preview-only overrides for "hovered" / "pressed" states.
+// Inline styles guarantee the override wins regardless of Tailwind's
+// generated CSS source order.
+const stateVars: Record<
+	ButtonVariant,
+	Partial<Record<'hovered' | 'pressed', { bg: string; text?: string }>>
+> = {
+	primary: {
+		hovered: { bg: 'var(--nok-color-action-primary-hover)' },
+		pressed: { bg: 'var(--nok-color-action-primary-pressed)' },
+	},
+	secondary: {
+		hovered: { bg: 'var(--nok-color-action-secondary-hover)' },
+		pressed: { bg: 'var(--nok-color-action-secondary-pressed)' },
+	},
+	tertiary: {
+		hovered: { bg: 'var(--nok-color-action-tertiary-hover)' },
+		pressed: { bg: 'var(--nok-color-action-tertiary-pressed)' },
+	},
+	destructive: {
+		hovered: { bg: 'var(--nok-color-action-destructive-hover)' },
+		pressed: { bg: 'var(--nok-color-action-destructive-pressed)' },
+	},
+};
+
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-	({ variant = 'primary', size = 'md', className, disabled, ...props }, ref) => {
+	(
+		{
+			variant = 'primary',
+			size = 'md',
+			state = 'default',
+			className,
+			style,
+			...props
+		},
+		ref,
+	) => {
 		const classes = [
-			'inline-flex items-center justify-center rounded-md font-medium transition-colors',
+			'inline-flex items-center justify-center rounded-md font-body font-medium leading-none transition-colors',
 			'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--nok-color-border-focus)]',
 			'disabled:cursor-not-allowed',
 			variantClasses[variant],
@@ -41,7 +85,28 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			.filter(Boolean)
 			.join(' ');
 
-		return <button ref={ref} className={classes} disabled={disabled} {...props} />;
+		const forcedVars =
+			state === 'hovered' || state === 'pressed'
+				? stateVars[variant][state]
+				: undefined;
+
+		const forcedStyle = forcedVars
+			? {
+					backgroundColor: forcedVars.bg,
+					...(forcedVars.text ? { color: forcedVars.text } : {}),
+					...style,
+				}
+			: style;
+
+		return (
+			<button
+				ref={ref}
+				className={classes}
+				style={forcedStyle}
+				disabled={state === 'disabled'}
+				{...props}
+			/>
+		);
 	},
 );
 
