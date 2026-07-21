@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button } from './button.js';
+import * as icons from './icons/generated/index.js';
+
+const iconNames = Object.keys(icons);
 
 const meta = {
 	title: 'Components/Button',
@@ -18,7 +21,16 @@ const meta = {
 			control: 'select',
 			options: ['default', 'hovered', 'pressed', 'disabled'],
 		},
+		icon: {
+			control: 'select',
+			options: [undefined, ...iconNames],
+		},
+		iconPosition: {
+			control: 'select',
+			options: ['left', 'right', 'only'],
+		},
 		children: {
+			name: 'Label',
 			control: 'text',
 		},
 	},
@@ -26,6 +38,7 @@ const meta = {
 		variant: 'primary',
 		size: 'md',
 		state: 'default',
+		iconPosition: 'left',
 		children: 'Button',
 	},
 } satisfies Meta<typeof Button>;
