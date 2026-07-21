@@ -10,6 +10,7 @@
 		"lint": "eslint . --max-warnings 0",
 		"generate:component": "turbo gen react-component",
 		"check-types": "tsc --noEmit",
+		"icons": "svgr --config-file svgr.config.js --out-dir src/icons/generated src/icons/svg && node scripts/fix-icon-exports.js",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"
 	},
@@ -20,6 +21,7 @@
 		"@storybook/addon-docs": "^10.5.2",
 		"@storybook/addon-mcp": "^0.7.0",
 		"@storybook/react-vite": "^10.5.2",
+		"@svgr/cli": "^8.1.0",
 		"@types/node": "^22.15.3",
 		"@types/react": "19.2.2",
 		"@types/react-dom": "19.2.2",
