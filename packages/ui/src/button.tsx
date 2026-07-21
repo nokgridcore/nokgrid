@@ -1,10 +1,12 @@
 'use client';
 
-import { ButtonHTMLAttributes, forwardRef } from 'react';
+import { ButtonHTMLAttributes, forwardRef, useEffect } from 'react';
+import { Icon, IconName, IconSize } from './icons/Icon.js';
 
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'destructive';
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
 type ButtonState = 'default' | 'hovered' | 'pressed' | 'disabled';
+type IconPosition = 'left' | 'right' | 'only';
 
 export interface ButtonProps extends Omit<
 	ButtonHTMLAttributes<HTMLButtonElement>,
@@ -17,6 +19,8 @@ export interface ButtonProps extends Omit<
 	 * "disabled" also sets the real disabled attribute.
 	 */
 	state?: ButtonState;
+	icon?: IconName;
+	iconPosition?: IconPosition;
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
@@ -30,6 +34,7 @@ const variantClasses: Record<ButtonVariant, string> = {
 		'bg-action-destructive-default text-action-destructive-text hover:bg-action-destructive-hover active:bg-action-destructive-pressed disabled:bg-action-destructive-disabled disabled:text-action-destructive-disabled-text',
 };
 
+// Text-button padding: asymmetric (wider horizontally).
 const sizeClasses: Record<ButtonSize, string> = {
 	xs: 'h-control-xs py-component-xs px-component-sm gap-component-xs text-sm',
 	sm: 'h-control-sm py-component-sm px-component-md gap-component-sm text-sm',
@@ -37,9 +42,15 @@ const sizeClasses: Record<ButtonSize, string> = {
 	lg: 'h-control-lg py-component-lg px-component-xl gap-component-lg text-base',
 };
 
-// Preview-only overrides for "hovered" / "pressed" states.
-// Inline styles guarantee the override wins regardless of Tailwind's
-// generated CSS source order.
+// Icon-only padding: equal on all sides for a square-ish shape.
+// NOTE: inferred, not confirmed by Manny/Figma yet.
+const iconOnlySizeClasses: Record<ButtonSize, string> = {
+	xs: 'h-control-xs w-control-xs p-component-xs',
+	sm: 'h-control-sm w-control-sm p-component-sm',
+	md: 'h-control-md w-control-md p-component-md',
+	lg: 'h-control-lg w-control-lg p-component-lg',
+};
+
 const stateVars: Record<
 	ButtonVariant,
 	Partial<Record<'hovered' | 'pressed', { bg: string; text?: string }>>
@@ -68,18 +79,32 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			variant = 'primary',
 			size = 'md',
 			state = 'default',
+			icon,
+			iconPosition = 'left',
 			className,
 			style,
+			children,
+			'aria-label': ariaLabel,
 			...props
 		},
 		ref,
 	) => {
+		const isIconOnly = Boolean(icon) && iconPosition === 'only';
+
+		useEffect(() => {
+			if (isIconOnly && !ariaLabel && process.env.NODE_ENV !== 'production') {
+				console.warn(
+					'Button: icon-only buttons need an `aria-label` for accessibility.',
+				);
+			}
+		}, [isIconOnly, ariaLabel]);
+
 		const classes = [
 			'inline-flex items-center justify-center rounded-md font-body font-medium leading-none transition-colors',
 			'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--nok-color-border-focus)]',
 			'disabled:cursor-not-allowed',
 			variantClasses[variant],
-			sizeClasses[size],
+			isIconOnly ? iconOnlySizeClasses[size] : sizeClasses[size],
 			className,
 		]
 			.filter(Boolean)
@@ -98,14 +123,26 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 				}
 			: style;
 
+		const iconElement = icon ? <Icon name={icon} size={size as IconSize} /> : null;
+
 		return (
 			<button
 				ref={ref}
 				className={classes}
 				style={forcedStyle}
 				disabled={state === 'disabled'}
-				{...props}
-			/>
+				aria-label={ariaLabel}
+				{...props}>
+				{isIconOnly ? (
+					iconElement
+				) : (
+					<>
+						{icon && iconPosition === 'left' && iconElement}
+						{children}
+						{icon && iconPosition === 'right' && iconElement}
+					</>
+				)}
+			</button>
 		);
 	},
 );
