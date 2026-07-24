@@ -100,7 +100,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 		}, [isIconOnly, ariaLabel]);
 
 		const classes = [
-			'inline-flex items-center justify-center rounded-md font-body font-medium leading-none transition-colors',
+			'inline-flex items-center justify-center font-body font-medium leading-none transition-colors',
+			isIconOnly ? 'rounded-full' : 'rounded-md',
 			'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--nok-color-border-focus)]',
 			'disabled:cursor-not-allowed',
 			variantClasses[variant],

@@ -1,12 +1,28 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button } from './button.js';
+import { Button, ButtonProps } from './button.js';
 import * as icons from './icons/generated/index.js';
 
 const iconNames = Object.keys(icons);
 
+interface ButtonStoryProps extends ButtonProps {
+	theme?: 'light' | 'dark';
+}
+
+const ButtonWithTheme = ({ theme = 'light', ...props }: ButtonStoryProps) => (
+	<div
+		data-theme={theme === 'dark' ? 'dark' : undefined}
+		style={{
+			background: 'var(--nok-color-background-canvas)',
+			padding: '1rem',
+			display: 'inline-block',
+		}}>
+		<Button {...props} />
+	</div>
+);
+
 const meta = {
 	title: 'Components/Button',
-	component: Button,
+	component: ButtonWithTheme,
 	tags: ['autodocs'],
 	argTypes: {
 		variant: {
@@ -29,6 +45,11 @@ const meta = {
 			control: 'select',
 			options: ['left', 'right', 'only'],
 		},
+		theme: {
+			name: 'Theme',
+			control: 'select',
+			options: ['light', 'dark'],
+		},
 		children: {
 			name: 'Label',
 			control: 'text',
@@ -39,9 +60,10 @@ const meta = {
 		size: 'md',
 		state: 'default',
 		iconPosition: 'left',
+		theme: 'light',
 		children: 'Button',
 	},
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof ButtonWithTheme>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
