@@ -98,11 +98,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 		const backgroundClass =
 			isDisabled || isReadOnly
 				? 'bg-background-sunken cursor-not-allowed'
-				: resolvedShowBg
-					? 'bg-background-overlay'
-					: variant === 'underline'
-						? 'bg-transparent'
-						: 'bg-background-surface';
+				: variant === 'underline' && isError
+					? 'bg-background-error'
+					: resolvedShowBg
+						? 'bg-background-overlay'
+						: variant === 'underline'
+							? 'bg-transparent'
+							: 'bg-background-surface';
 
 		const fieldClasses = [
 			'flex items-center flex-shrink-0 self-stretch transition-colors',
