@@ -1,7 +1,7 @@
 'use client';
 
 import { ButtonHTMLAttributes, forwardRef, useEffect } from 'react';
-import { Icon, IconName, IconSize } from './icons/Icon.js';
+import { Icon, IconName, IconSize } from '../icons/Icon.js';
 
 type ButtonVariant = 'primary' | 'secondary' | 'tertiary' | 'destructive';
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';

@@ -4,7 +4,7 @@
 	"private": true,
 	"type": "module",
 	"exports": {
-		"./*": "./src/*.tsx"
+		"./button": "./src/button/button.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
