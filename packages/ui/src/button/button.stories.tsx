@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Button, ButtonProps } from './button.js';
-import * as icons from './icons/generated/index.js';
+import * as icons from '../icons/generated/index.js';
 
 const iconNames = Object.keys(icons);
 
@@ -13,8 +13,8 @@ const ButtonWithTheme = ({ theme = 'light', ...props }: ButtonStoryProps) => (
 		data-theme={theme === 'dark' ? 'dark' : undefined}
 		style={{
 			background: 'var(--nok-color-background-canvas)',
-			padding: '1rem',
-			display: 'inline-block',
+			width: '100%',
+			padding: '2rem',
 		}}>
 		<Button {...props} />
 	</div>
