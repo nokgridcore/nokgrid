@@ -5,6 +5,7 @@ import { nokTailwindTheme } from '@nokgridcore/tokens/tailwind-theme';
 import { Icon, IconName } from '../icons/Icon.js';
 
 type InputSize = 'sm' | 'md' | 'lg';
+type InputVariant = 'default' | 'underline';
 type InputState =
 	| 'default'
 	| 'hovered'
@@ -21,6 +22,9 @@ export interface InputProps extends Omit<
 	required?: boolean;
 	helperText?: string;
 	size?: InputSize;
+	variant?: InputVariant;
+	/** Defaults to true for "underline" variant, false otherwise */
+	showBg?: boolean;
 	/** Storybook preview + real functional states (error/disabled/readonly) */
 	state?: InputState;
 	startIcon?: IconName;
@@ -65,6 +69,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 			required,
 			helperText,
 			size = 'sm',
+			variant = 'default',
+			showBg,
 			state = 'default',
 			startIcon,
 			endIcon,
@@ -80,16 +86,31 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 		const isDisabled = state === 'disabled';
 		const isReadOnly = state === 'readonly';
 		const isError = state === 'error';
+		const resolvedShowBg = showBg ?? variant === 'underline';
+
+		const borderClasses =
+			variant === 'underline' ? 'border-b-2 rounded-none' : 'border rounded-md';
+
+		const borderColorClass = isError
+			? 'border-border-error'
+			: 'border-border-default';
+
+		const backgroundClass =
+			isDisabled || isReadOnly
+				? 'bg-background-sunken cursor-not-allowed'
+				: resolvedShowBg
+					? 'bg-background-overlay'
+					: variant === 'underline'
+						? 'bg-transparent'
+						: 'bg-background-surface';
 
 		const fieldClasses = [
-			'flex items-center flex-shrink-0 self-stretch rounded-md border transition-colors',
+			'flex items-center flex-shrink-0 self-stretch transition-colors',
 			'hover:bg-background-overlay focus-within:border-border-focus focus-within:outline-none',
 			fieldSizeClasses[size],
-			isError
-				? 'border-border-error border-2'
-				: isDisabled || isReadOnly
-					? 'border-border-default bg-background-sunken cursor-not-allowed'
-					: 'border-border-default bg-background-surface',
+			borderClasses,
+			borderColorClass,
+			backgroundClass,
 			className,
 		]
 			.filter(Boolean)
@@ -108,14 +129,26 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 					<label
 						htmlFor={inputId}
 						style={nokTailwindTheme.textStyles[labelStyleKey[size]]}
-						className='text-text-primary'>
+						className={isDisabled ? 'text-text-disabled' : 'text-text-primary'}>
 						{label}
-						{required && <span className='text-text-error ml-1'>*</span>}
+						{required && (
+							<span
+								className={isDisabled ? 'text-text-disabled' : 'text-text-error'}>
+								{' '}
+								*
+							</span>
+						)}
 					</label>
 				)}
 
 				<div className={fieldClasses} style={forcedStyle}>
-					{startIcon && <Icon name={startIcon} size={iconSizeForInputSize[size]} />}
+					{startIcon && (
+						<Icon
+							name={startIcon}
+							size={iconSizeForInputSize[size]}
+							color={isDisabled ? 'disabled' : undefined}
+						/>
+					)}
 					<input
 						ref={ref}
 						id={inputId}
@@ -135,13 +168,25 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 						}
 						{...props}
 					/>
-					{endIcon && <Icon name={endIcon} size={iconSizeForInputSize[size]} />}
+					{endIcon && (
+						<Icon
+							name={endIcon}
+							size={iconSizeForInputSize[size]}
+							color={isDisabled ? 'disabled' : undefined}
+						/>
+					)}
 				</div>
 
 				{helperText && (
 					<span
 						style={nokTailwindTheme.textStyles[helperStyleKey[size]]}
-						className={isError ? 'text-text-error' : 'text-text-primary'}>
+						className={
+							isDisabled
+								? 'text-text-disabled'
+								: isError
+									? 'text-text-error'
+									: 'text-text-primary'
+						}>
 						{helperText}
 					</span>
 				)}

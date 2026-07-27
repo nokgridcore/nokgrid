@@ -25,6 +25,10 @@ const meta = {
 	component: InputWithTheme,
 	tags: ['autodocs'],
 	argTypes: {
+		variant: {
+			control: 'select',
+			options: ['default', 'underline'],
+		},
 		size: {
 			control: 'select',
 			options: ['sm', 'md', 'lg'],
@@ -32,6 +36,9 @@ const meta = {
 		state: {
 			control: 'select',
 			options: ['default', 'hovered', 'focused', 'disabled', 'error', 'readonly'],
+		},
+		showBg: {
+			control: 'boolean',
 		},
 		label: {
 			control: 'text',
@@ -60,6 +67,7 @@ const meta = {
 		},
 	},
 	args: {
+		variant: 'default',
 		size: 'sm',
 		state: 'default',
 		label: 'Label',
