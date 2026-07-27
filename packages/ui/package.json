@@ -4,7 +4,8 @@
 	"private": true,
 	"type": "module",
 	"exports": {
-		"./button": "./src/button/button.tsx"
+		"./button": "./src/button/button.tsx",
+		"./textarea": "./src/textarea/textarea.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
