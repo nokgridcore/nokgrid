@@ -5,7 +5,8 @@
 	"type": "module",
 	"exports": {
 		"./button": "./src/button/button.tsx",
-		"./textarea": "./src/textarea/textarea.tsx"
+		"./textarea": "./src/textarea/textarea.tsx",
+		"./checkbox": "./src/checkbox/checkbox.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
