@@ -11,16 +11,16 @@ export default function Home() {
 				<Button variant='destructive'>Destructive</Button>
 			</div>
 			<div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-				<Button disabled variant='primary'>
+				<Button state="disabled" variant='primary'>
 					Primary Disabled
 				</Button>
-				<Button disabled variant='secondary'>
+				<Button state="disabled" variant='secondary'>
 					Secondary Disabled
 				</Button>
-				<Button disabled variant='tertiary'>
+				<Button state="disabled" variant='tertiary'>
 					Tertiary Disabled
 				</Button>
-				<Button disabled variant='destructive'>
+				<Button state="disabled" variant='destructive'>
 					Destructive Disabled
 				</Button>
 			</div>
