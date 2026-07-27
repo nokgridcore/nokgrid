@@ -93,15 +93,19 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
 		return (
 			<div className='inline-flex flex-col gap-1'>
-				<div className='inline-flex items-center gap-2'>
+				<label
+					htmlFor={checkboxId}
+					className={`inline-flex items-center gap-2 ${
+						isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
+					}`}>
 					<div className={boxClasses} style={forcedStyle}>
 						<input
 							ref={setRefs}
 							type='checkbox'
-							required={required}
 							id={checkboxId}
 							checked={isChecked}
 							disabled={isDisabled}
+							required={required}
 							className='sr-only'
 							{...props}
 						/>
@@ -114,8 +118,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 						)}
 					</div>
 					{label && (
-						<label
-							htmlFor={checkboxId}
+						<span
 							style={nokTailwindTheme.textStyles['body-sm']}
 							className={isDisabled ? 'text-text-disabled' : 'text-text-primary'}>
 							{label}
@@ -126,9 +129,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 									*
 								</span>
 							)}
-						</label>
+						</span>
 					)}
-				</div>
+				</label>
 
 				{helperText && (
 					<span
