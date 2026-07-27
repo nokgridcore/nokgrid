@@ -108,7 +108,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
 		const fieldClasses = [
 			'flex items-center flex-shrink-0 self-stretch transition-colors',
-			'hover:bg-background-overlay focus-within:border-border-focus focus-within:outline-none',
+			isReadOnly || isDisabled
+				? 'hover:bg-background-overlay'
+				: 'hover:bg-background-overlay focus-within:border-border-focus focus-within:outline-none',
 			fieldSizeClasses[size],
 			borderClasses,
 			borderColorClass,
@@ -126,7 +128,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 					: style;
 
 		return (
-			<div className='inline-flex flex-col gap-1'>
+			<div className='inline-flex flex-col gap-1 w-full'>
 				{label && (
 					<label
 						htmlFor={inputId}
