@@ -18,8 +18,10 @@ export interface TextAreaProps extends Omit<
 > {
 	leadingLabel?: string;
 	trailingLabel?: string;
+	hideLabel?: boolean;
 	required?: boolean;
 	helperText?: string;
+	hideHelperText?: boolean;
 	variant?: TextAreaVariant;
 	/** Defaults to true for "underline" variant, false otherwise */
 	showBg?: boolean;
@@ -36,8 +38,10 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 		{
 			leadingLabel,
 			trailingLabel,
+			hideLabel = false,
 			required,
 			helperText,
+			hideHelperText = false,
 			variant = 'default',
 			showBg,
 			state = 'default',
@@ -144,7 +148,10 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 		return (
 			<div className='flex flex-col gap-1 w-full'>
 				{(leadingLabel || trailingLabel) && (
-					<div className='flex items-center justify-between w-full'>
+					<div
+						className={`flex items-center justify-between w-full ${
+							hideLabel ? 'sr-only' : ''
+						}`}>
 						{leadingLabel && (
 							<label
 								htmlFor={fieldId}
@@ -200,13 +207,13 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 				{helperText && (
 					<span
 						style={nokTailwindTheme.textStyles['caption-sm']}
-						className={
+						className={`${hideHelperText ? 'sr-only' : ''} ${
 							isDisabled
 								? 'text-text-disabled'
 								: isError
 									? 'text-text-error'
 									: 'text-text-primary'
-						}>
+						}`}>
 						{helperText}
 					</span>
 				)}

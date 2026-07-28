@@ -7,7 +7,8 @@
 		"./button": "./src/button/button.tsx",
 		"./textarea": "./src/textarea/textarea.tsx",
 		"./checkbox": "./src/checkbox/checkbox.tsx",
-		"./radio": "./src/radio/radio.tsx"
+		"./radio": "./src/radio/radio.tsx",
+		"./toggle": "./src/toggle/toggle.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",

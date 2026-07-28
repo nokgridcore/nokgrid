@@ -11,7 +11,9 @@ export interface RadioProps extends Omit<
 	'size' | 'disabled' | 'type' | 'required'
 > {
 	label?: string;
+	hideLabel?: boolean;
 	helperText?: string;
+	hideHelperText?: boolean;
 	size?: RadioSize;
 	state?: RadioState;
 }
@@ -40,7 +42,9 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
 	(
 		{
 			label,
+			hideLabel = false,
 			helperText,
+			hideHelperText = false,
 			size = 'sm',
 			state = 'default',
 			checked,
@@ -106,7 +110,9 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
 					{label && (
 						<span
 							style={nokTailwindTheme.textStyles[labelStyleKey[size]]}
-							className={isDisabled ? 'text-text-disabled' : 'text-text-primary'}>
+							className={`${hideLabel ? 'sr-only' : ''} ${
+								isDisabled ? 'text-text-disabled' : 'text-text-primary'
+							}`}>
 							{label}
 						</span>
 					)}
@@ -115,13 +121,13 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
 				{helperText && (
 					<span
 						style={nokTailwindTheme.textStyles[helperStyleKey[size]]}
-						className={
+						className={`${hideHelperText ? 'sr-only' : ''} ${
 							isDisabled
 								? 'text-text-disabled'
 								: isError
 									? 'text-text-error'
 									: 'text-text-secondary'
-						}>
+						}`}>
 						{helperText}
 					</span>
 				)}

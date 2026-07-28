@@ -12,7 +12,9 @@ export interface CheckboxProps extends Omit<
 	'size' | 'disabled' | 'type' | 'required'
 > {
 	label?: string;
+	hideLabel?: boolean;
 	helperText?: string;
+	hideHelperText?: boolean;
 	size?: CheckboxSize;
 	state?: CheckboxState;
 	indeterminate?: boolean;
@@ -42,7 +44,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 	(
 		{
 			label,
+			hideLabel = false,
 			helperText,
+			hideHelperText = false,
 			size = 'sm',
 			state = 'default',
 			indeterminate = false,
@@ -129,7 +133,9 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 					{label && (
 						<span
 							style={nokTailwindTheme.textStyles[labelStyleKey[size]]}
-							className={isDisabled ? 'text-text-disabled' : 'text-text-primary'}>
+							className={`${hideLabel ? 'sr-only' : ''} ${
+								isDisabled ? 'text-text-disabled' : 'text-text-primary'
+							}`}>
 							{label}
 						</span>
 					)}
@@ -138,13 +144,13 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 				{helperText && (
 					<span
 						style={nokTailwindTheme.textStyles[helperStyleKey[size]]}
-						className={
+						className={`${hideHelperText ? 'sr-only' : ''} ${
 							isDisabled
 								? 'text-text-disabled'
 								: isError
 									? 'text-text-error'
 									: 'text-text-secondary'
-						}>
+						}`}>
 						{helperText}
 					</span>
 				)}

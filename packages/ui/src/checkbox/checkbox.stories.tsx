@@ -40,8 +40,14 @@ const meta = {
 		label: {
 			control: 'text',
 		},
+		hideLabel: {
+			control: 'boolean',
+		},
 		helperText: {
 			control: 'text',
+		},
+		hideHelperText: {
+			control: 'boolean',
 		},
 		theme: {
 			name: 'Theme',
@@ -55,7 +61,9 @@ const meta = {
 		checked: false,
 		indeterminate: false,
 		label: 'Label',
+		hideLabel: false,
 		helperText: 'Helper text',
+		hideHelperText: false,
 		theme: 'light',
 	},
 	render: (args) => {

@@ -43,6 +43,9 @@ const meta = {
 		label: {
 			control: 'text',
 		},
+		hideLabel: {
+			control: 'boolean',
+		},
 		required: {
 			control: 'boolean',
 		},
@@ -51,6 +54,9 @@ const meta = {
 		},
 		helperText: {
 			control: 'text',
+		},
+		hideHelperText: {
+			control: 'boolean',
 		},
 		leadingIcon: {
 			control: 'select',
@@ -71,9 +77,11 @@ const meta = {
 		size: 'sm',
 		state: 'default',
 		label: 'Label',
+		hideLabel: false,
 		required: false,
 		placeholder: 'Placeholder text',
 		helperText: 'Helper text',
+		hideHelperText: false,
 		theme: 'light',
 	},
 } satisfies Meta<typeof InputWithTheme>;

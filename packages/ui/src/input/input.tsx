@@ -19,8 +19,10 @@ export interface InputProps extends Omit<
 	'size' | 'disabled' | 'readOnly'
 > {
 	label?: string;
+	hideLabel?: boolean;
 	required?: boolean;
 	helperText?: string;
+	hideHelperText?: boolean;
 	size?: InputSize;
 	variant?: InputVariant;
 	/** Defaults to true for "underline" variant, false otherwise */
@@ -66,8 +68,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 	(
 		{
 			label,
+			hideLabel = false,
 			required,
 			helperText,
+			hideHelperText = false,
 			size = 'sm',
 			variant = 'default',
 			showBg,
@@ -173,7 +177,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 					<label
 						htmlFor={inputId}
 						style={nokTailwindTheme.textStyles[labelStyleKey[size]]}
-						className={isDisabled ? 'text-text-disabled' : 'text-text-primary'}>
+						className={`${hideLabel ? 'sr-only' : ''} ${
+							isDisabled ? 'text-text-disabled' : 'text-text-primary'
+						}`}>
 						{label}
 						{required && (
 							<span
@@ -238,13 +244,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 				{helperText && (
 					<span
 						style={nokTailwindTheme.textStyles[helperStyleKey[size]]}
-						className={
+						className={`${hideHelperText ? 'sr-only' : ''} ${
 							isDisabled
 								? 'text-text-disabled'
 								: isError
 									? 'text-text-error'
 									: 'text-text-primary'
-						}>
+						}`}>
 						{helperText}
 					</span>
 				)}

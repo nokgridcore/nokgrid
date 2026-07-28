@@ -39,6 +39,9 @@ const meta = {
 		trailingLabel: {
 			control: 'text',
 		},
+		hideLabel: {
+			control: 'boolean',
+		},
 		required: {
 			control: 'boolean',
 		},
@@ -47,6 +50,9 @@ const meta = {
 		},
 		helperText: {
 			control: 'text',
+		},
+		hideHelperText: {
+			control: 'boolean',
 		},
 		theme: {
 			name: 'Theme',
@@ -59,9 +65,11 @@ const meta = {
 		state: 'default',
 		leadingLabel: 'Label',
 		trailingLabel: '120/200',
+		hideLabel: false,
 		required: false,
 		placeholder: 'Placeholder text',
 		helperText: 'Helper text',
+		hideHelperText: false,
 		theme: 'light',
 	},
 } satisfies Meta<typeof TextAreaWithTheme>;
