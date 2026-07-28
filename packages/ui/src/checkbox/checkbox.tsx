@@ -9,7 +9,7 @@ type CheckboxState = 'default' | 'hovered' | 'disabled' | 'error';
 
 export interface CheckboxProps extends Omit<
 	InputHTMLAttributes<HTMLInputElement>,
-	'size' | 'disabled' | 'type'
+	'size' | 'disabled' | 'type' | 'required'
 > {
 	label?: string;
 	helperText?: string;
@@ -28,6 +28,16 @@ const iconSizeForCheckboxSize: Record<CheckboxSize, 'xs' | 'sm'> = {
 	md: 'sm',
 };
 
+const labelStyleKey: Record<CheckboxSize, string> = {
+	sm: 'body-sm',
+	md: 'body-md',
+};
+
+const helperStyleKey: Record<CheckboxSize, string> = {
+	sm: 'caption-sm',
+	md: 'caption-md',
+};
+
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 	(
 		{
@@ -37,7 +47,6 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 			state = 'default',
 			indeterminate = false,
 			checked,
-			required,
 			id,
 			className,
 			style,
@@ -73,7 +82,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 			isDisabled
 				? isFilled
 					? 'bg-action-primary-disabled border-action-primary-disabled'
-					: 'bg-background-sunken border-border-default'
+					: 'bg-transparent border-border-default'
 				: isError
 					? 'border-border-error bg-transparent'
 					: isFilled
@@ -95,7 +104,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 			<div className='inline-flex flex-col gap-1'>
 				<label
 					htmlFor={checkboxId}
-					className={`inline-flex items-center gap-2 ${
+					className={`inline-flex items-center gap-component-xs ${
 						isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
 					}`}>
 					<div className={boxClasses} style={forcedStyle}>
@@ -105,37 +114,30 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 							id={checkboxId}
 							checked={isChecked}
 							disabled={isDisabled}
-							required={required}
 							className='sr-only'
 							{...props}
 						/>
-						{isFilled && (
-							<Icon
-								name={indeterminate ? 'Minus' : 'Check'}
-								size={iconSizeForCheckboxSize[size]}
-								color='white'
-							/>
-						)}
+						<Icon
+							name={indeterminate ? 'Minus' : 'Check'}
+							size={iconSizeForCheckboxSize[size]}
+							color='white'
+							className={`transition-all duration-200 ease-in-out ${
+								isFilled && !isError ? 'scale-100 opacity-100' : 'scale-50 opacity-0'
+							}`}
+						/>
 					</div>
 					{label && (
 						<span
-							style={nokTailwindTheme.textStyles['body-sm']}
+							style={nokTailwindTheme.textStyles[labelStyleKey[size]]}
 							className={isDisabled ? 'text-text-disabled' : 'text-text-primary'}>
 							{label}
-							{required && (
-								<span
-									className={isDisabled ? 'text-text-disabled' : 'text-text-error'}>
-									{' '}
-									*
-								</span>
-							)}
 						</span>
 					)}
 				</label>
 
 				{helperText && (
 					<span
-						style={nokTailwindTheme.textStyles['caption-sm']}
+						style={nokTailwindTheme.textStyles[helperStyleKey[size]]}
 						className={
 							isDisabled
 								? 'text-text-disabled'

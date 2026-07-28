@@ -40,9 +40,6 @@ const meta = {
 		label: {
 			control: 'text',
 		},
-		required: {
-			control: 'boolean',
-		},
 		helperText: {
 			control: 'text',
 		},
@@ -66,7 +63,9 @@ const meta = {
 		return (
 			<CheckboxWithTheme
 				{...args}
-				onChange={(e) => updateArgs({ checked: e.target.checked })}
+				onChange={(e) =>
+					updateArgs({ checked: e.target.checked, indeterminate: false })
+				}
 			/>
 		);
 	},

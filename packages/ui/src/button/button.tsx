@@ -25,9 +25,9 @@ export interface ButtonProps extends Omit<
 
 const variantClasses: Record<ButtonVariant, string> = {
 	primary:
-		'bg-action-primary-default text-action-primary-text hover:bg-action-primary-hover active:bg-action-primary-pressed disabled:bg-action-primary-disabled disabled:text-action-primary-text',
+		'bg-action-primary-default text-white hover:bg-action-primary-hover active:bg-action-primary-pressed disabled:bg-action-primary-disabled disabled:text-white',
 	secondary:
-		'bg-action-secondary-default text-action-secondary-text hover:bg-action-secondary-hover active:bg-action-secondary-pressed disabled:bg-action-secondary-disabled disabled:text-action-secondary-disabled-text',
+		'bg-action-secondary-default text-action-secondary-text hover:bg-action-secondary-hover active:bg-action-secondary-pressed disabled:bg-action-secondary-disabled disabled:text-text-disabled',
 	tertiary:
 		'bg-action-tertiary-background border border-action-tertiary-border text-action-tertiary-text hover:bg-action-tertiary-hover active:bg-action-tertiary-pressed disabled:bg-action-tertiary-disabled-background disabled:border-action-tertiary-disabled-border disabled:text-action-tertiary-disabled-text',
 	destructive:

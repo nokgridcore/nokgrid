@@ -52,11 +52,11 @@ const meta = {
 		helperText: {
 			control: 'text',
 		},
-		startIcon: {
+		leadingIcon: {
 			control: 'select',
 			options: [undefined, ...iconNames],
 		},
-		endIcon: {
+		trailingIcon: {
 			control: 'select',
 			options: [undefined, ...iconNames],
 		},

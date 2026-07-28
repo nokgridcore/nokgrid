@@ -55,31 +55,57 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 		const isError = state === 'error';
 		const resolvedShowBg = showBg ?? variant === 'underline';
 
-		const borderClasses =
-			variant === 'underline' ? 'border-b-2 rounded-none' : 'border rounded-md';
+		const isUnderline = variant === 'underline';
 
-		const borderColorClass = isError
-			? 'border-border-error'
-			: 'border-border-default';
+		const borderClasses = isUnderline
+			? isReadOnly
+				? 'border-b border-dashed rounded-none'
+				: isError
+					? 'border-b-2 rounded-none'
+					: 'border-b rounded-none'
+			: isError
+				? 'border-2 rounded-md'
+				: 'border rounded-md';
+
+		const borderColorClass =
+			isUnderline && isReadOnly
+				? 'border-border-strong'
+				: isError
+					? 'border-border-error'
+					: 'border-border-default';
 
 		const backgroundClass =
-			isDisabled || isReadOnly
-				? 'bg-background-sunken cursor-not-allowed'
-				: variant === 'underline' && isError
-					? 'bg-background-error'
-					: resolvedShowBg
-						? 'bg-background-overlay'
-						: variant === 'underline'
-							? 'bg-transparent'
+			isDisabled
+				? 'bg-background-overlay cursor-not-allowed'
+				: isReadOnly
+					? 'bg-background-sunken cursor-not-allowed'
+					: isUnderline
+						? isError
+							? 'bg-background-error'
+							: resolvedShowBg
+								? 'bg-background-canvas'
+								: 'bg-transparent'
+						: resolvedShowBg
+							? 'bg-background-overlay'
 							: 'bg-background-surface';
 
 		const fieldClasses = [
-			'flex px-layout-sm py-component-xs transition-colors w-full',
-			isReadOnly || isDisabled
-				? 'hover:bg-background-overlay'
-				: 'hover:bg-background-overlay focus-within:border-border-focus focus-within:outline-none',
+			'flex p-component-sm transition-[background-color,border-color,border-width] duration-200 ease-in-out w-full',
+			!isReadOnly &&
+				!isDisabled &&
+				[
+					'hover:border-border-strong',
+					isUnderline && 'hover:bg-background-overlay',
+					isUnderline ? 'focus-within:border-b-2' : 'focus-within:border-2',
+					'focus-within:border-border-strong',
+					'focus-within:outline-none',
+					isUnderline && 'focus-within:bg-background-canvas',
+				]
+					.filter(Boolean)
+					.join(' '),
 			borderClasses,
 			borderColorClass,
+			isReadOnly && '[[data-theme=dark]_&]:border-transparent',
 			backgroundClass,
 			className,
 		]
@@ -88,9 +114,24 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 
 		const forcedStyle =
 			state === 'hovered'
-				? { backgroundColor: 'var(--nok-color-background-overlay)', ...style }
+				? {
+						borderColor: 'var(--nok-color-border-strong)',
+						...(isUnderline
+							? { backgroundColor: 'var(--nok-color-background-overlay)' }
+							: {}),
+						...style,
+					}
 				: state === 'focused'
-					? { borderColor: 'var(--nok-color-border-focus)', ...style }
+					? {
+							borderColor: 'var(--nok-color-border-strong)',
+							...(isUnderline
+								? {
+										borderBottomWidth: '2px',
+										backgroundColor: 'var(--nok-color-background-canvas)',
+									}
+								: { borderWidth: '2px' }),
+							...style,
+						}
 					: style;
 
 		const leadingLabelColor = isDisabled
@@ -148,9 +189,9 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 							outline: 'none',
 						}}
 						className={
-							(isDisabled || isReadOnly
-								? 'text-text-disabled'
-								: 'text-text-primary') + ' placeholder:text-text-tertiary'
+							isDisabled || isReadOnly
+								? 'text-text-disabled placeholder:text-text-disabled'
+								: 'text-text-primary placeholder:text-text-tertiary'
 						}
 						{...props}
 					/>

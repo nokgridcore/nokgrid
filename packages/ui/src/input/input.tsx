@@ -27,14 +27,14 @@ export interface InputProps extends Omit<
 	showBg?: boolean;
 	/** Storybook preview + real functional states (error/disabled/readonly) */
 	state?: InputState;
-	startIcon?: IconName;
-	endIcon?: IconName;
+	leadingIcon?: IconName;
+	trailingIcon?: IconName;
 }
 
 const fieldSizeClasses: Record<InputSize, string> = {
-	sm: 'h-control-sm px-layout-sm gap-layout-md',
-	md: 'h-control-md px-layout-md gap-layout-lg',
-	lg: 'h-control-lg px-layout-lg gap-layout-lg',
+	sm: 'h-control-sm px-layout-sm gap-component-sm',
+	md: 'h-control-md px-layout-md gap-component-sm',
+	lg: 'h-control-lg px-layout-lg gap-component-sm',
 };
 
 const iconSizeForInputSize: Record<InputSize, 'sm' | 'md' | 'lg'> = {
@@ -72,8 +72,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 			variant = 'default',
 			showBg,
 			state = 'default',
-			startIcon,
-			endIcon,
+			leadingIcon,
+			trailingIcon,
 			id,
 			className,
 			style,
@@ -87,33 +87,58 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 		const isReadOnly = state === 'readonly';
 		const isError = state === 'error';
 		const resolvedShowBg = showBg ?? variant === 'underline';
+		const isUnderline = variant === 'underline';
 
-		const borderClasses =
-			variant === 'underline' ? 'border-b-2 rounded-none' : 'border rounded-md';
+		const borderClasses = isUnderline
+			? isReadOnly
+				? 'border-b border-dashed rounded-none'
+				: isError
+					? 'border-b-2 rounded-none'
+					: 'border-b rounded-none'
+			: isError
+				? 'border-2 rounded-md'
+				: 'border rounded-md';
 
-		const borderColorClass = isError
-			? 'border-border-error'
-			: 'border-border-default';
+		const borderColorClass =
+			isUnderline && isReadOnly
+				? 'border-border-strong'
+				: isError
+					? 'border-border-error'
+					: 'border-border-default';
 
 		const backgroundClass =
-			isDisabled || isReadOnly
-				? 'bg-background-sunken cursor-not-allowed'
-				: variant === 'underline' && isError
-					? 'bg-background-error'
-					: resolvedShowBg
-						? 'bg-background-overlay'
-						: variant === 'underline'
-							? 'bg-transparent'
+			isDisabled
+				? 'bg-background-overlay cursor-not-allowed'
+				: isReadOnly
+					? 'bg-background-sunken cursor-not-allowed'
+					: isUnderline
+						? isError
+							? 'bg-background-error'
+							: resolvedShowBg
+								? 'bg-background-canvas'
+								: 'bg-transparent'
+						: resolvedShowBg
+							? 'bg-background-overlay'
 							: 'bg-background-surface';
 
 		const fieldClasses = [
-			'flex items-center flex-shrink-0 self-stretch transition-colors',
-			isReadOnly || isDisabled
-				? 'hover:bg-background-overlay'
-				: 'hover:bg-background-overlay focus-within:border-border-focus focus-within:outline-none',
+			'flex items-center flex-shrink-0 self-stretch transition-[background-color,border-color,border-width] duration-200 ease-in-out',
+			!isReadOnly &&
+				!isDisabled &&
+				[
+					'hover:border-border-strong',
+					isUnderline && 'hover:bg-background-overlay',
+					isUnderline ? 'focus-within:border-b-2' : 'focus-within:border-2',
+					'focus-within:border-border-strong',
+					'focus-within:outline-none',
+					isUnderline && 'focus-within:bg-background-canvas',
+				]
+					.filter(Boolean)
+					.join(' '),
 			fieldSizeClasses[size],
 			borderClasses,
 			borderColorClass,
+			isReadOnly && '[[data-theme=dark]_&]:border-transparent',
 			backgroundClass,
 			className,
 		]
@@ -122,9 +147,24 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
 		const forcedStyle =
 			state === 'hovered'
-				? { backgroundColor: 'var(--nok-color-background-overlay)', ...style }
+				? {
+						borderColor: 'var(--nok-color-border-strong)',
+						...(isUnderline
+							? { backgroundColor: 'var(--nok-color-background-overlay)' }
+							: {}),
+						...style,
+					}
 				: state === 'focused'
-					? { borderColor: 'var(--nok-color-border-focus)', ...style }
+					? {
+							borderColor: 'var(--nok-color-border-strong)',
+							...(isUnderline
+								? {
+										borderBottomWidth: '2px',
+										backgroundColor: 'var(--nok-color-background-canvas)',
+									}
+								: { borderWidth: '2px' }),
+							...style,
+						}
 					: style;
 
 		return (
@@ -146,11 +186,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 				)}
 
 				<div className={fieldClasses} style={forcedStyle}>
-					{startIcon && (
+					{leadingIcon && (
 						<Icon
-							name={startIcon}
+							name={leadingIcon}
 							size={iconSizeForInputSize[size]}
-							color={isDisabled ? 'disabled' : undefined}
+							color={
+							isDisabled
+								? 'disabled'
+								: isError || isReadOnly
+									? 'secondary'
+									: undefined
+						}
 						/>
 					)}
 					<input
@@ -168,15 +214,23 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 							outline: 'none',
 						}}
 						className={
-							isDisabled || isReadOnly ? 'text-text-disabled' : 'text-text-primary'
+							isDisabled || isReadOnly
+								? 'text-text-disabled placeholder:text-text-disabled'
+								: 'text-text-primary'
 						}
 						{...props}
 					/>
-					{endIcon && (
+					{trailingIcon && (
 						<Icon
-							name={endIcon}
+							name={trailingIcon}
 							size={iconSizeForInputSize[size]}
-							color={isDisabled ? 'disabled' : undefined}
+							color={
+							isDisabled
+								? 'disabled'
+								: isError || isReadOnly
+									? 'secondary'
+									: undefined
+						}
 						/>
 					)}
 				</div>
