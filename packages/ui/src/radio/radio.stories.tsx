@@ -11,7 +11,7 @@ const RadioWithTheme = ({ theme = 'light', ...props }: RadioStoryProps) => (
 	<div
 		data-theme={theme === 'dark' ? 'dark' : undefined}
 		style={{
-			background: 'var(--nok-color-background-canvas)',
+			background: 'var(--nok-color-background-surface)',
 			width: '100%',
 			padding: '2rem',
 		}}>
@@ -91,7 +91,7 @@ const RadioGroupDemo = ({
 				display: 'flex',
 				flexDirection: 'column',
 				gap: '0.75rem',
-				background: 'var(--nok-color-background-canvas)',
+				background: 'var(--nok-color-background-surface)',
 				padding: '2rem',
 			}}>
 			{options.map((option) => (

@@ -191,12 +191,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 							name={leadingIcon}
 							size={iconSizeForInputSize[size]}
 							color={
-							isDisabled
-								? 'disabled'
-								: isError || isReadOnly
-									? 'secondary'
-									: undefined
-						}
+								isDisabled
+									? 'disabled'
+									: isError || isReadOnly
+										? 'secondary'
+										: 'default'
+							}
 						/>
 					)}
 					<input
@@ -225,12 +225,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 							name={trailingIcon}
 							size={iconSizeForInputSize[size]}
 							color={
-							isDisabled
-								? 'disabled'
-								: isError || isReadOnly
-									? 'secondary'
-									: undefined
-						}
+								isDisabled
+									? 'disabled'
+									: isError || isReadOnly
+										? 'secondary'
+										: 'default'
+							}
 						/>
 					)}
 				</div>

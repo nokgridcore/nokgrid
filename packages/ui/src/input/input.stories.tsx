@@ -12,7 +12,7 @@ const InputWithTheme = ({ theme = 'light', ...props }: InputStoryProps) => (
 	<div
 		data-theme={theme === 'dark' ? 'dark' : undefined}
 		style={{
-			background: 'var(--nok-color-background-canvas)',
+			background: 'var(--nok-color-background-surface)',
 			width: '100%',
 			padding: '2rem',
 		}}>
