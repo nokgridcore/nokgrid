@@ -32,25 +32,25 @@
         "value": "{color.green.50}"
       },
       "success-strong": {
-        "value": "{color.green.100}"
+        "value": "{color.green.500}"
       },
       "warning": {
         "value": "{color.nokbanana.50}"
       },
       "warning-strong": {
-        "value": "{color.nokbanana.100}"
+        "value": "{color.nokbanana.600}"
       },
       "error": {
         "value": "{color.red.50}"
       },
       "error-strong": {
-        "value": "{color.red.100}"
+        "value": "{color.red.600}"
       },
       "info": {
         "value": "{color.blue.50}"
       },
       "info-strong": {
-        "value": "{color.blue.100}"
+        "value": "{color.blue.600}"
       }
     },
     "text": {

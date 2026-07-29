@@ -32,7 +32,7 @@
         "value": "{color.green.900}"
       },
       "success-strong": {
-        "value": "{color.green.800}"
+        "value": "{color.green.700}"
       },
       "warning": {
         "value": "{color.nokbanana.900}"
