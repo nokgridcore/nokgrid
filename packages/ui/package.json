@@ -11,7 +11,8 @@
 		"./toggle": "./src/toggle/toggle.tsx",
 		"./badge": "./src/badge/badge.tsx",
 		"./badge-count": "./src/badge/badge-count.tsx",
-		"./status-dot": "./src/badge/status-dot.tsx"
+		"./status-dot": "./src/badge/status-dot.tsx",
+		"./chip": "./src/chip/chip.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
