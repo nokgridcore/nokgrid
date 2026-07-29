@@ -12,6 +12,11 @@ const preview: Preview = {
 		a11y: {
 			test: 'todo',
 		},
+		options: {
+			storySort: {
+				order: ['Components', ['Badge', ['Badge', 'Count', 'StatusDot']]],
+			},
+		},
 	},
 };
 
