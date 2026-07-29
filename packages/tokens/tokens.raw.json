@@ -1097,7 +1097,7 @@
             "com.figma.hiddenFromPublishing": false
           },
           "$type": "color",
-          "$value": "{colour.Green.100}"
+          "$value": "{colour.Green.500}"
         },
         "warning": {
           "$extensions": {
@@ -1117,7 +1117,7 @@
             "com.figma.hiddenFromPublishing": false
           },
           "$type": "color",
-          "$value": "{colour.NokBanana.100}"
+          "$value": "{colour.NokBanana.600}"
         },
         "error": {
           "$extensions": {
@@ -1137,7 +1137,7 @@
             "com.figma.hiddenFromPublishing": false
           },
           "$type": "color",
-          "$value": "{colour.Red.100}"
+          "$value": "{colour.Red.600}"
         },
         "info": {
           "$extensions": {
@@ -1157,7 +1157,7 @@
             "com.figma.hiddenFromPublishing": false
           },
           "$type": "color",
-          "$value": "{colour.Blue.100}"
+          "$value": "{colour.Blue.600}"
         }
       },
       "text": {
@@ -2480,7 +2480,7 @@
             "com.figma.hiddenFromPublishing": false
           },
           "$type": "color",
-          "$value": "{colour.Green.800}"
+          "$value": "{colour.Green.700}"
         },
         "warning": {
           "$extensions": {
