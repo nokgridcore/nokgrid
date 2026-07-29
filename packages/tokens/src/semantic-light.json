@@ -108,7 +108,7 @@
         "value": "{color.nokbanana.400}"
       },
       "error": {
-        "value": "{color.red.300}"
+        "value": "{color.red.600}"
       },
       "info": {
         "value": "{color.blue.300}"
