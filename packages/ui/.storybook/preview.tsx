@@ -14,7 +14,10 @@ const preview: Preview = {
 		},
 		options: {
 			storySort: {
-				order: ['Components', ['Badge', ['Badge', 'Count', 'StatusDot']]],
+				order: [
+					'Components',
+					['Badge', ['Badge', 'Count', 'StatusDot'], 'Tab', ['Tab', 'Group']],
+				],
 			},
 		},
 	},
