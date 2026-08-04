@@ -8,7 +8,14 @@
 		"./textarea": "./src/textarea/textarea.tsx",
 		"./checkbox": "./src/checkbox/checkbox.tsx",
 		"./radio": "./src/radio/radio.tsx",
-		"./toggle": "./src/toggle/toggle.tsx"
+		"./toggle": "./src/toggle/toggle.tsx",
+		"./badge": "./src/badge/badge.tsx",
+		"./badge-count": "./src/badge/badge-count.tsx",
+		"./status-dot": "./src/badge/status-dot.tsx",
+		"./chip": "./src/chip/chip.tsx",
+		"./tab": "./src/tab/tab.tsx",
+		"./tab-group": "./src/tab/tab-group.tsx",
+		"./search-input": "./src/search-input/search-input.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
