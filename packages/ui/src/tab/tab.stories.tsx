@@ -55,26 +55,8 @@ const meta = {
 			control: 'select',
 			options: ['neutral', 'primary', 'success', 'warning', 'error', 'info'],
 		},
-		badgeAppearance: {
-			control: 'select',
-			options: ['filled', 'tinted'],
-		},
 		badgeLabel: {
 			control: 'text',
-		},
-		badgeDot: {
-			control: 'boolean',
-		},
-		badgeLeadingIcon: {
-			control: 'select',
-			options: [undefined, ...iconNames],
-		},
-		badgeTrailingIcon: {
-			control: 'select',
-			options: [undefined, ...iconNames],
-		},
-		badgeFullyRounded: {
-			control: 'boolean',
 		},
 		showFocusRing: {
 			control: 'boolean',
@@ -93,10 +75,7 @@ const meta = {
 		label: 'Label',
 		showBadge: false,
 		badgeVariant: 'neutral',
-		badgeAppearance: 'filled',
 		badgeLabel: '1',
-		badgeDot: false,
-		badgeFullyRounded: false,
 		showFocusRing: false,
 		theme: 'light',
 	},
