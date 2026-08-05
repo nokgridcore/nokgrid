@@ -15,7 +15,9 @@
 		"./chip": "./src/chip/chip.tsx",
 		"./tab": "./src/tab/tab.tsx",
 		"./tab-group": "./src/tab/tab-group.tsx",
-		"./search-input": "./src/search-input/search-input.tsx"
+		"./search-input": "./src/search-input/search-input.tsx",
+		"./select": "./src/select/select.tsx",
+		"./option": "./src/option/option.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
