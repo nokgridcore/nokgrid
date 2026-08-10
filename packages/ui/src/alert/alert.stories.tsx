@@ -1,0 +1,74 @@
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { Alert, AlertProps } from './alert.js';
+
+interface AlertStoryProps extends AlertProps {
+	theme?: 'light' | 'dark';
+}
+
+const AlertWithTheme = ({ theme = 'light', ...props }: AlertStoryProps) => (
+	<div
+		data-theme={theme === 'dark' ? 'dark' : undefined}
+		style={{
+			background: 'var(--nok-color-background-surface)',
+			width: '100%',
+			maxWidth: '480px',
+			padding: '2rem',
+		}}>
+		<Alert {...props} />
+	</div>
+);
+
+const meta = {
+	title: 'Components/Alert',
+	component: AlertWithTheme,
+	tags: ['autodocs'],
+	argTypes: {
+		variant: {
+			control: 'select',
+			options: ['success', 'warning', 'error', 'info'],
+		},
+		appearance: {
+			control: 'select',
+			options: ['subtle', 'strong'],
+		},
+		inline: {
+			control: 'boolean',
+		},
+		bleed: {
+			control: 'boolean',
+		},
+		title: {
+			control: 'text',
+		},
+		showTitle: {
+			control: 'boolean',
+		},
+		description: {
+			control: 'text',
+		},
+		dismissible: {
+			control: 'boolean',
+		},
+		theme: {
+			name: 'Theme',
+			control: 'select',
+			options: ['light', 'dark'],
+		},
+	},
+	args: {
+		variant: 'success',
+		appearance: 'subtle',
+		inline: false,
+		bleed: false,
+		title: 'Title',
+		showTitle: true,
+		description: 'This is a description of the alert.',
+		dismissible: false,
+		theme: 'light',
+	},
+} satisfies Meta<typeof AlertWithTheme>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {};

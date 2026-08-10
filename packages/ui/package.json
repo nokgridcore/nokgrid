@@ -18,7 +18,8 @@
 		"./search-input": "./src/search-input/search-input.tsx",
 		"./select": "./src/select/select.tsx",
 		"./option": "./src/option/option.tsx",
-		"./kpi": "./src/kpi/kpi.tsx"
+		"./kpi": "./src/kpi/kpi.tsx",
+		"./alert": "./src/alert/alert.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
