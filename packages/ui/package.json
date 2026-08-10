@@ -17,7 +17,8 @@
 		"./tab-group": "./src/tab/tab-group.tsx",
 		"./search-input": "./src/search-input/search-input.tsx",
 		"./select": "./src/select/select.tsx",
-		"./option": "./src/option/option.tsx"
+		"./option": "./src/option/option.tsx",
+		"./kpi": "./src/kpi/kpi.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
