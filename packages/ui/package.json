@@ -19,7 +19,8 @@
 		"./select": "./src/select/select.tsx",
 		"./option": "./src/option/option.tsx",
 		"./kpi": "./src/kpi/kpi.tsx",
-		"./alert": "./src/alert/alert.tsx"
+		"./alert": "./src/alert/alert.tsx",
+		"./avatar": "./src/avatar/avatar.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
