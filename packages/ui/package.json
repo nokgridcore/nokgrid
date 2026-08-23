@@ -25,7 +25,9 @@
 		"./segment": "./src/segment/segment.tsx",
 		"./progress-stepped": "./src/progress-stepped/progress-stepped.tsx",
 		"./card": "./src/card/card.tsx",
-		"./divider": "./src/divider/divider.tsx"
+		"./divider": "./src/divider/divider.tsx",
+		"./menu-item": "./src/menu/menu-item.tsx",
+		"./menu": "./src/menu/menu.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
