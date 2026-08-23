@@ -20,7 +20,10 @@
 		"./option": "./src/option/option.tsx",
 		"./kpi": "./src/kpi/kpi.tsx",
 		"./alert": "./src/alert/alert.tsx",
-		"./avatar": "./src/avatar/avatar.tsx"
+		"./avatar": "./src/avatar/avatar.tsx",
+		"./progress": "./src/progress/progress.tsx",
+		"./segment": "./src/segment/segment.tsx",
+		"./progress-stepped": "./src/progress-stepped/progress-stepped.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
