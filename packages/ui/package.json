@@ -23,7 +23,8 @@
 		"./avatar": "./src/avatar/avatar.tsx",
 		"./progress": "./src/progress/progress.tsx",
 		"./segment": "./src/segment/segment.tsx",
-		"./progress-stepped": "./src/progress-stepped/progress-stepped.tsx"
+		"./progress-stepped": "./src/progress-stepped/progress-stepped.tsx",
+		"./card": "./src/card/card.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
