@@ -27,7 +27,9 @@
 		"./card": "./src/card/card.tsx",
 		"./divider": "./src/divider/divider.tsx",
 		"./menu-item": "./src/menu/menu-item.tsx",
-		"./menu": "./src/menu/menu.tsx"
+		"./menu": "./src/menu/menu.tsx",
+		"./pagination-button": "./src/pagination/pagination-button.tsx",
+		"./pagination": "./src/pagination/pagination.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
