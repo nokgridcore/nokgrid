@@ -10,7 +10,7 @@ const SegmentWithTheme = ({ theme = 'light', ...props }: SegmentStoryProps) => (
 		data-theme={theme === 'dark' ? 'dark' : undefined}
 		style={{
 			background: 'var(--nok-color-background-surface)',
-			width: '240px',
+			width: '100%',
 			padding: '2rem',
 		}}>
 		<Segment {...props} />
@@ -22,9 +22,13 @@ const meta = {
 	component: SegmentWithTheme,
 	tags: ['autodocs'],
 	argTypes: {
+		shape: {
+			control: 'select',
+			options: ['linear', 'circular'],
+		},
 		state: {
 			control: 'select',
-			options: ['default', 'filled'],
+			options: ['upcoming', 'active', 'completed'],
 		},
 		color: {
 			control: 'select',
@@ -41,7 +45,8 @@ const meta = {
 		},
 	},
 	args: {
-		state: 'default',
+		shape: 'linear',
+		state: 'upcoming',
 		color: 'primary',
 		size: 'sm',
 		theme: 'light',

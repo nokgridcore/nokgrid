@@ -38,7 +38,7 @@ const meta = {
 			control: { type: 'number', min: 1 },
 		},
 		currentStep: {
-			control: { type: 'number', min: 0 },
+			control: { type: 'number', min: 1 },
 		},
 		showLabel: {
 			control: 'boolean',
