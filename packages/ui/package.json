@@ -15,7 +15,21 @@
 		"./chip": "./src/chip/chip.tsx",
 		"./tab": "./src/tab/tab.tsx",
 		"./tab-group": "./src/tab/tab-group.tsx",
-		"./search-input": "./src/search-input/search-input.tsx"
+		"./search-input": "./src/search-input/search-input.tsx",
+		"./select": "./src/select/select.tsx",
+		"./option": "./src/option/option.tsx",
+		"./kpi": "./src/kpi/kpi.tsx",
+		"./alert": "./src/alert/alert.tsx",
+		"./avatar": "./src/avatar/avatar.tsx",
+		"./progress": "./src/progress/progress.tsx",
+		"./segment": "./src/segment/segment.tsx",
+		"./progress-stepped": "./src/progress-stepped/progress-stepped.tsx",
+		"./card": "./src/card/card.tsx",
+		"./divider": "./src/divider/divider.tsx",
+		"./menu-item": "./src/menu/menu-item.tsx",
+		"./menu": "./src/menu/menu.tsx",
+		"./pagination-button": "./src/pagination/pagination-button.tsx",
+		"./pagination": "./src/pagination/pagination.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",

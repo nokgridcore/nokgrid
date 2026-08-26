@@ -53,6 +53,7 @@ export { default as ChevronUp } from "./ChevronUp.js";
 export { default as Circle } from "./Circle.js";
 export { default as CircleAlert } from "./CircleAlert.js";
 export { default as CircleCheck } from "./CircleCheck.js";
+export { default as CircleCheckBig } from "./CircleCheckBig.js";
 export { default as CircleDot } from "./CircleDot.js";
 export { default as CircleSlash } from "./CircleSlash.js";
 export { default as CircleX } from "./CircleX.js";

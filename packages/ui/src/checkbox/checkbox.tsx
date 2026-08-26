@@ -4,7 +4,7 @@ import { forwardRef, InputHTMLAttributes, useEffect, useId, useRef } from 'react
 import { nokTailwindTheme } from '@nokgridcore/tokens/tailwind-theme';
 import { Icon } from '../icons/Icon.js';
 
-type CheckboxSize = 'sm' | 'md';
+export type CheckboxSize = 'sm' | 'md';
 type CheckboxState = 'default' | 'hovered' | 'disabled' | 'error';
 
 export interface CheckboxProps extends Omit<

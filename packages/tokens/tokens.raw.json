@@ -1158,6 +1158,10 @@
           },
           "$type": "color",
           "$value": "{colour.Blue.600}"
+        },
+        "white": {
+          "$type": "color",
+          "$value": "{colour.Neutral.0}"
         }
       },
       "text": {
@@ -1274,6 +1278,10 @@
         "white": {
           "$type": "color",
           "$value": "{colour.Neutral.0}"
+        },
+        "black": {
+          "$type": "color",
+          "$value": "{colour.Neutral.900}"
         }
       },
       "border": {
@@ -2570,6 +2578,10 @@
           },
           "$type": "color",
           "$value": "{colour.Blue.800}"
+        },
+        "white": {
+          "$type": "color",
+          "$value": "{colour.Neutral.0}"
         }
       },
       "text": {
@@ -2686,6 +2698,10 @@
         "white": {
           "$type": "color",
           "$value": "{colour.Neutral.0}"
+        },
+        "black": {
+          "$type": "color",
+          "$value": "{colour.Neutral.900}"
         }
       },
       "border": {

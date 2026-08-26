@@ -3,7 +3,7 @@
 import { ButtonHTMLAttributes, forwardRef } from 'react';
 import { nokTailwindTheme } from '@nokgridcore/tokens/tailwind-theme';
 import { Icon, IconName } from '../icons/Icon.js';
-import { Badge, BadgeVariant, BadgeAppearance } from '../badge/badge.js';
+import { Badge, BadgeVariant } from '../badge/badge.js';
 
 type TabDirection = 'horizontal' | 'vertical';
 type TabAppearance = 'border' | 'filled' | 'elevated';
@@ -22,12 +22,7 @@ export interface TabProps extends Omit<
 	leadingIcon?: IconName;
 	showBadge?: boolean;
 	badgeVariant?: BadgeVariant;
-	badgeAppearance?: BadgeAppearance;
 	badgeLabel?: string;
-	badgeDot?: boolean;
-	badgeLeadingIcon?: IconName;
-	badgeTrailingIcon?: IconName;
-	badgeFullyRounded?: boolean;
 	showFocusRing?: boolean;
 }
 
@@ -71,7 +66,7 @@ const colorClasses: Record<TabAppearance, Record<TabState, string>> = {
 	elevated: {
 		default: 'rounded-sm text-text-secondary',
 		hover: 'rounded-sm bg-background-overlay shadow-[0_1px_2px_0_rgba(0,0,0,0.06)] text-text-secondary',
-		active: 'rounded-sm bg-background-surface text-text-primary',
+		active: 'rounded-sm shadow-sm bg-background-surface text-text-primary',
 		disabled: 'rounded-sm text-text-disabled',
 	},
 };
@@ -87,12 +82,7 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
 			leadingIcon,
 			showBadge = false,
 			badgeVariant,
-			badgeAppearance,
 			badgeLabel,
-			badgeDot,
-			badgeLeadingIcon,
-			badgeTrailingIcon,
-			badgeFullyRounded,
 			showFocusRing = false,
 			className,
 			...props
@@ -124,13 +114,9 @@ export const Tab = forwardRef<HTMLButtonElement, TabProps>(
 					<span style={nokTailwindTheme.textStyles[labelStyleKey[size]]}>{label}</span>
 					{showBadge && (
 						<Badge
-							variant={badgeVariant}
-							appearance={badgeAppearance}
+							variant={state === 'active' ? 'primary' : badgeVariant}
 							label={badgeLabel ?? ''}
-							dot={badgeDot}
-							leadingIcon={badgeLeadingIcon}
-							trailingIcon={badgeTrailingIcon}
-							fullyRounded={badgeFullyRounded}
+							fullyRounded
 						/>
 					)}
 				</span>
