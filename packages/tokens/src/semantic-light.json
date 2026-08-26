@@ -51,6 +51,9 @@
       },
       "info-strong": {
         "value": "{color.blue.600}"
+      },
+      "white": {
+        "value": "{color.neutral.0}"
       }
     },
     "text": {
@@ -89,6 +92,9 @@
       },
       "white": {
         "value": "{color.neutral.0}"
+      },
+      "black": {
+        "value": "{color.neutral.900}"
       }
     },
     "border": {
