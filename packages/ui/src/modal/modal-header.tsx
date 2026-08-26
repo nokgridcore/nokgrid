@@ -104,17 +104,25 @@ export const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(
 
 				<div
 					className='flex items-center p-layout-lg'
-					style={{ gap: showArtwork && artworkType === 'standard' ? '12px' : undefined }}>
+					style={{
+						gap: showArtwork && artworkType === 'standard' ? '12px' : undefined,
+					}}>
 					{showArtwork && artworkType === 'standard' && (
 						<div
 							className='rounded-md shrink-0'
-							style={{ width: '48px', height: '48px', background: 'var(--nok-color-background-sunken)' }}
+							style={{
+								width: '48px',
+								height: '48px',
+								background: 'var(--nok-color-background-sunken)',
+							}}
 						/>
 					)}
 
 					<div className='flex flex-1 flex-col'>
 						<div className='flex items-center'>
-							{showTitle && title && <span style={titleStyles[titleStyle]}>{title}</span>}
+							{showTitle && title && (
+								<span style={titleStyles[titleStyle]}>{title}</span>
+							)}
 
 							{showInlineCloseButton && (
 								<button
@@ -132,7 +140,7 @@ export const ModalHeader = forwardRef<HTMLDivElement, ModalHeaderProps>(
 										// centers, so its edge sits 8px further in than the
 										// icon glyph itself — pull the box out by that same
 										// 8px so the glyph lines up flush with the title's
-										// own inset, keeping the larger tap target.
+										// own inset, keeping the larger tap target..
 										marginRight: '-8px',
 									}}>
 									<Icon name='X' size='sm' color='inverse' />
