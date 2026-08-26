@@ -34,7 +34,11 @@
 		"./table-cell": "./src/table/table-cell.tsx",
 		"./table-toolbar": "./src/table/table-toolbar.tsx",
 		"./table-row": "./src/table/table-row.tsx",
-		"./table": "./src/table/table.tsx"
+		"./table": "./src/table/table.tsx",
+		"./modal-header": "./src/modal/modal-header.tsx",
+		"./modal-body": "./src/modal/modal-body.tsx",
+		"./modal-footer": "./src/modal/modal-footer.tsx",
+		"./modal": "./src/modal/modal.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
