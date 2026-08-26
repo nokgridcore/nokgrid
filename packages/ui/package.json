@@ -29,7 +29,12 @@
 		"./menu-item": "./src/menu/menu-item.tsx",
 		"./menu": "./src/menu/menu.tsx",
 		"./pagination-button": "./src/pagination/pagination-button.tsx",
-		"./pagination": "./src/pagination/pagination.tsx"
+		"./pagination": "./src/pagination/pagination.tsx",
+		"./table-header-cell": "./src/table/table-header-cell.tsx",
+		"./table-cell": "./src/table/table-cell.tsx",
+		"./table-toolbar": "./src/table/table-toolbar.tsx",
+		"./table-row": "./src/table/table-row.tsx",
+		"./table": "./src/table/table.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",

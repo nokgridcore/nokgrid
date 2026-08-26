@@ -11,9 +11,11 @@ import {
 	ReactNode,
 	useEffect,
 	useId,
+	useLayoutEffect,
 	useRef,
 	useState,
 } from 'react';
+import { createPortal } from 'react-dom';
 import { nokTailwindTheme } from '@nokgridcore/tokens/tailwind-theme';
 import { Icon, IconName, IconSize } from '../icons/Icon.js';
 import { OptionProps } from '../option/option.js';
@@ -119,18 +121,53 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 		const isEmphasized = state === 'focused' || state === 'active' || isOpen;
 
 		const containerRef = useRef<HTMLDivElement>(null);
+		// The dropdown portals to document.body (see below) so it isn't clipped
+		// by an ancestor's overflow:hidden (e.g. Table's rounded container) —
+		// its DOM node lives outside containerRef, so "outside click" needs to
+		// check it too.
+		const menuRef = useRef<HTMLDivElement>(null);
+		const anchorRef = useRef<HTMLDivElement>(null);
+		const [isMounted, setIsMounted] = useState(false);
+		const [menuRect, setMenuRect] = useState<{ top: number; left: number; width: number } | null>(null);
+
+		useEffect(() => {
+			setIsMounted(true);
+		}, []);
 
 		useEffect(() => {
 			if (!isOpen) return;
 
 			const handleOutsideClick = (event: MouseEvent) => {
-				if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+				const target = event.target as Node;
+				if (
+					containerRef.current &&
+					!containerRef.current.contains(target) &&
+					menuRef.current &&
+					!menuRef.current.contains(target)
+				) {
 					setIsOpen(false);
 				}
 			};
 
 			document.addEventListener('mousedown', handleOutsideClick);
 			return () => document.removeEventListener('mousedown', handleOutsideClick);
+		}, [isOpen]);
+
+		useLayoutEffect(() => {
+			if (!isOpen || !anchorRef.current) return;
+
+			const updateRect = () => {
+				const rect = anchorRef.current!.getBoundingClientRect();
+				setMenuRect({ top: rect.bottom + 4, left: rect.left, width: rect.width });
+			};
+
+			updateRect();
+			window.addEventListener('resize', updateRect);
+			window.addEventListener('scroll', updateRect, true);
+			return () => {
+				window.removeEventListener('resize', updateRect);
+				window.removeEventListener('scroll', updateRect, true);
+			};
 		}, [isOpen]);
 
 		const childrenArray = Children.toArray(children) as ReactElement<OptionProps>[];
@@ -207,7 +244,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 					</label>
 				)}
 
-				<div className='relative w-full'>
+				<div ref={anchorRef} className='relative w-full'>
 					<button
 						ref={ref}
 						type='button'
@@ -259,35 +296,47 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 						/>
 					</button>
 
-					<div
-						role='listbox'
-						className={`absolute left-0 right-0 top-full z-10 mt-1 flex origin-top flex-col border border-border-default bg-background-surface shadow-md transition-[opacity,transform] duration-200 ease-in-out ${menuAppearanceClasses[variant]} ${
-							isOpen
-								? 'pointer-events-auto scale-100 opacity-100'
-								: 'pointer-events-none scale-95 opacity-0'
-						}`}>
-						{Children.map(children, (child, index) => {
-							if (!isValidElement<OptionProps>(child)) return child;
+					{isMounted &&
+						createPortal(
+							<div
+								ref={menuRef}
+								role='listbox'
+								className={`z-50 flex origin-top flex-col border border-border-default bg-background-surface shadow-md transition-[opacity,transform] duration-200 ease-in-out ${menuAppearanceClasses[variant]} ${
+									isOpen
+										? 'pointer-events-auto scale-100 opacity-100'
+										: 'pointer-events-none scale-95 opacity-0'
+								}`}
+								style={{
+									position: 'fixed',
+									top: menuRect?.top ?? 0,
+									left: menuRect?.left ?? 0,
+									width: menuRect?.width ?? 0,
+									visibility: menuRect ? 'visible' : 'hidden',
+								}}>
+								{Children.map(children, (child, index) => {
+									if (!isValidElement<OptionProps>(child)) return child;
 
-							const isChildDisabled = child.props.state === 'disabled';
+									const isChildDisabled = child.props.state === 'disabled';
 
-							return cloneElement(child, {
-								variant,
-								state: isChildDisabled
-									? 'disabled'
-									: index === selectedIndex
-										? 'selected'
-										: 'default',
-								onClick: (event: ReactMouseEvent<HTMLDivElement>) => {
-									child.props.onClick?.(event);
-									if (isChildDisabled) return;
-									setInternalSelectedIndex(index);
-									onSelectedIndexChange?.(index);
-									setIsOpen(false);
-								},
-							});
-						})}
-					</div>
+									return cloneElement(child, {
+										variant,
+										state: isChildDisabled
+											? 'disabled'
+											: index === selectedIndex
+												? 'selected'
+												: 'default',
+										onClick: (event: ReactMouseEvent<HTMLDivElement>) => {
+											child.props.onClick?.(event);
+											if (isChildDisabled) return;
+											setInternalSelectedIndex(index);
+											onSelectedIndexChange?.(index);
+											setIsOpen(false);
+										},
+									});
+								})}
+							</div>,
+							document.body,
+						)}
 				</div>
 
 				{belowSlot === 'helperText' && helperText && (
