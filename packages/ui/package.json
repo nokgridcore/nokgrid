@@ -38,7 +38,8 @@
 		"./modal-header": "./src/modal/modal-header.tsx",
 		"./modal-body": "./src/modal/modal-body.tsx",
 		"./modal-footer": "./src/modal/modal-footer.tsx",
-		"./modal": "./src/modal/modal.tsx"
+		"./modal": "./src/modal/modal.tsx",
+		"./toast": "./src/toast/toast.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
