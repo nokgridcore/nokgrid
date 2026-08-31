@@ -30,7 +30,7 @@ const titleStyles: Record<ModalHeaderTitleStyle, object> = {
 		fontSize: 'var(--nok-typography-font-size-16)',
 		fontStyle: 'normal',
 		fontWeight: 600,
-		lineHeight: 'var(--nok-typography-line-height-22_4)',
+		lineHeight: 'var(--nok-typography-line-height-22-4)',
 	},
 	promotional: {
 		color: 'var(--nok-color-text-primary)',

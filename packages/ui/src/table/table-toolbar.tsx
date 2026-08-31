@@ -21,7 +21,7 @@ const titleStyle = {
 	fontSize: 'var(--nok-typography-font-size-14)',
 	fontStyle: 'normal',
 	fontWeight: 600,
-	lineHeight: 'var(--nok-typography-line-height-19_6)',
+	lineHeight: 'var(--nok-typography-line-height-19-6)',
 } as const;
 
 export const TableToolbar = forwardRef<HTMLDivElement, TableToolbarProps>(

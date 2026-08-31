@@ -80,7 +80,7 @@ const titleStyle: CSSProperties = {
 	fontSize: 'var(--nok-typography-font-size-13, 13px)',
 	fontStyle: 'normal',
 	fontWeight: 500,
-	lineHeight: 'var(--nok-typography-line-height-18_2, 18.2px)',
+	lineHeight: 'var(--nok-typography-line-height-18-2, 18.2px)',
 };
 
 const textStyle: CSSProperties = {
@@ -88,7 +88,7 @@ const textStyle: CSSProperties = {
 	fontSize: 'var(--nok-typography-font-size-13, 13px)',
 	fontStyle: 'normal',
 	fontWeight: 400,
-	lineHeight: 'var(--nok-typography-line-height-19_5, 19.5px)',
+	lineHeight: 'var(--nok-typography-line-height-19-5, 19.5px)',
 };
 
 export const Toast = forwardRef<HTMLDivElement, ToastProps>(

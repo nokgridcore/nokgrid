@@ -39,7 +39,9 @@
 		"./modal-body": "./src/modal/modal-body.tsx",
 		"./modal-footer": "./src/modal/modal-footer.tsx",
 		"./modal": "./src/modal/modal.tsx",
-		"./toast": "./src/toast/toast.tsx"
+		"./toast": "./src/toast/toast.tsx",
+		"./tooltip-row": "./src/tooltip/tooltip-row.tsx",
+		"./tooltip": "./src/tooltip/tooltip.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",

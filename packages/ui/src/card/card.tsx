@@ -59,7 +59,7 @@ const titleStyle = {
 	fontFamily: 'var(--nok-typography-font-family-brand)',
 	fontStyle: 'normal',
 	fontWeight: 600,
-	lineHeight: 'var(--nok-typography-line-height-19_6)',
+	lineHeight: 'var(--nok-typography-line-height-19-6)',
 } as const;
 
 const descriptionStyle = {
@@ -67,7 +67,7 @@ const descriptionStyle = {
 	fontFamily: 'var(--nok-typography-font-family-body)',
 	fontStyle: 'normal',
 	fontWeight: 400,
-	lineHeight: 'var(--nok-typography-line-height-19_5)',
+	lineHeight: 'var(--nok-typography-line-height-19-5)',
 } as const;
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
