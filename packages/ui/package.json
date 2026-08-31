@@ -41,7 +41,12 @@
 		"./modal": "./src/modal/modal.tsx",
 		"./toast": "./src/toast/toast.tsx",
 		"./tooltip-row": "./src/tooltip/tooltip-row.tsx",
-		"./tooltip": "./src/tooltip/tooltip.tsx"
+		"./tooltip": "./src/tooltip/tooltip.tsx",
+		"./sidebar-header": "./src/sidebar/sidebar-header.tsx",
+		"./sidebar-footer": "./src/sidebar/sidebar-footer.tsx",
+		"./sidebar-group": "./src/sidebar/sidebar-group.tsx",
+		"./sidebar-content": "./src/sidebar/sidebar-content.tsx",
+		"./sidebar": "./src/sidebar/sidebar.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
