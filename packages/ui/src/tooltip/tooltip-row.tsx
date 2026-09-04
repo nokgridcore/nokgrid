@@ -4,7 +4,9 @@ import { CSSProperties, HTMLAttributes, forwardRef } from 'react';
 
 type TooltipRowColor = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 
-export interface TooltipRowProps extends HTMLAttributes<HTMLDivElement> {
+// Omit HTMLAttributes' own `color` (a real HTML attribute, string-typed) —
+// it collides with the `color` swatch-index prop below (1-8).
+export interface TooltipRowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'color'> {
 	color?: TooltipRowColor;
 	showSwatch?: boolean;
 	label?: string;
@@ -39,12 +41,16 @@ export const TooltipRow = forwardRef<HTMLDivElement, TooltipRowProps>(
 					{label && <span style={{ ...captionStyle, color: 'var(--nok-color-text-secondary, #5C5C5C)' }}>{label}</span>}
 				</div>
 				{value && (
+					// Tabular figures — same known gap noted in the design system's
+					// own changelog, matters here since several stacked rows'
+					// right-aligned values should line up on their digits.
 					<span
 						style={{
 							...captionStyle,
 							color: 'var(--nok-color-text-primary, #141414)',
 							textAlign: 'right',
 							marginLeft: 'auto',
+							fontVariantNumeric: 'tabular-nums',
 						}}>
 						{value}
 					</span>

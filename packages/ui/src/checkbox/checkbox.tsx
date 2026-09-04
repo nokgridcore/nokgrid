@@ -81,7 +81,11 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 		const isFilled = isChecked || indeterminate;
 
 		const boxClasses = [
-			'flex items-center justify-center rounded-xs border transition-colors shrink-0',
+			// Focus ring — the design system's own convention: 2px, bound to
+			// border/focus, on the control rather than the label. The native
+			// input is visually hidden (sr-only) inside this box, so `has-` reads
+			// its :focus-visible state onto the box that's actually visible.
+			'flex items-center justify-center rounded-xs border transition-colors shrink-0 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-[var(--nok-color-border-focus)]',
 			boxSizeClasses[size],
 			isDisabled
 				? isFilled

@@ -7,7 +7,9 @@ type ToastColor = 'neutral' | 'primary' | 'success' | 'warning' | 'error';
 type ToastOrientation = 'horizontal' | 'vertical';
 type ToastPosition = 'top' | 'bottom';
 
-export interface ToastProps extends HTMLAttributes<HTMLDivElement> {
+// Omit HTMLAttributes' own `content` (a real HTML attribute) — it collides
+// with the `content` slot prop below.
+export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'content'> {
 	color?: ToastColor;
 	orientation?: ToastOrientation;
 	/**

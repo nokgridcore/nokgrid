@@ -278,7 +278,10 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 										className='text-left'
 										style={{
 											overflow: 'hidden',
-											color: 'var(--nok-color-text-tertiary)',
+											// text-secondary, not -tertiary — matches the design
+											// system's own contrast fix (tertiary placeholder text
+											// failed 4.5:1).
+											color: 'var(--nok-color-text-secondary)',
 											fontSize: 'var(--nok-typography-font-size-14)',
 											fontStyle: 'normal',
 											fontWeight: 400,

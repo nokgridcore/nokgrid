@@ -62,7 +62,11 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
 		const isChecked = Boolean(checked);
 
 		const boxClasses = [
-			'flex items-center justify-center rounded-full bg-background-surface transition-[border-color,border-width] duration-200 ease-in-out shrink-0',
+			// Focus ring — the design system's own convention: 2px, bound to
+			// border/focus, on the control rather than the label. The native
+			// input is visually hidden (sr-only) inside this box, so `has-` reads
+			// its :focus-visible state onto the box that's actually visible.
+			'flex items-center justify-center rounded-full bg-background-surface transition-[border-color,border-width] duration-200 ease-in-out shrink-0 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-[var(--nok-color-border-focus)]',
 			boxSizeClasses[size],
 			!isChecked && 'border',
 			isDisabled

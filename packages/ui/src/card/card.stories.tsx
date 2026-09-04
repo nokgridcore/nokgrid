@@ -1,20 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Card, CardProps } from './card.js';
 import { Button } from '../button/button.js';
+import { Icon, IconName } from '../icons/Icon.js';
 import * as icons from '../icons/generated/index.js';
 
-const iconNames = Object.keys(icons);
+const iconNames = Object.keys(icons) as IconName[];
 
-interface CardStoryProps extends Omit<CardProps, 'primaryAction' | 'secondaryAction'> {
+interface CardStoryProps extends Omit<CardProps, 'primaryAction' | 'secondaryAction' | 'icon'> {
 	theme?: 'light' | 'dark';
 	primaryActionLabel?: string;
 	secondaryActionLabel?: string;
+	/** Story-only: picks which icon renders in Card's `icon` slot. */
+	iconName?: IconName;
 }
 
 const CardWithTheme = ({
 	theme = 'light',
 	primaryActionLabel,
 	secondaryActionLabel,
+	iconName,
 	...props
 }: CardStoryProps) => (
 	<div
@@ -26,6 +30,7 @@ const CardWithTheme = ({
 		}}>
 		<Card
 			{...props}
+			icon={iconName && <Icon name={iconName} color='inverse' />}
 			primaryAction={
 				<Button variant='primary' size='sm'>
 					{primaryActionLabel}
@@ -52,7 +57,8 @@ const meta = {
 		showIcon: {
 			control: 'boolean',
 		},
-		icon: {
+		iconName: {
+			name: 'icon',
 			control: 'select',
 			options: [undefined, ...iconNames],
 		},
@@ -86,7 +92,7 @@ const meta = {
 	args: {
 		size: 'sm',
 		showIcon: true,
-		icon: 'CircleCheckBig',
+		iconName: 'CircleCheckBig',
 		title: 'Card title',
 		description: 'Card description text goes here.',
 		showDescription: true,

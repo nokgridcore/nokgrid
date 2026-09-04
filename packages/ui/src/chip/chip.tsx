@@ -77,7 +77,9 @@ export const Chip = forwardRef<HTMLButtonElement, ChipProps>(
 		const isDisabled = state === 'disabled';
 
 		const classes = [
-			'inline-flex items-center rounded-full transition-colors duration-200 ease-in-out',
+			// Focus ring — the design system's own convention: 2px, bound to
+			// border/focus.
+			'inline-flex items-center rounded-full transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--nok-color-border-focus)]',
 			isDisabled ? 'cursor-not-allowed' : 'cursor-pointer',
 			sizeClasses[size],
 			colorClasses[appearance][state],

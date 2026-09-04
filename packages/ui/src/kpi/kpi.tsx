@@ -1,10 +1,12 @@
 'use client';
 
-import { HTMLAttributes, forwardRef } from 'react';
+import { HTMLAttributes, ReactNode, forwardRef } from 'react';
 import { Icon, IconName, IconSize } from '../icons/Icon.js';
 
 type KpiSize = 'sm' | 'md' | 'lg';
 type KpiDeltaDirection = 'positive' | 'negative' | 'neutral';
+type KpiIconPosition = 'leading' | 'corner' | 'top';
+type KpiSubtitlePosition = 'below' | 'inline';
 
 export interface KpiProps extends HTMLAttributes<HTMLDivElement> {
 	size?: KpiSize;
@@ -12,11 +14,18 @@ export interface KpiProps extends HTMLAttributes<HTMLDivElement> {
 	label: string;
 	value: number;
 	showIcon?: boolean;
-	icon?: IconName;
+	/**
+	 * A slot, not an icon swap — matches the design system's own fix (icon
+	 * swaps get locked to the host's icon box, squashing anything larger like
+	 * an icon tile or avatar). Pass a bare `<Icon/>` or any other layer.
+	 */
+	icon?: ReactNode;
+	iconPosition?: KpiIconPosition;
 	showDelta?: boolean;
 	deltaValue?: string;
 	showSubtitle?: boolean;
 	subtitle?: string;
+	subtitlePosition?: KpiSubtitlePosition;
 }
 
 // No dedicated KPI height token exists — hardcoded per size, confirmed with
@@ -82,12 +91,16 @@ export const Kpi = forwardRef<HTMLDivElement, KpiProps>(
 			deltaDirection = 'neutral',
 			label,
 			value,
-			showIcon = false,
+			// Design system default is true — the icon slot is meant to show
+			// unless explicitly turned off.
+			showIcon = true,
 			icon,
+			iconPosition = 'leading',
 			showDelta = false,
 			deltaValue,
 			showSubtitle = false,
 			subtitle,
+			subtitlePosition = 'below',
 			className,
 			style,
 			...props
@@ -102,47 +115,75 @@ export const Kpi = forwardRef<HTMLDivElement, KpiProps>(
 			.filter(Boolean)
 			.join(' ');
 
+		const showIconSlot = showIcon && icon;
+
+		const deltaRow = showDelta && deltaValue && (
+			<span className={`inline-flex items-center gap-component-xs ${deltaColorClass[deltaDirection]}`}>
+				<Icon
+					name={deltaIconForDirection[deltaDirection]}
+					size={iconSizeForKpiSize[size]}
+					color={deltaDirection === 'neutral' ? 'inverse' : undefined}
+				/>
+				<span style={{ fontWeight: 400, fontSize: deltaFontSizeVar[size], fontVariantNumeric: 'tabular-nums' }}>
+					{deltaValue}
+				</span>
+			</span>
+		);
+
+		const subtitleEl = showSubtitle && subtitle && (
+			<span className='text-text-tertiary' style={{ fontWeight: 400, fontSize: subtitleFontSizeVar[size] }}>
+				{subtitle}
+			</span>
+		);
+
 		return (
 			<div
 				ref={ref}
 				className={classes}
-				style={{ width: '260px', minHeight: heightForSize[size], ...style }}
+				style={{
+					width: '260px',
+					minHeight: heightForSize[size],
+					position: iconPosition === 'corner' ? 'relative' : undefined,
+					...style,
+				}}
 				{...props}>
-				<span className='inline-flex items-center gap-component-xs'>
-					{showIcon && icon && (
-						<Icon name={icon} size={iconSizeForKpiSize[size]} color='secondary' />
-					)}
+				{showIconSlot && iconPosition === 'corner' && (
 					<span
-						className='text-text-secondary'
-						style={{ fontWeight: 500, fontSize: labelFontSizeVar[size] }}>
+						className='absolute'
+						style={{ top: 'var(--nok-spacing-component-md, 12px)', right: 'var(--nok-spacing-component-md, 12px)' }}>
+						{icon}
+					</span>
+				)}
+
+				{showIconSlot && iconPosition === 'top' && <span className='inline-flex'>{icon}</span>}
+
+				<span className='inline-flex items-center gap-component-xs'>
+					{showIconSlot && iconPosition === 'leading' && icon}
+					<span className='text-text-secondary' style={{ fontWeight: 500, fontSize: labelFontSizeVar[size] }}>
 						{label}
 					</span>
 				</span>
 
+				{/* Tabular figures so KPI values don't jitter/misalign as digits
+				change — known gap noted in the design system's own changelog. */}
 				<span
 					className='text-text-primary'
-					style={{ fontWeight: 700, fontSize: valueFontSizeVar[size] }}>
+					style={{ fontWeight: 700, fontSize: valueFontSizeVar[size], fontVariantNumeric: 'tabular-nums' }}>
 					{value}
 				</span>
 
-				{showDelta && deltaValue && (
-					<span className={`inline-flex items-center gap-component-xs ${deltaColorClass[deltaDirection]}`}>
-						<Icon
-							name={deltaIconForDirection[deltaDirection]}
-							size={iconSizeForKpiSize[size]}
-							color={deltaDirection === 'neutral' ? 'inverse' : undefined}
-						/>
-						<span style={{ fontWeight: 400, fontSize: deltaFontSizeVar[size] }}>{deltaValue}</span>
-					</span>
-				)}
-
-				{showSubtitle && subtitle && (
-					<span
-						className='text-text-tertiary'
-						style={{ fontWeight: 400, fontSize: subtitleFontSizeVar[size] }}>
-						{subtitle}
-					</span>
-				)}
+				{subtitlePosition === 'inline' ?
+					(deltaRow || subtitleEl) && (
+						<span className='inline-flex items-center' style={{ gap: 'var(--nok-spacing-component-xs, 4px)' }}>
+							{deltaRow}
+							{subtitleEl}
+						</span>
+					)
+				:	<>
+						{deltaRow}
+						{subtitleEl}
+					</>
+				}
 			</div>
 		);
 	},

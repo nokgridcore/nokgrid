@@ -105,13 +105,18 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
 		const iconColor = isDisabled ? 'disabled' : 'default';
 
 		const classes = [
-			'inline-flex items-center w-full transition-colors duration-200 ease-in-out',
+			// Focus ring — the design system's own convention: 2px, bound to
+			// border/focus, on the control rather than the label.
+			'inline-flex items-center w-full transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--nok-color-border-focus)]',
 			isDisabled ? 'cursor-not-allowed' : 'cursor-pointer',
 			fieldSizeClasses[size],
 			radiusClasses[variant],
 			colorClasses[variant][state],
 			!isDisabled && !isSelected && interactiveClasses[variant],
-			isDisabled ? 'text-text-disabled' : isSelected ? 'text-text-brand' : 'text-text-primary',
+			// text-primary, not -brand, on the selected label — matches the design
+			// system's own contrast fix (brand text on the selected row failed
+			// 4.5:1 at 3.07:1); the accent border still carries the selection.
+			isDisabled ? 'text-text-disabled' : 'text-text-primary',
 			className,
 		]
 			.filter(Boolean)

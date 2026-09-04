@@ -198,7 +198,9 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 						className={
 							isDisabled || isReadOnly
 								? 'text-text-disabled placeholder:text-text-disabled'
-								: 'text-text-primary placeholder:text-text-tertiary'
+								// text-secondary, not -tertiary — matches the design system's
+								// own contrast fix (tertiary placeholder text failed 4.5:1).
+								: 'text-text-primary placeholder:text-text-secondary'
 						}
 						{...props}
 					/>

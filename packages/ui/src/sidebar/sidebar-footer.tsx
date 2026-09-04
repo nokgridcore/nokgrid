@@ -3,7 +3,9 @@
 import { CSSProperties, HTMLAttributes, ReactNode, forwardRef } from 'react';
 import { Avatar } from '../avatar/avatar.js';
 
-export interface SidebarFooterProps extends HTMLAttributes<HTMLDivElement> {
+// Omit HTMLAttributes' own `content` (a real HTML attribute) — it collides
+// with the `content` slot prop below.
+export interface SidebarFooterProps extends Omit<HTMLAttributes<HTMLDivElement>, 'content'> {
 	content?: ReactNode;
 	showContent?: boolean;
 	showProfile?: boolean;
