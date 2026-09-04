@@ -148,10 +148,20 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
 		const textEl = showText && text && <span style={{ ...textStyle, color: textColor[color] }}>{text}</span>;
 		const contentEl = showContentSlot && content;
 
+		// Vertical swaps the action order (secondary first, primary last) —
+		// horizontal keeps primary first.
 		const actions = (showPrimaryAction || showSecondaryAction) && (
 			<div className='flex shrink-0 items-center' style={{ gap: 'var(--nok-spacing-component-sm, 8px)' }}>
-				{showPrimaryAction && primaryAction}
-				{showSecondaryAction && secondaryAction}
+				{isVertical ?
+					<>
+						{showSecondaryAction && secondaryAction}
+						{showPrimaryAction && primaryAction}
+					</>
+				:	<>
+						{showPrimaryAction && primaryAction}
+						{showSecondaryAction && secondaryAction}
+					</>
+				}
 			</div>
 		);
 
