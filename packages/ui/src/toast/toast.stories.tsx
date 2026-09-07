@@ -41,15 +41,24 @@ const meta = {
 	render: (args) => (
 		<ToastWithTheme
 			{...args}
-			// Primary action is white/borderless (tertiary, border stripped) only
-			// on the neutral toast; every other color keeps the normal solid
-			// `primary` button.
+			// Primary action is white/borderless (tertiary, border stripped) on
+			// the neutral toast; on every other (saturated) color it drops the
+			// primary variant's solid background entirely — just text. Warning
+			// keeps that text dark (text-primary), same as its title/body text;
+			// primary/success/error keep it white.
 			primaryAction={
 				args.color === 'neutral' ?
 					<Button variant='tertiary' size='xs' style={{ border: 'none' }}>
 						Button
 					</Button>
-				:	<Button variant='primary' size='xs'>
+				: args.color === 'warning' ?
+					<Button
+						variant='primary'
+						size='xs'
+						style={{ background: 'transparent', color: 'var(--nok-color-text-primary, #141414)' }}>
+						Button
+					</Button>
+				:	<Button variant='primary' size='xs' style={{ background: 'transparent' }}>
 						Button
 					</Button>
 			}
