@@ -48,7 +48,11 @@
 		"./sidebar-content": "./src/sidebar/sidebar-content.tsx",
 		"./sidebar": "./src/sidebar/sidebar.tsx",
 		"./breadcrumb-item": "./src/breadcrumb/breadcrumb-item.tsx",
-		"./breadcrumb": "./src/breadcrumb/breadcrumb.tsx"
+		"./breadcrumb": "./src/breadcrumb/breadcrumb.tsx",
+		"./calendar-day": "./src/calendar/calendar-day.tsx",
+		"./calendar-picker-cell": "./src/calendar/calendar-picker-cell.tsx",
+		"./calendar-picker": "./src/calendar/calendar-picker.tsx",
+		"./calendar": "./src/calendar/calendar.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
