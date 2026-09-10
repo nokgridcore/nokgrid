@@ -50,7 +50,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 					position: 'relative',
 					padding: 'var(--nok-spacing-component-sm, 8px)',
 					gap: 'var(--nok-spacing-component-xs, 4px)',
-					borderRadius: 'var(--nok-spacing-radius-md, 6px)',
+					borderRadius: 'var(--nok-spacing-radius-lg, 8px)',
 					border: '1px solid var(--nok-color-border-default, #D9D9D9)',
 					background: 'var(--nok-color-background-surface, #FFF)',
 					boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.06)',

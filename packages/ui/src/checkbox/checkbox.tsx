@@ -40,6 +40,14 @@ const helperStyleKey: Record<CheckboxSize, string> = {
 	md: 'caption-md',
 };
 
+// Helper text sits under the label, not under the box — box width + the
+// label gap (16 + 4 / 20 + 4). Matches the design system's own checkbox/radio
+// alignment fix.
+const helperIndent: Record<CheckboxSize, string> = {
+	sm: '20px',
+	md: '24px',
+};
+
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 	(
 		{
@@ -147,7 +155,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
 				{helperText && (
 					<span
-						style={nokTailwindTheme.textStyles[helperStyleKey[size]]}
+						style={{ ...nokTailwindTheme.textStyles[helperStyleKey[size]], paddingLeft: helperIndent[size] }}
 						className={`${hideHelperText ? 'sr-only' : ''} ${
 							isDisabled
 								? 'text-text-disabled'

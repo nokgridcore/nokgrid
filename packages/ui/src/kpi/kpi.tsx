@@ -1,7 +1,7 @@
 'use client';
 
 import { HTMLAttributes, ReactNode, forwardRef } from 'react';
-import { Icon, IconName, IconSize } from '../icons/Icon.js';
+import { Icon, IconName } from '../icons/Icon.js';
 
 type KpiSize = 'sm' | 'md' | 'lg';
 type KpiDeltaDirection = 'positive' | 'negative' | 'neutral';
@@ -34,12 +34,6 @@ const heightForSize: Record<KpiSize, string> = {
 	sm: '95px',
 	md: '138px',
 	lg: '165px',
-};
-
-const iconSizeForKpiSize: Record<KpiSize, IconSize> = {
-	sm: 'sm',
-	md: 'md',
-	lg: 'lg',
 };
 
 const paddingClassForSize: Record<KpiSize, string> = {
@@ -107,8 +101,11 @@ export const Kpi = forwardRef<HTMLDivElement, KpiProps>(
 		},
 		ref,
 	) => {
+		// Structure (design system's own spec): head = label + value 4px apart,
+		// 16px (component/lg) down to the delta stack, and inside that the arrow
+		// and its value are 2px apart with 4px to the subtitle.
 		const classes = [
-			'flex flex-col items-start gap-component-xs rounded-lg border border-border-default bg-background-surface',
+			'flex flex-col items-start rounded-lg border border-border-default bg-background-surface',
 			paddingClassForSize[size],
 			className,
 		]
@@ -117,11 +114,12 @@ export const Kpi = forwardRef<HTMLDivElement, KpiProps>(
 
 		const showIconSlot = showIcon && icon;
 
-		const deltaRow = showDelta && deltaValue && (
-			<span className={`inline-flex items-center gap-component-xs ${deltaColorClass[deltaDirection]}`}>
+		// The delta arrow is 16×16 at every size — not scaled to the KPI size.
+		const deltaFrame = showDelta && deltaValue && (
+			<span className={`inline-flex items-center ${deltaColorClass[deltaDirection]}`} style={{ gap: '2px' }}>
 				<Icon
 					name={deltaIconForDirection[deltaDirection]}
-					size={iconSizeForKpiSize[size]}
+					size='sm'
 					color={deltaDirection === 'neutral' ? 'inverse' : undefined}
 				/>
 				<span style={{ fontWeight: 400, fontSize: deltaFontSizeVar[size], fontVariantNumeric: 'tabular-nums' }}>
@@ -136,6 +134,23 @@ export const Kpi = forwardRef<HTMLDivElement, KpiProps>(
 			</span>
 		);
 
+		const deltaStack = (deltaFrame || subtitleEl) && (
+			<div className='flex flex-col items-start' style={{ gap: 'var(--nok-spacing-component-xs, 4px)' }}>
+				{subtitlePosition === 'inline' ?
+					// Inline wraps the arrow + value in their own frame so the 2px
+					// (arrow↔value) and 4px (delta↔subtitle) gaps stay independent.
+					<span className='inline-flex items-baseline' style={{ gap: 'var(--nok-spacing-component-xs, 4px)' }}>
+						{deltaFrame}
+						{subtitleEl}
+					</span>
+				:	<>
+						{deltaFrame}
+						{subtitleEl}
+					</>
+				}
+			</div>
+		);
+
 		return (
 			<div
 				ref={ref}
@@ -144,6 +159,7 @@ export const Kpi = forwardRef<HTMLDivElement, KpiProps>(
 					width: '260px',
 					minHeight: heightForSize[size],
 					position: iconPosition === 'corner' ? 'relative' : undefined,
+					gap: 'var(--nok-spacing-component-lg, 16px)',
 					...style,
 				}}
 				{...props}>
@@ -157,33 +173,24 @@ export const Kpi = forwardRef<HTMLDivElement, KpiProps>(
 
 				{showIconSlot && iconPosition === 'top' && <span className='inline-flex'>{icon}</span>}
 
-				<span className='inline-flex items-center gap-component-xs'>
-					{showIconSlot && iconPosition === 'leading' && icon}
-					<span className='text-text-secondary' style={{ fontWeight: 500, fontSize: labelFontSizeVar[size] }}>
-						{label}
-					</span>
-				</span>
-
-				{/* Tabular figures so KPI values don't jitter/misalign as digits
-				change — known gap noted in the design system's own changelog. */}
-				<span
-					className='text-text-primary'
-					style={{ fontWeight: 700, fontSize: valueFontSizeVar[size], fontVariantNumeric: 'tabular-nums' }}>
-					{value}
-				</span>
-
-				{subtitlePosition === 'inline' ?
-					(deltaRow || subtitleEl) && (
-						<span className='inline-flex items-center' style={{ gap: 'var(--nok-spacing-component-xs, 4px)' }}>
-							{deltaRow}
-							{subtitleEl}
+				<div className='flex flex-col items-start' style={{ gap: 'var(--nok-spacing-component-xs, 4px)' }}>
+					<span className='inline-flex items-center gap-component-xs'>
+						{showIconSlot && iconPosition === 'leading' && icon}
+						<span className='text-text-secondary' style={{ fontWeight: 500, fontSize: labelFontSizeVar[size] }}>
+							{label}
 						</span>
-					)
-				:	<>
-						{deltaRow}
-						{subtitleEl}
-					</>
-				}
+					</span>
+
+					{/* Tabular figures so KPI values don't jitter/misalign as digits
+					change — known gap noted in the design system's own changelog. */}
+					<span
+						className='text-text-primary'
+						style={{ fontWeight: 700, fontSize: valueFontSizeVar[size], fontVariantNumeric: 'tabular-nums' }}>
+						{value}
+					</span>
+				</div>
+
+				{deltaStack}
 			</div>
 		);
 	},

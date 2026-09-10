@@ -55,7 +55,7 @@
 		"generate:component": "turbo gen react-component",
 		"check-types": "tsc --noEmit",
 		"icons": "svgr --config-file svgr.config.js --out-dir src/icons/generated src/icons/svg && node scripts/fix-icon-exports.js",
-		"storybook": "storybook dev -p 6006",
+		"storybook": "storybook dev -p 6007",
 		"build-storybook": "storybook build",
 		"deploy": "pnpm --filter @nokgridcore/tokens run tokens && pnpm run build-storybook"
 	},

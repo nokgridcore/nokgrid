@@ -79,7 +79,7 @@ const meta = {
 		label: 'Label',
 		hideLabel: false,
 		required: false,
-		placeholder: 'Placeholder text',
+		placeholder: 'Placeholder text...',
 		helperText: 'Helper text',
 		hideHelperText: false,
 		theme: 'light',

@@ -25,6 +25,8 @@ export interface TextAreaProps extends Omit<
 	variant?: TextAreaVariant;
 	/** Defaults to true for "underline" variant, false otherwise */
 	showBg?: boolean;
+	/** Resize grip in the bottom-right corner, and a draggable field. Default on. */
+	showResize?: boolean;
 	/** Storybook preview + real functional states (error/disabled/readonly) */
 	state?: TextAreaState;
 }
@@ -44,6 +46,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 			hideHelperText = false,
 			variant = 'default',
 			showBg,
+			showResize = true,
 			state = 'default',
 			id,
 			className,
@@ -58,6 +61,8 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 		const isReadOnly = state === 'readonly';
 		const isError = state === 'error';
 		const resolvedShowBg = showBg ?? variant === 'underline';
+		// Grip only drags when the field is actually editable.
+		const resizeEnabled = showResize && !isDisabled && !isReadOnly;
 
 		const isUnderline = variant === 'underline';
 
@@ -94,7 +99,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 							: 'bg-background-surface';
 
 		const fieldClasses = [
-			'flex p-component-sm transition-[background-color,border-color,border-width] duration-200 ease-in-out w-full',
+			'relative flex p-component-sm transition-[background-color,border-color,border-width] duration-200 ease-in-out w-full',
 			!isReadOnly &&
 				!isDisabled &&
 				[
@@ -190,7 +195,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 							...nokTailwindTheme.textStyles['body-sm'],
 							height: FIXED_HEIGHT,
 							width: '100%',
-							resize: 'none',
+							resize: resizeEnabled ? 'vertical' : 'none',
 							background: 'transparent',
 							border: 'none',
 							outline: 'none',
@@ -204,6 +209,22 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 						}
 						{...props}
 					/>
+
+					{showResize && (
+						// Standard two-stroke corner grip, bottom-right. Decorative
+						// only (pointer-events-none) — the native resize handle sits
+						// under it. icon/secondary normally, icon/disabled otherwise.
+						<span
+							aria-hidden='true'
+							className={`pointer-events-none absolute bottom-0.5 right-0.5 ${
+								isDisabled || isReadOnly ? 'text-icon-disabled' : 'text-icon-secondary'
+							}`}>
+							<svg width='10' height='10' viewBox='0 0 10 10' fill='none'>
+								<path d='M9 1L1 9' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' />
+								<path d='M9 5L5 9' stroke='currentColor' strokeWidth='1.5' strokeLinecap='round' />
+							</svg>
+						</span>
+					)}
 				</div>
 
 				{helperText && (

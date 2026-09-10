@@ -223,7 +223,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 				}
 			: style;
 
-		const iconColor = disabled ? 'disabled' : isError ? 'secondary' : 'default';
+		// Field icons sit on icon/secondary so they match the placeholder
+		// exactly — the design system's own field-icon fix.
+		const iconColor = disabled ? 'disabled' : 'secondary';
 
 		return (
 			<div ref={containerRef} className='inline-flex flex-col gap-1 w-full'>

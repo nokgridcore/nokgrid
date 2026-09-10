@@ -119,7 +119,9 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 						}
 					: style;
 
-		const iconColor = isDisabled ? 'disabled' : 'default';
+		// Field icons sit on icon/secondary so they match the placeholder
+		// exactly — the design system's own field-icon fix.
+		const iconColor = isDisabled ? 'disabled' : 'secondary';
 
 		return (
 			<div className={fieldClasses} style={forcedStyle}>

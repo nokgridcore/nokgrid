@@ -196,13 +196,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 						<Icon
 							name={leadingIcon}
 							size={iconSizeForInputSize[size]}
-							color={
-								isDisabled
-									? 'disabled'
-									: isError || isReadOnly
-										? 'secondary'
-										: 'default'
-							}
+							// Field icons sit on icon/secondary so they match the
+							// placeholder exactly — the design system's own field-icon fix.
+							color={isDisabled ? 'disabled' : 'secondary'}
 						/>
 					)}
 					<input
@@ -232,13 +228,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 						<Icon
 							name={trailingIcon}
 							size={iconSizeForInputSize[size]}
-							color={
-								isDisabled
-									? 'disabled'
-									: isError || isReadOnly
-										? 'secondary'
-										: 'default'
-							}
+							// Field icons sit on icon/secondary so they match the
+							// placeholder exactly — the design system's own field-icon fix.
+							color={isDisabled ? 'disabled' : 'secondary'}
 						/>
 					)}
 				</div>

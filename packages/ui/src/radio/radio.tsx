@@ -38,6 +38,14 @@ const helperStyleKey: Record<RadioSize, string> = {
 	md: 'caption-md',
 };
 
+// Helper text sits under the label, not under the box — box width + the
+// label gap (16 + 4 / 20 + 4). Matches the design system's own checkbox/radio
+// alignment fix.
+const helperIndent: Record<RadioSize, string> = {
+	sm: '20px',
+	md: '24px',
+};
+
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(
 	(
 		{
@@ -124,7 +132,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
 
 				{helperText && (
 					<span
-						style={nokTailwindTheme.textStyles[helperStyleKey[size]]}
+						style={{ ...nokTailwindTheme.textStyles[helperStyleKey[size]], paddingLeft: helperIndent[size] }}
 						className={`${hideHelperText ? 'sr-only' : ''} ${
 							isDisabled
 								? 'text-text-disabled'

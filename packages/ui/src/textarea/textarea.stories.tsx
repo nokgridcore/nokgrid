@@ -33,6 +33,9 @@ const meta = {
 		showBg: {
 			control: 'boolean',
 		},
+		showResize: {
+			control: 'boolean',
+		},
 		leadingLabel: {
 			control: 'text',
 		},
@@ -63,11 +66,12 @@ const meta = {
 	args: {
 		variant: 'default',
 		state: 'default',
+		showResize: true,
 		leadingLabel: 'Label',
 		trailingLabel: '120/200',
 		hideLabel: false,
 		required: false,
-		placeholder: 'Placeholder text',
+		placeholder: 'Placeholder text...',
 		helperText: 'Helper text',
 		hideHelperText: false,
 		theme: 'light',
