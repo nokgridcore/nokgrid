@@ -52,7 +52,8 @@
 		"./calendar-day": "./src/calendar/calendar-day.tsx",
 		"./calendar-picker-cell": "./src/calendar/calendar-picker-cell.tsx",
 		"./calendar-picker": "./src/calendar/calendar-picker.tsx",
-		"./calendar": "./src/calendar/calendar.tsx"
+		"./calendar": "./src/calendar/calendar.tsx",
+		"./popover": "./src/popover/popover.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
