@@ -53,7 +53,8 @@
 		"./calendar-picker-cell": "./src/calendar/calendar-picker-cell.tsx",
 		"./calendar-picker": "./src/calendar/calendar-picker.tsx",
 		"./calendar": "./src/calendar/calendar.tsx",
-		"./popover": "./src/popover/popover.tsx"
+		"./popover": "./src/popover/popover.tsx",
+		"./top-bar": "./src/top-bar/top-bar.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
