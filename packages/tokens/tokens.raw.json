@@ -17,6 +17,10 @@
           "$value": "#ffd8c7"
         },
         "200": {
+          "20": {
+            "$type": "color",
+            "$value": "rgba(255,177,143,0.2)"
+          },
           "$extensions": {
             "com.figma.hiddenFromPublishing": true
           },
@@ -72,6 +76,18 @@
           },
           "$type": "color",
           "$value": "#66210a"
+        },
+        "200-20": {
+          "$type": "color",
+          "$value": "rgba(255, 177, 143, 0.2)"
+        },
+        "400-20": {
+          "$type": "color",
+          "$value": "rgba(249, 107, 52, 0.2)"
+        },
+        "500-20": {
+          "$type": "color",
+          "$value": "rgba(240, 93, 35, 0.2)"
         }
       },
       "NokMoss": {
@@ -144,6 +160,18 @@
           },
           "$type": "color",
           "$value": "#111613"
+        },
+        "300-20": {
+          "$type": "color",
+          "$value": "rgba(134, 151, 142, 0.2)"
+        },
+        "200-20": {
+          "$type": "color",
+          "$value": "rgba(167, 179, 172, 0.2)"
+        },
+        "500-20": {
+          "$type": "color",
+          "$value": "rgba(47, 61, 52, 0.2)"
         }
       },
       "Neutral": {
@@ -302,6 +330,22 @@
           },
           "$type": "color",
           "$value": "#4a420f"
+        },
+        "300-20": {
+          "$type": "color",
+          "$value": "rgba(255, 240, 158, 0.2)"
+        },
+        "400-20": {
+          "$type": "color",
+          "$value": "rgba(247, 238, 127, 0.2)"
+        },
+        "500-20": {
+          "$type": "color",
+          "$value": "rgba(237, 224, 106, 0.2)"
+        },
+        "600-20": {
+          "$type": "color",
+          "$value": "rgba(214, 201, 87, 0.2)"
         }
       },
       "NokSnow": {
@@ -390,6 +434,14 @@
           },
           "$type": "color",
           "$value": "#072b1c"
+        },
+        "400-20": {
+          "$type": "color",
+          "$value": "rgba(69, 191, 128, 0.2)"
+        },
+        "500-20": {
+          "$type": "color",
+          "$value": "rgba(34, 160, 107, 0.2)"
         }
       },
       "Red": {
@@ -536,6 +588,14 @@
           },
           "$type": "color",
           "$value": "#0a1f40"
+        },
+        "300-20": {
+          "$type": "color",
+          "$value": "rgba(147, 197, 253, 0.2)"
+        },
+        "400-20": {
+          "$type": "color",
+          "$value": "rgba(96, 165, 250, 0.2)"
         }
       }
     },
@@ -977,12 +1037,24 @@
         "$type": "dimension",
         "$value": "15rem"
       },
+      "1_5": {
+        "$type": "dimension",
+        "$value": "0.375rem"
+      },
+      "2_5": {
+        "$type": "dimension",
+        "$value": "0.625rem"
+      },
       "px": {
         "$extensions": {
           "com.figma.hiddenFromPublishing": true
         },
         "$type": "dimension",
         "$value": "0.063rem"
+      },
+      "half": {
+        "$type": "dimension",
+        "$value": "0.125rem"
       }
     }
   },
@@ -1738,6 +1810,124 @@
           },
           "$type": "color",
           "$value": "{colour.Neutral.300}"
+        },
+        "label": {
+          "$type": "color",
+          "$value": "{colour.Neutral.600}"
+        },
+        "track": {
+          "$type": "color",
+          "$value": "{colour.Neutral.100}"
+        },
+        "crosshair": {
+          "$type": "color",
+          "$value": "{colour.Neutral.300}"
+        },
+        "marker-ring": {
+          "$type": "color",
+          "$value": "{colour.Neutral.0}"
+        },
+        "fill": {
+          "1": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.500-20}"
+          },
+          "2": {
+            "$type": "color",
+            "$value": "{colour.NokMoss.500-20}"
+          },
+          "3": {
+            "$type": "color",
+            "$value": "{colour.NokBanana.400-20}"
+          },
+          "4": {
+            "$type": "color",
+            "$value": "{colour.Green.500-20}"
+          },
+          "5": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.200-20}"
+          },
+          "6": {
+            "$type": "color",
+            "$value": "{colour.NokMoss.300-20}"
+          },
+          "7": {
+            "$type": "color",
+            "$value": "{colour.NokBanana.600-20}"
+          },
+          "8": {
+            "$type": "color",
+            "$value": "{colour.Blue.400-20}"
+          }
+        },
+        "sequential": {
+          "1": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.50}"
+          },
+          "2": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.100}"
+          },
+          "3": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.200}"
+          },
+          "4": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.300}"
+          },
+          "5": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.400}"
+          },
+          "6": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.500}"
+          },
+          "7": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.600}"
+          },
+          "8": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.700}"
+          },
+          "9": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.800}"
+          }
+        },
+        "diverging": {
+          "neg-3": {
+            "$type": "color",
+            "$value": "{colour.Blue.700}"
+          },
+          "neg-2": {
+            "$type": "color",
+            "$value": "{colour.Blue.500}"
+          },
+          "neg-1": {
+            "$type": "color",
+            "$value": "{colour.Blue.300}"
+          },
+          "mid": {
+            "$type": "color",
+            "$value": "{colour.Neutral.200}"
+          },
+          "pos-1": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.300}"
+          },
+          "pos-2": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.500}"
+          },
+          "pos-3": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.700}"
+          }
         }
       },
       "icon": {
@@ -2187,6 +2377,32 @@
         },
         "$type": "dimension",
         "$value": "{space.60}"
+      },
+      "chart": {
+        "plot-inset": {
+          "$type": "dimension",
+          "$value": "{space.3}"
+        },
+        "marker": {
+          "$type": "dimension",
+          "$value": "{space.1_5}"
+        },
+        "marker-active": {
+          "$type": "dimension",
+          "$value": "{space.2_5}"
+        },
+        "line": {
+          "$type": "dimension",
+          "$value": "{space.half}"
+        },
+        "grid": {
+          "$type": "dimension",
+          "$value": "{space.px}"
+        },
+        "bar-gap": {
+          "$type": "dimension",
+          "$value": "{space.2}"
+        }
       }
     },
     "typography": {
@@ -3158,6 +3374,124 @@
           },
           "$type": "color",
           "$value": "{colour.Neutral.700}"
+        },
+        "label": {
+          "$type": "color",
+          "$value": "{colour.Neutral.400}"
+        },
+        "track": {
+          "$type": "color",
+          "$value": "{colour.Neutral.800}"
+        },
+        "crosshair": {
+          "$type": "color",
+          "$value": "{colour.Neutral.700}"
+        },
+        "marker-ring": {
+          "$type": "color",
+          "$value": "{colour.Neutral.950}"
+        },
+        "fill": {
+          "1": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.400-20}"
+          },
+          "2": {
+            "$type": "color",
+            "$value": "{colour.NokMoss.300-20}"
+          },
+          "3": {
+            "$type": "color",
+            "$value": "{colour.NokBanana.300-20}"
+          },
+          "4": {
+            "$type": "color",
+            "$value": "{colour.Green.400-20}"
+          },
+          "5": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.200.20}"
+          },
+          "6": {
+            "$type": "color",
+            "$value": "{colour.NokMoss.200-20}"
+          },
+          "7": {
+            "$type": "color",
+            "$value": "{colour.NokBanana.500-20}"
+          },
+          "8": {
+            "$type": "color",
+            "$value": "{colour.Blue.300-20}"
+          }
+        },
+        "sequential": {
+          "1": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.900}"
+          },
+          "2": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.800}"
+          },
+          "3": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.700}"
+          },
+          "4": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.600}"
+          },
+          "5": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.500}"
+          },
+          "6": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.400}"
+          },
+          "7": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.300}"
+          },
+          "8": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.200}"
+          },
+          "9": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.100}"
+          }
+        },
+        "diverging": {
+          "neg-3": {
+            "$type": "color",
+            "$value": "{colour.Blue.200}"
+          },
+          "neg-2": {
+            "$type": "color",
+            "$value": "{colour.Blue.400}"
+          },
+          "neg-1": {
+            "$type": "color",
+            "$value": "{colour.Blue.600}"
+          },
+          "mid": {
+            "$type": "color",
+            "$value": "{colour.Neutral.700}"
+          },
+          "pos-1": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.600}"
+          },
+          "pos-2": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.400}"
+          },
+          "pos-3": {
+            "$type": "color",
+            "$value": "{colour.NokFlame.200}"
+          }
         }
       },
       "icon": {
@@ -3607,6 +3941,32 @@
         },
         "$type": "dimension",
         "$value": "{space.60}"
+      },
+      "chart": {
+        "plot-inset": {
+          "$type": "dimension",
+          "$value": "{space.3}"
+        },
+        "marker": {
+          "$type": "dimension",
+          "$value": "{space.1_5}"
+        },
+        "marker-active": {
+          "$type": "dimension",
+          "$value": "{space.2_5}"
+        },
+        "line": {
+          "$type": "dimension",
+          "$value": "{space.half}"
+        },
+        "grid": {
+          "$type": "dimension",
+          "$value": "{space.px}"
+        },
+        "bar-gap": {
+          "$type": "dimension",
+          "$value": "{space.2}"
+        }
       }
     },
     "typography": {
