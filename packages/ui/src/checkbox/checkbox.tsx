@@ -40,6 +40,14 @@ const helperStyleKey: Record<CheckboxSize, string> = {
 	md: 'caption-md',
 };
 
+// Helper text sits under the label, not under the box — box width + the
+// label gap (16 + 4 / 20 + 4). Matches the design system's own checkbox/radio
+// alignment fix.
+const helperIndent: Record<CheckboxSize, string> = {
+	sm: '20px',
+	md: '24px',
+};
+
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 	(
 		{
@@ -81,7 +89,11 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 		const isFilled = isChecked || indeterminate;
 
 		const boxClasses = [
-			'flex items-center justify-center rounded-xs border transition-colors shrink-0',
+			// Focus ring — the design system's own convention: 2px, bound to
+			// border/focus, on the control rather than the label. The native
+			// input is visually hidden (sr-only) inside this box, so `has-` reads
+			// its :focus-visible state onto the box that's actually visible.
+			'flex items-center justify-center rounded-xs border transition-colors shrink-0 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-[var(--nok-color-border-focus)]',
 			boxSizeClasses[size],
 			isDisabled
 				? isFilled
@@ -143,7 +155,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
 
 				{helperText && (
 					<span
-						style={nokTailwindTheme.textStyles[helperStyleKey[size]]}
+						style={{ ...nokTailwindTheme.textStyles[helperStyleKey[size]], paddingLeft: helperIndent[size] }}
 						className={`${hideHelperText ? 'sr-only' : ''} ${
 							isDisabled
 								? 'text-text-disabled'

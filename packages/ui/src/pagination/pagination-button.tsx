@@ -29,7 +29,9 @@ export const PaginationButton = forwardRef<HTMLButtonElement, PaginationButtonPr
 		const isActive = state === 'active';
 
 		const classes = [
-			'inline-flex w-control-sm h-control-sm items-center justify-center rounded-sm transition-colors duration-200 ease-in-out',
+			// Focus ring — the design system's own convention: 2px, bound to
+			// border/focus.
+			'inline-flex w-control-sm h-control-sm items-center justify-center rounded-sm transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--nok-color-border-focus)]',
 			isDisabled ? 'cursor-not-allowed' : 'cursor-pointer',
 			!isDisabled && !isActive && 'hover:bg-background-overlay active:bg-background-sunken',
 			isDisabled ? 'text-text-disabled' : isActive ? 'text-text-brand' : 'text-text-primary',

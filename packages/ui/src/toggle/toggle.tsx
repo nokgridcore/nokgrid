@@ -78,7 +78,12 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
 		const isDisabled = state === 'off-disabled' || state === 'on-disabled';
 
 		const trackClasses = [
-			'flex items-center shrink-0 rounded-full transition-colors duration-200 ease-in-out',
+			// Focus ring — the design system's own convention: 2px, bound to
+			// border/focus, on the control rather than the label. The native
+			// input is visually hidden (sr-only) inside this track, so `has-`
+			// reads its :focus-visible state onto the track that's actually
+			// visible.
+			'flex items-center shrink-0 rounded-full transition-colors duration-200 ease-in-out has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-[var(--nok-color-border-focus)]',
 			isDisabled ? 'cursor-not-allowed' : 'cursor-pointer',
 			!isDisabled &&
 				(isOn ? 'hover:bg-action-primary-hover' : 'hover:bg-background-sunken'),

@@ -223,7 +223,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 				}
 			: style;
 
-		const iconColor = disabled ? 'disabled' : isError ? 'secondary' : 'default';
+		// Field icons sit on icon/secondary so they match the placeholder
+		// exactly — the design system's own field-icon fix.
+		const iconColor = disabled ? 'disabled' : 'secondary';
 
 		return (
 			<div ref={containerRef} className='inline-flex flex-col gap-1 w-full'>
@@ -278,7 +280,10 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 										className='text-left'
 										style={{
 											overflow: 'hidden',
-											color: 'var(--nok-color-text-tertiary)',
+											// text-secondary, not -tertiary — matches the design
+											// system's own contrast fix (tertiary placeholder text
+											// failed 4.5:1).
+											color: 'var(--nok-color-text-secondary)',
 											fontSize: 'var(--nok-typography-font-size-14)',
 											fontStyle: 'normal',
 											fontWeight: 400,

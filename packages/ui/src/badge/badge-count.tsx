@@ -59,7 +59,9 @@ export const BadgeCount = ({
 
 	return (
 		<span className={classes} style={countStyle} {...props}>
-			<span style={nokTailwindTheme.textStyles[labelStyleKey[size]]}>
+			{/* Tabular figures — same known gap noted in the design system's own
+			changelog, matters here since count changes shouldn't shift width. */}
+			<span style={{ ...nokTailwindTheme.textStyles[labelStyleKey[size]], fontVariantNumeric: 'tabular-nums' }}>
 				{count}
 			</span>
 		</span>

@@ -119,7 +119,9 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 						}
 					: style;
 
-		const iconColor = isDisabled ? 'disabled' : 'default';
+		// Field icons sit on icon/secondary so they match the placeholder
+		// exactly — the design system's own field-icon fix.
+		const iconColor = isDisabled ? 'disabled' : 'secondary';
 
 		return (
 			<div className={fieldClasses} style={forcedStyle}>
@@ -137,7 +139,13 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 						border: 'none',
 						outline: 'none',
 					}}
-					className={isDisabled ? 'text-text-disabled placeholder:text-text-disabled' : 'text-text-primary'}
+					className={
+						isDisabled ?
+							'text-text-disabled placeholder:text-text-disabled'
+							// text-secondary, not -tertiary — matches the design system's
+							// own contrast fix (tertiary placeholder text failed 4.5:1).
+						:	'text-text-primary placeholder:text-text-secondary'
+					}
 					{...props}
 				/>
 				{showClear && (

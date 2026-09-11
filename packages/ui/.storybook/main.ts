@@ -11,6 +11,13 @@ import { fileURLToPath } from "url"
 function getAbsolutePath(value: string) {
   return dirname(fileURLToPath(import.meta.resolve(`${value}/package.json`)))
 }
+
+// addon-mcp wires up a local MCP server for AI editor integration during
+// `storybook dev` — it has no role in a static `build-storybook` output and
+// pulls in an experimental component-manifest build feature, so it's left
+// out of production/CI builds entirely.
+const isDevServer = process.env.npm_lifecycle_event === 'storybook';
+
 const config: StorybookConfig = {
   "stories": [
     "../src/**/*.mdx",
@@ -19,8 +26,13 @@ const config: StorybookConfig = {
   "addons": [
     getAbsolutePath('@storybook/addon-a11y'),
     getAbsolutePath('@storybook/addon-docs'),
-    getAbsolutePath('@storybook/addon-mcp')
+    ...(isDevServer ? [getAbsolutePath('@storybook/addon-mcp')] : [])
   ],
+  "core": {
+    // Avoids a silent hang in CI build sandboxes with restricted egress —
+    // Storybook's telemetry ping has no timeout guard in some versions.
+    "disableTelemetry": true
+  },
   "framework": getAbsolutePath('@storybook/react-vite')
 };
 export default config;

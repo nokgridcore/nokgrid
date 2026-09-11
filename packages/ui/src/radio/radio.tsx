@@ -38,6 +38,14 @@ const helperStyleKey: Record<RadioSize, string> = {
 	md: 'caption-md',
 };
 
+// Helper text sits under the label, not under the box — box width + the
+// label gap (16 + 4 / 20 + 4). Matches the design system's own checkbox/radio
+// alignment fix.
+const helperIndent: Record<RadioSize, string> = {
+	sm: '20px',
+	md: '24px',
+};
+
 export const Radio = forwardRef<HTMLInputElement, RadioProps>(
 	(
 		{
@@ -62,7 +70,11 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
 		const isChecked = Boolean(checked);
 
 		const boxClasses = [
-			'flex items-center justify-center rounded-full bg-background-surface transition-[border-color,border-width] duration-200 ease-in-out shrink-0',
+			// Focus ring — the design system's own convention: 2px, bound to
+			// border/focus, on the control rather than the label. The native
+			// input is visually hidden (sr-only) inside this box, so `has-` reads
+			// its :focus-visible state onto the box that's actually visible.
+			'flex items-center justify-center rounded-full bg-background-surface transition-[border-color,border-width] duration-200 ease-in-out shrink-0 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-[var(--nok-color-border-focus)]',
 			boxSizeClasses[size],
 			!isChecked && 'border',
 			isDisabled
@@ -120,7 +132,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
 
 				{helperText && (
 					<span
-						style={nokTailwindTheme.textStyles[helperStyleKey[size]]}
+						style={{ ...nokTailwindTheme.textStyles[helperStyleKey[size]], paddingLeft: helperIndent[size] }}
 						className={`${hideHelperText ? 'sr-only' : ''} ${
 							isDisabled
 								? 'text-text-disabled'

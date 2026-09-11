@@ -1,14 +1,18 @@
 'use client';
 
 import { HTMLAttributes, ReactNode, forwardRef } from 'react';
-import { Icon, IconName, IconSize } from '../icons/Icon.js';
 
 type CardSize = 'sm' | 'md' | 'lg';
 
 export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 	size?: CardSize;
 	showIcon?: boolean;
-	icon?: IconName;
+	/**
+	 * A slot, not an icon swap — matches the design system's own fix (icon
+	 * swaps get locked to the host's icon box, squashing anything larger like
+	 * an icon tile or avatar). Pass a bare `<Icon/>` or any other layer.
+	 */
+	icon?: ReactNode;
 	title: string;
 	description?: string;
 	showDescription?: boolean;
@@ -19,12 +23,6 @@ export interface CardProps extends HTMLAttributes<HTMLDivElement> {
 	/** Slot for a `<Button variant="secondary">` — Card doesn't build the button itself. */
 	secondaryAction?: ReactNode;
 }
-
-const iconSizeForCardSize: Record<CardSize, IconSize> = {
-	sm: 'sm',
-	md: 'md',
-	lg: 'lg',
-};
 
 const paddingClassForSize: Record<CardSize, string> = {
 	sm: 'p-component-md',
@@ -59,7 +57,7 @@ const titleStyle = {
 	fontFamily: 'var(--nok-typography-font-family-brand)',
 	fontStyle: 'normal',
 	fontWeight: 600,
-	lineHeight: 'var(--nok-typography-line-height-19_6)',
+	lineHeight: 'var(--nok-typography-line-height-19-6)',
 } as const;
 
 const descriptionStyle = {
@@ -67,7 +65,7 @@ const descriptionStyle = {
 	fontFamily: 'var(--nok-typography-font-family-body)',
 	fontStyle: 'normal',
 	fontWeight: 400,
-	lineHeight: 'var(--nok-typography-line-height-19_5)',
+	lineHeight: 'var(--nok-typography-line-height-19-5)',
 } as const;
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
@@ -100,7 +98,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
 
 		return (
 			<div ref={ref} className={classes} style={{ width: '320px', ...style }} {...props}>
-				{showIcon && icon && <Icon name={icon} size={iconSizeForCardSize[size]} color='inverse' />}
+				{showIcon && icon}
 
 				<div className='flex flex-col items-start gap-component-xs'>
 					<span style={{ ...titleStyle, fontSize: titleFontSizeVar[size] }}>{title}</span>

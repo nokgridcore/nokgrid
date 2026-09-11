@@ -128,7 +128,12 @@ export const TableCell = forwardRef<HTMLDivElement, TableCellProps>(
 		return (
 			<div ref={ref} className={classes} style={rootStyle} {...props}>
 				<div className={`flex flex-col ${isNumeric ? 'items-end' : 'items-start'}`}>
-					<span style={valueStyle} className='text-text-primary'>
+					{/* Tabular figures so numeric columns actually align — known gap
+					noted in the design system's own changelog ("numbers are not on
+					tabular figures"). */}
+					<span
+						style={isNumeric ? { ...valueStyle, fontVariantNumeric: 'tabular-nums' } : valueStyle}
+						className='text-text-primary'>
 						{value}
 					</span>
 					{showSubText && subText && (

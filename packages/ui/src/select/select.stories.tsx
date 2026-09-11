@@ -90,7 +90,7 @@ const meta = {
 		label: 'Label',
 		showLabel: true,
 		required: false,
-		placeholder: 'Placeholder text',
+		placeholder: 'Select an option...',
 		showPlaceholder: true,
 		disabled: false,
 		theme: 'light',

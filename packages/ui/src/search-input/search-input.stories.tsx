@@ -53,7 +53,7 @@ const meta = {
 		variant: 'default',
 		size: 'sm',
 		state: 'default',
-		placeholder: 'Search',
+		placeholder: 'Search...',
 		showClear: false,
 		theme: 'light',
 	},

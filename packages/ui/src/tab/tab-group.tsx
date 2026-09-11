@@ -33,7 +33,9 @@ export interface TabGroupProps extends HTMLAttributes<HTMLDivElement> {
 // An inset shadow doesn't consume any box space, so it sits exactly where
 // the tabs' own edges already are — no separate alignment hack needed.
 // filled has no container styling at all, elevated is a self-contained
-// rounded/sunken surface regardless of direction.
+// rounded/overlay surface regardless of direction — matches the design
+// system's own fix (elevated moved off sunken, which is unchanged for
+// filled's hover).
 const appearanceClasses: Record<TabGroupAppearance, Record<TabGroupDirection, string>> = {
 	border: {
 		horizontal: 'shadow-[inset_0_-1px_0_0_var(--nok-color-border-default)]',
@@ -44,8 +46,8 @@ const appearanceClasses: Record<TabGroupAppearance, Record<TabGroupDirection, st
 		vertical: '',
 	},
 	elevated: {
-		horizontal: 'rounded-md bg-background-sunken p-component-xs',
-		vertical: 'rounded-md bg-background-sunken p-component-xs',
+		horizontal: 'rounded-md bg-background-overlay p-component-xs',
+		vertical: 'rounded-md bg-background-overlay p-component-xs',
 	},
 };
 

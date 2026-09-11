@@ -1,14 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Kpi, KpiProps } from './kpi.js';
+import { Icon, IconName } from '../icons/Icon.js';
 import * as icons from '../icons/generated/index.js';
 
-const iconNames = Object.keys(icons);
+const iconNames = Object.keys(icons) as IconName[];
 
-interface KpiStoryProps extends KpiProps {
+interface KpiStoryProps extends Omit<KpiProps, 'icon'> {
 	theme?: 'light' | 'dark';
+	/** Story-only: picks which icon renders in Kpi's `icon` slot. */
+	iconName?: IconName;
 }
 
-const KpiWithTheme = ({ theme = 'light', ...props }: KpiStoryProps) => (
+const KpiWithTheme = ({ theme = 'light', iconName, ...props }: KpiStoryProps) => (
 	<div
 		data-theme={theme === 'dark' ? 'dark' : undefined}
 		style={{
@@ -16,7 +19,7 @@ const KpiWithTheme = ({ theme = 'light', ...props }: KpiStoryProps) => (
 			width: '100%',
 			padding: '2rem',
 		}}>
-		<Kpi {...props} />
+		<Kpi {...props} icon={iconName && <Icon name={iconName} size='sm' color='secondary' />} />
 	</div>
 );
 
@@ -42,9 +45,14 @@ const meta = {
 		showIcon: {
 			control: 'boolean',
 		},
-		icon: {
+		iconName: {
+			name: 'icon',
 			control: 'select',
 			options: [undefined, ...iconNames],
+		},
+		iconPosition: {
+			control: 'select',
+			options: ['leading', 'corner', 'top'],
 		},
 		showDelta: {
 			control: 'boolean',
@@ -58,6 +66,10 @@ const meta = {
 		subtitle: {
 			control: 'text',
 		},
+		subtitlePosition: {
+			control: 'select',
+			options: ['below', 'inline'],
+		},
 		theme: {
 			name: 'Theme',
 			control: 'select',
@@ -69,12 +81,14 @@ const meta = {
 		deltaDirection: 'neutral',
 		label: 'Revenue',
 		value: 12400,
-		showIcon: false,
-		icon: 'DollarSign',
+		showIcon: true,
+		iconName: 'DollarSign',
+		iconPosition: 'leading',
 		showDelta: false,
 		deltaValue: '2.4%',
 		showSubtitle: false,
 		subtitle: 'vs. last month',
+		subtitlePosition: 'below',
 		theme: 'light',
 	},
 } satisfies Meta<typeof KpiWithTheme>;

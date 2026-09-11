@@ -196,13 +196,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 						<Icon
 							name={leadingIcon}
 							size={iconSizeForInputSize[size]}
-							color={
-								isDisabled
-									? 'disabled'
-									: isError || isReadOnly
-										? 'secondary'
-										: 'default'
-							}
+							// Field icons sit on icon/secondary so they match the
+							// placeholder exactly — the design system's own field-icon fix.
+							color={isDisabled ? 'disabled' : 'secondary'}
 						/>
 					)}
 					<input
@@ -222,7 +218,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 						className={
 							isDisabled || isReadOnly
 								? 'text-text-disabled placeholder:text-text-disabled'
-								: 'text-text-primary'
+								// text-secondary, not -tertiary — matches the design system's
+								// own contrast fix (tertiary placeholder text failed 4.5:1).
+								: 'text-text-primary placeholder:text-text-secondary'
 						}
 						{...props}
 					/>
@@ -230,13 +228,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 						<Icon
 							name={trailingIcon}
 							size={iconSizeForInputSize[size]}
-							color={
-								isDisabled
-									? 'disabled'
-									: isError || isReadOnly
-										? 'secondary'
-										: 'default'
-							}
+							// Field icons sit on icon/secondary so they match the
+							// placeholder exactly — the design system's own field-icon fix.
+							color={isDisabled ? 'disabled' : 'secondary'}
 						/>
 					)}
 				</div>

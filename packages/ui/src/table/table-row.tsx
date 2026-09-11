@@ -53,7 +53,11 @@ export const TableRow = forwardRef<HTMLDivElement, TableRowProps>(
 		// by gap * column-index. Checkbox/hoverActions get their own margin
 		// below instead of relying on a row-level gap.
 		const classes = [
-			'flex items-center transition-colors duration-200 ease-in-out',
+			// Focus ring — the design system's own convention: 2px, bound to
+			// border/focus. Needs tabIndex below to actually be reachable — the
+			// row wasn't focusable at all before, matching MenuItem/Option's
+			// existing always-focusable convention in this codebase.
+			'flex items-center transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[var(--nok-color-border-focus)]',
 			isDisabled ? 'cursor-not-allowed' : '',
 			!isDisabled && !isSelectedBase && 'hover:bg-background-overlay',
 			className,
@@ -84,6 +88,7 @@ export const TableRow = forwardRef<HTMLDivElement, TableRowProps>(
 		return (
 			<div
 				ref={ref}
+				tabIndex={isDisabled ? -1 : 0}
 				className={classes}
 				style={{ background: baseBackground, ...style }}
 				onMouseEnter={(event) => {

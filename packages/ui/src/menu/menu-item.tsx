@@ -95,7 +95,13 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 		};
 
 		const classes = [
-			'inline-flex items-center rounded-sm transition-colors duration-200 ease-in-out',
+			// Real focus ring — the design system's own convention: 2px, bound to
+			// border/focus, orthogonal to hover/active/disabled (its own notes
+			// call out that focus shouldn't be modeled as a value on the state
+			// axis, which is what the pre-existing state="focused" box-shadow
+			// below does — left in place for now as a legacy preview option, but
+			// this is the real mechanism).
+			'inline-flex items-center rounded-sm transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--nok-color-border-focus)]',
 			isDisabled ? 'cursor-not-allowed' : 'cursor-pointer',
 			!isDisabled && !isActive && 'hover:bg-background-overlay',
 			isDisabled ? 'text-text-disabled' : isActive ? 'text-text-brand' : 'text-text-primary',
