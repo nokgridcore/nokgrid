@@ -55,7 +55,9 @@
 		"./calendar": "./src/calendar/calendar.tsx",
 		"./popover": "./src/popover/popover.tsx",
 		"./top-bar": "./src/top-bar/top-bar.tsx",
-		"./legend": "./src/legend/legend.tsx"
+		"./legend": "./src/legend/legend.tsx",
+		"./chart-frame": "./src/chart-frame/chart-frame.tsx",
+		"./skeleton": "./src/chart-frame/skeleton.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",

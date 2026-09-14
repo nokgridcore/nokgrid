@@ -236,6 +236,96 @@
       },
       "axis": {
         "value": "{color.neutral.700}"
+      },
+      "label": {
+        "value": "{color.neutral.400}"
+      },
+      "track": {
+        "value": "{color.neutral.800}"
+      },
+      "crosshair": {
+        "value": "{color.neutral.700}"
+      },
+      "marker-ring": {
+        "value": "{color.neutral.950}"
+      },
+      "fill": {
+        "1": {
+          "value": "{color.nokflame.400-20}"
+        },
+        "2": {
+          "value": "{color.nokmoss.300-20}"
+        },
+        "3": {
+          "value": "{color.nokbanana.300-20}"
+        },
+        "4": {
+          "value": "{color.green.400-20}"
+        },
+        "5": {
+          "value": "{color.nokflame.200-20}"
+        },
+        "6": {
+          "value": "{color.nokmoss.200-20}"
+        },
+        "7": {
+          "value": "{color.nokbanana.500-20}"
+        },
+        "8": {
+          "value": "{color.blue.300-20}"
+        }
+      },
+      "sequential": {
+        "1": {
+          "value": "{color.nokflame.900}"
+        },
+        "2": {
+          "value": "{color.nokflame.800}"
+        },
+        "3": {
+          "value": "{color.nokflame.700}"
+        },
+        "4": {
+          "value": "{color.nokflame.600}"
+        },
+        "5": {
+          "value": "{color.nokflame.500}"
+        },
+        "6": {
+          "value": "{color.nokflame.400}"
+        },
+        "7": {
+          "value": "{color.nokflame.300}"
+        },
+        "8": {
+          "value": "{color.nokflame.200}"
+        },
+        "9": {
+          "value": "{color.nokflame.100}"
+        }
+      },
+      "diverging": {
+        "neg-3": {
+          "value": "{color.blue.200}"
+        },
+        "neg-2": {
+          "value": "{color.blue.400}"
+        },
+        "neg-1": {
+          "value": "{color.blue.600}"
+        },
+        "mid": {
+          "value": "{color.neutral.700}"
+        },
+        "pos-1": {
+          "value": "{color.nokflame.600}"
+        },
+        "pos-2": {
+          "value": "{color.nokflame.400}"
+        },
+        "pos-3": {
+          "value": "{color.nokflame.200}"
+        }
       }
     },
     "icon": {
@@ -378,6 +468,26 @@
     },
     "sidebar-expanded": {
       "value": "{space.60}"
+    },
+    "chart": {
+      "plot-inset": {
+        "value": "{space.3}"
+      },
+      "marker": {
+        "value": "{space.1_5}"
+      },
+      "marker-active": {
+        "value": "{space.2_5}"
+      },
+      "line": {
+        "value": "{space.half}"
+      },
+      "grid": {
+        "value": "{space.px}"
+      },
+      "bar-gap": {
+        "value": "{space.2}"
+      }
     }
   },
   "typography": {
