@@ -1234,6 +1234,14 @@
         "white": {
           "$type": "color",
           "$value": "{colour.Neutral.0}"
+        },
+        "code": {
+          "$type": "color",
+          "$value": "{colour.Neutral.900}"
+        },
+        "code-raised": {
+          "$type": "color",
+          "$value": "{colour.Neutral.800}"
         }
       },
       "text": {
@@ -1354,6 +1362,14 @@
         "black": {
           "$type": "color",
           "$value": "{colour.Neutral.900}"
+        },
+        "code": {
+          "$type": "color",
+          "$value": "{colour.Neutral.0}"
+        },
+        "code-muted": {
+          "$type": "color",
+          "$value": "{colour.Neutral.400}"
         }
       },
       "border": {
@@ -1426,6 +1442,10 @@
           },
           "$type": "color",
           "$value": "{colour.Blue.300}"
+        },
+        "code": {
+          "$type": "color",
+          "$value": "{colour.Neutral.700}"
         }
       },
       "action": {
@@ -2798,6 +2818,14 @@
         "white": {
           "$type": "color",
           "$value": "{colour.Neutral.0}"
+        },
+        "code": {
+          "$type": "color",
+          "$value": "{colour.Neutral.900}"
+        },
+        "code-raised": {
+          "$type": "color",
+          "$value": "{colour.Neutral.800}"
         }
       },
       "text": {
@@ -2918,6 +2946,14 @@
         "black": {
           "$type": "color",
           "$value": "{colour.Neutral.900}"
+        },
+        "code": {
+          "$type": "color",
+          "$value": "{colour.Neutral.0}"
+        },
+        "code-muted": {
+          "$type": "color",
+          "$value": "{colour.Neutral.400}"
         }
       },
       "border": {
@@ -2990,6 +3026,10 @@
           },
           "$type": "color",
           "$value": "{colour.Blue.700}"
+        },
+        "code": {
+          "$type": "color",
+          "$value": "{colour.Neutral.700}"
         }
       },
       "action": {
@@ -3410,7 +3450,7 @@
           },
           "5": {
             "$type": "color",
-            "$value": "{colour.NokFlame.200-20}"
+            "$value": "{colour.NokFlame.200.20}"
           },
           "6": {
             "$type": "color",
