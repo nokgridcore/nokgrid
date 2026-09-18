@@ -14,7 +14,7 @@ const SkeletonWithTheme = ({ theme = 'light', ...props }: SkeletonStoryProps) =>
 );
 
 const meta = {
-	title: 'Components/Skeleton',
+	title: 'Components/ChartFrame/Skeleton',
 	component: SkeletonWithTheme,
 	tags: ['autodocs'],
 	argTypes: {

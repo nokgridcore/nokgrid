@@ -12,9 +12,12 @@ export interface ChartBarSegmentProps extends Omit<HTMLAttributes<HTMLDivElement
 	color?: ChartBarSegmentColor;
 	label?: string;
 	showLabel?: boolean;
+	/** Rounds the edge furthest from the baseline — on by default for a
+	 * standalone segment. ChartBarStack turns this off on every segment
+	 * except the one furthest from the baseline. */
+	roundedEdge?: boolean;
 }
 
-const THICKNESS = '40px';
 const GAP = 'var(--nok-spacing-component-sm, 8px)';
 
 // Rounds the edge furthest from the baseline — top corners standing up,
@@ -26,12 +29,13 @@ const radiusForOrientation: Record<ChartBarSegmentOrientation, string> = {
 	horizontal: '0 var(--nok-spacing-radius-xs, 2px) var(--nok-spacing-radius-xs, 2px) 0',
 };
 
-// TODO: only the base fill color was given — `focused` reuses the solid
-// color (no distinct treatment specced yet); `unfocused` reuses the existing
-// chart-fill-N (20%-alpha) token, matching its established de-emphasis
-// purpose elsewhere in the chart token set. Both unconfirmed.
-const backgroundForState = (color: ChartBarSegmentColor, state: ChartBarSegmentState) =>
-	state === 'unfocused' ? `var(--nok-color-chart-fill-${color})` : `var(--nok-color-chart-${color})`;
+// TODO: `focused` reuses the solid color (no distinct treatment specced yet
+// beyond staying at full opacity while siblings dim).
+const opacityForState: Record<ChartBarSegmentState, number> = {
+	default: 1,
+	focused: 1,
+	unfocused: 0.3,
+};
 
 const labelStyle: CSSProperties = {
 	color: 'var(--nok-color-text-secondary, #5C5C5C)',
@@ -44,24 +48,30 @@ const labelStyle: CSSProperties = {
 };
 
 export const ChartBarSegment = forwardRef<HTMLDivElement, ChartBarSegmentProps>(
-	({ orientation = 'vertical', state = 'default', color = 1, label, showLabel = true, className, style, ...props }, ref) => {
+	({ orientation = 'vertical', state = 'default', color = 1, label, showLabel = true, roundedEdge = true, className, style, ...props }, ref) => {
 		const isVertical = orientation === 'vertical';
 
 		return (
 			<div
 				ref={ref}
-				className={['flex', isVertical ? 'h-full flex-col items-center' : 'w-full flex-row items-center', className]
-					.filter(Boolean)
-					.join(' ')}
-				style={{ gap: GAP, ...style }}
+				className={['flex', isVertical ? 'flex-col items-center' : 'flex-row items-center', className].filter(Boolean).join(' ')}
+				// `flex: 1` (not h-full/w-full) so multiple segments split their
+				// shared parent's space when stacked — a single standalone segment
+				// still fills its container the same way it did before.
+				style={{ flex: 1, gap: GAP, ...style }}
 				{...props}>
 				<div
 					style={{
 						flex: 1,
-						width: isVertical ? THICKNESS : undefined,
-						height: isVertical ? undefined : THICKNESS,
-						borderRadius: radiusForOrientation[orientation],
-						background: backgroundForState(color, state),
+						// Fills whatever cross-axis size the root ends up with — no
+						// fixed thickness of its own, so it grows/shrinks with
+						// whatever container it's placed in.
+						width: isVertical ? '100%' : undefined,
+						height: isVertical ? undefined : '100%',
+						borderRadius: roundedEdge ? radiusForOrientation[orientation] : 0,
+						background: `var(--nok-color-chart-${color})`,
+						opacity: opacityForState[state],
+						transition: 'opacity 150ms ease',
 					}}
 				/>
 				{showLabel && label && <span style={labelStyle}>{label}</span>}

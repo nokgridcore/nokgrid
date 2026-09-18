@@ -12,7 +12,7 @@ const ChartFrameWithTheme = ({ theme = 'light', ...props }: ChartFrameStoryProps
 );
 
 const meta = {
-	title: 'Components/ChartFrame',
+	title: 'Components/ChartFrame/ChartFrame',
 	component: ChartFrameWithTheme,
 	tags: ['autodocs'],
 	argTypes: {
