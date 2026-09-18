@@ -54,6 +54,12 @@
       },
       "white": {
         "value": "{color.neutral.0}"
+      },
+      "code": {
+        "value": "{color.neutral.900}"
+      },
+      "code-raised": {
+        "value": "{color.neutral.800}"
       }
     },
     "text": {
@@ -95,6 +101,12 @@
       },
       "black": {
         "value": "{color.neutral.900}"
+      },
+      "code": {
+        "value": "{color.neutral.0}"
+      },
+      "code-muted": {
+        "value": "{color.neutral.400}"
       }
     },
     "border": {
@@ -118,6 +130,9 @@
       },
       "info": {
         "value": "{color.blue.700}"
+      },
+      "code": {
+        "value": "{color.neutral.700}"
       }
     },
     "action": {
