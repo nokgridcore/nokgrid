@@ -17,9 +17,10 @@ const SidebarWithTheme = ({ theme = 'light', ...props }: SidebarStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Sidebar/Sidebar',
+	title: 'Components/Navigation/Sidebar/Sidebar',
 	component: SidebarWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The primary navigation rail.` } } },
 	argTypes: {
 		state: {
 			control: 'select',

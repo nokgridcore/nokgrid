@@ -17,9 +17,10 @@ const ChartLineSeriesWithTheme = ({ theme = 'light', ...props }: ChartLineSeries
 );
 
 const meta = {
-	title: 'Components/ChartLine/ChartLineSeries',
+	title: 'Components/Charts/Line chart/Series',
 	component: ChartLineSeriesWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One series in a line chart.\n\n> Show markers only on the point being read, not on all of them.` } } },
 	argTypes: {
 		color: { control: 'select', options: [1, 2, 3, 4, 5, 6, 7, 8] },
 		curve: { control: 'select', options: ['linear', 'smooth'] },

@@ -1,0 +1,63 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Callout } from './blocks';
+
+<Meta title="Getting Started/Installation/For developers" />
+
+# Installation: for developers
+
+<Callout tone="draft">
+Draft: this page will be finalised after end-to-end QA.
+</Callout>
+
+## Requirements
+
+TODO: confirm after QA
+
+## Install the packages
+
+TODO: confirm after QA
+
+```sh
+pnpm add @nokgridcore/ui @nokgridcore/tokens
+# npm install @nokgridcore/ui @nokgridcore/tokens
+# yarn add @nokgridcore/ui @nokgridcore/tokens
+```
+
+## Import styles
+
+TODO: confirm after QA
+
+```css
+@import "@nokgridcore/tokens/dist/css/primitives.css";
+@import "@nokgridcore/tokens/dist/css/semantic-light.css";
+@import "@nokgridcore/tokens/dist/css/semantic-dark.css";
+```
+
+## Set up Tailwind
+
+TODO: confirm after QA
+
+```ts
+// tailwind.config.ts
+import { nokTailwindTheme } from '@nokgridcore/tokens/tailwind-theme';
+
+export default { theme: { extend: nokTailwindTheme } };
+```
+
+## Render a first Button
+
+TODO: confirm after QA
+
+```tsx
+import { Button } from '@nokgridcore/ui/button';
+
+export const Example = () => <Button variant="primary">Save</Button>;
+```
+
+## Switch themes
+
+TODO: confirm after QA
+
+```html
+<div data-theme="dark">…</div>
+```

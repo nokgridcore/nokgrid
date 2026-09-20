@@ -116,8 +116,8 @@ export const ChartDonut = forwardRef<HTMLDivElement, ChartDonutProps>(
 							key={`${s.label}-${i}`}
 							color={s.color}
 							state={stateForIndex(i)}
-							startAngle={arcs[i].startAngle}
-							endAngle={arcs[i].endAngle}
+							startAngle={arcs[i]?.startAngle ?? 0}
+							endAngle={arcs[i]?.endAngle ?? 0}
 							innerRadius={type === 'pie' ? 0 : DONUT_INNER_RADIUS}
 							onMouseEnter={() => setHoveredIndex(i)}
 							onMouseLeave={() => setHoveredIndex(null)}

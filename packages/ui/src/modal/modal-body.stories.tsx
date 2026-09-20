@@ -18,9 +18,10 @@ const ModalBodyWithTheme = ({ theme = 'light', ...props }: ModalBodyStoryProps) 
 );
 
 const meta = {
-	title: 'Components/Modal/ModalBody',
+	title: 'Components/Surfaces/Modal/Body',
 	component: ModalBodyWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The scrollable content area of a modal.` } } },
 	argTypes: {
 		theme: {
 			name: 'Theme',

@@ -12,9 +12,10 @@ const ChartFrameWithTheme = ({ theme = 'light', ...props }: ChartFrameStoryProps
 );
 
 const meta = {
-	title: 'Components/ChartFrame/ChartFrame',
+	title: 'Components/Charts/Chart frame',
 	component: ChartFrameWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The wrapper a chart sits in. It owns the title and the loading, empty and error states.\n\n> The chart goes in its slot and brings its own legend.` } } },
 	argTypes: {
 		state: { control: 'select', options: ['default', 'loading', 'empty', 'error'] },
 		density: { control: 'select', options: ['comfortable', 'compact'] },

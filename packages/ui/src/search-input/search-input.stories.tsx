@@ -18,9 +18,10 @@ const SearchInputWithTheme = ({ theme = 'light', ...props }: SearchInputStoryPro
 );
 
 const meta = {
-	title: 'Components/Input/Search',
+	title: 'Components/Input & control/Input/Search',
 	component: SearchInputWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A text field for searching a list or table.\n\n> Place it next to what it filters, inside the table toolbar.` } } },
 	argTypes: {
 		variant: {
 			control: 'select',

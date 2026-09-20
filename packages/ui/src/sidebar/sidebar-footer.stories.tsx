@@ -14,9 +14,10 @@ const SidebarFooterWithTheme = ({ theme = 'light', ...props }: SidebarFooterStor
 );
 
 const meta = {
-	title: 'Components/Sidebar/SidebarFooter',
+	title: 'Components/Navigation/Sidebar/Footer',
 	component: SidebarFooterWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The bottom of the sidebar, holding the profile and other content.` } } },
 	argTypes: {
 		theme: { name: 'Theme', control: 'select', options: ['light', 'dark'] },
 	},

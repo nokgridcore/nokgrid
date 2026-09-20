@@ -34,9 +34,10 @@ const CardWithTheme = ({ theme = 'light', actionLabel, iconName, ...props }: Car
 );
 
 const meta = {
-	title: 'Components/Card',
+	title: 'Components/Surfaces/Card',
 	component: CardWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A surface that groups related content into one object.` } } },
 	argTypes: {
 		size: { control: 'select', options: ['sm', 'md', 'lg'] },
 		orientation: { control: 'select', options: ['vertical', 'horizontal'] },

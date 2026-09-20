@@ -19,9 +19,10 @@ const AlertWithTheme = ({ theme = 'light', ...props }: AlertStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Alert',
+	title: 'Components/Feedback & status/Alert',
 	component: AlertWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A persistent message tied to a place on the page. It stays until resolved.\n\n> If it only confirms something happened, use toast.` } } },
 	argTypes: {
 		variant: {
 			control: 'select',

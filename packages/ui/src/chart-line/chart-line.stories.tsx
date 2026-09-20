@@ -21,9 +21,10 @@ const ChartLineWithTheme = ({ theme = 'light', ...props }: ChartLineStoryProps) 
 );
 
 const meta = {
-	title: 'Components/ChartLine/ChartLine',
+	title: 'Components/Charts/Line chart/Line chart',
 	component: ChartLineWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Shows a trend over time.\n\n> For comparing discrete categories, use a bar chart.` } } },
 	argTypes: {
 		grid: { control: 'select', options: ['horizontal', 'both'] },
 		curve: { control: 'select', options: ['linear', 'smooth'] },
@@ -59,5 +60,5 @@ type Story = StoryObj<typeof meta>;
 export const Playground: Story = {};
 
 export const SmoothWithArea: Story = {
-	args: { curve: 'smooth', showAreaFill: true, series: [SERIES[0]] },
+	args: { curve: 'smooth', showAreaFill: true, series: SERIES.slice(0, 1) },
 };

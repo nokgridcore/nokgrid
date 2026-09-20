@@ -18,9 +18,10 @@ const SegmentWithTheme = ({ theme = 'light', ...props }: SegmentStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Progress/Segment',
+	title: 'Components/Data display/Progress/Segment',
 	component: SegmentWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One filled segment inside progress.` } } },
 	argTypes: {
 		shape: {
 			control: 'select',

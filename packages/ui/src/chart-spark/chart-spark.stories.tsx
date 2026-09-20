@@ -14,9 +14,10 @@ const ChartSparkWithTheme = ({ theme = 'light', ...props }: ChartSparkStoryProps
 );
 
 const meta = {
-	title: 'Components/ChartSpark',
+	title: 'Components/Charts/Sparkline',
 	component: ChartSparkWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A trend at a glance, with no axes or labels.\n\n> Pairs with KPI value delta.` } } },
 	argTypes: {
 		trend: { control: 'select', options: ['up', 'down', 'flat'] },
 		size: { control: 'select', options: ['sm', 'md'] },

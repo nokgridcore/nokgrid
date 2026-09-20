@@ -22,9 +22,10 @@ const ChartBarStackWithTheme = ({ theme = 'light', ...props }: ChartBarStackStor
 );
 
 const meta = {
-	title: 'Components/ChartBar/ChartBarStack',
+	title: 'Components/Charts/Bar chart/Stack',
 	component: ChartBarStackWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One bar divided into segments.` } } },
 	argTypes: {
 		orientation: { control: 'select', options: ['vertical', 'horizontal'] },
 		label: { control: 'text' },

@@ -22,9 +22,10 @@ const ChartDonutWithTheme = ({ theme = 'light', ...props }: ChartDonutStoryProps
 );
 
 const meta = {
-	title: 'Components/ChartDonut/ChartDonut',
+	title: 'Components/Charts/Donut chart/Donut chart',
 	component: ChartDonutWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Shows share of a whole.\n\n> If the parts don't add up to a whole, use a bar chart.` } } },
 	argTypes: {
 		type: { control: 'select', options: ['donut', 'pie'] },
 		showCentreValue: { control: 'boolean' },

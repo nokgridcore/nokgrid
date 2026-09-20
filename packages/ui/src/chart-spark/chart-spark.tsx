@@ -63,7 +63,8 @@ export const ChartSpark = forwardRef<SVGSVGElement, ChartSparkProps>(
 		}
 		const pts = ys.map((y, i) => ({ x: INSET_X + i * step, y }));
 		const line = curve === 'smooth' ? smoothPath(pts) : linearPath(pts);
-		const last = pts[pts.length - 1];
+		const first = pts[0] ?? { x: INSET_X, y: 0 };
+		const last = pts[pts.length - 1] ?? first;
 		const colour = colourForTrend[trend];
 
 		return (
@@ -76,7 +77,7 @@ export const ChartSpark = forwardRef<SVGSVGElement, ChartSparkProps>(
 				data-size={size}
 				style={{ display: 'block', flexShrink: 0, overflow: 'visible', ...style }}
 				{...props}>
-				<path d={`${line} L${last.x} ${height} L${pts[0].x} ${height} Z`} fill={colour} fillOpacity={0.2} />
+				<path d={`${line} L${last.x} ${height} L${first.x} ${height} Z`} fill={colour} fillOpacity={0.2} />
 				<path d={line} stroke={colour} strokeWidth={2} strokeLinecap='round' strokeLinejoin='round' style={{ strokeWidth: 'var(--nok-size-chart-line, 2px)' }} />
 				<circle cx={last.x} cy={last.y} r={2} fill={colour} />
 			</svg>

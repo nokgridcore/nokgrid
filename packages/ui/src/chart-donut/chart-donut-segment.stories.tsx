@@ -17,9 +17,10 @@ const ChartDonutSegmentWithTheme = ({ theme = 'light', ...props }: ChartDonutSeg
 );
 
 const meta = {
-	title: 'Components/ChartDonut/ChartDonutSegment',
+	title: 'Components/Charts/Donut chart/Segment',
 	component: ChartDonutSegmentWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One arc inside a donut chart.` } } },
 	argTypes: {
 		state: { control: 'select', options: ['default', 'focused', 'unfocused'] },
 		color: { control: 'select', options: [1, 2, 3, 4, 5, 6, 7, 8] },

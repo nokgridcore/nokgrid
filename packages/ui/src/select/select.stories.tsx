@@ -26,9 +26,10 @@ const SelectWithTheme = ({ theme = 'light', ...props }: SelectStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Select',
+	title: 'Components/Input & control/Select/Select',
 	component: SelectWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Choose one option from a known list.\n\n> Under five options, use radio. Over twenty, pair it with search.` } } },
 	argTypes: {
 		variant: {
 			control: 'select',

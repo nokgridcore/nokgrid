@@ -15,9 +15,10 @@ const ToastWithTheme = ({ theme = 'light', ...props }: ToastStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Toast',
+	title: 'Components/Feedback & status/Toast',
 	component: ToastWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A short message that floats above the page and dismisses itself.\n\n> If the message must stay until resolved, use alert. A persistent toast must keep its close button.` } } },
 	argTypes: {
 		color: { control: 'select', options: ['neutral', 'primary', 'success', 'warning', 'error'] },
 		orientation: { control: 'select', options: ['horizontal', 'vertical'] },

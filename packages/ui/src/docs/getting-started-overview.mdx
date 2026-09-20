@@ -1,0 +1,38 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Callout } from './blocks';
+
+<Meta title="Getting Started/Overview" />
+
+# NokGridCore
+
+NokGridCore is a dashboard-first design system. Design tokens, a Figma library and a React component library are generated from one source, so design and code stay in sync.
+
+## What's included
+
+- **Figma library**: every component, in light and dark, built on the same tokens as the code.
+- **`@nokgridcore/ui`**: the React components documented in this Storybook.
+- **`@nokgridcore/tokens`**: the generated CSS variables, Tailwind theme and TypeScript maps.
+- **These docs**: Storybook, with a page for every component and every token family.
+
+## Principles
+
+- **Dashboard-first.** Components are shaped for dense, data-heavy screens: tables, charts, filters, KPIs.
+- **Token-driven.** No component holds a raw colour, size or spacing value.
+- **Semantic naming.** Tokens and components are named for the job they do, not how they look.
+- **Design-to-code parity.** A component's names, variants and states match its Figma component.
+- **Light and dark from the start.** Every component works in both themes.
+
+## How the system connects
+
+Figma Variables → Token Studio → Style Dictionary → CSS / Tailwind / TypeScript → React components → Storybook.
+
+## Where to go next
+
+- Set up: **Installation** (for designers, for developers).
+- Understand the theme model: **Theming**.
+- Learn the building blocks: **Foundations**.
+- Browse what's available: **Components**.
+
+<Callout tone="draft">
+Version and licence: TODO (owner: Emmanuel).
+</Callout>

@@ -19,9 +19,10 @@ const MenuWithTheme = ({ theme = 'light', ...props }: MenuStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Menu',
+	title: 'Components/Navigation/Menu/Menu',
 	component: MenuWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A floating list of actions or options opened from a trigger.` } } },
 	argTypes: {
 		defaultActiveIndex: {
 			control: { type: 'number', min: 0 },

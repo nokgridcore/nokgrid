@@ -1,0 +1,24 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { TokenBothThemes, ThemeSideBySide } from './blocks';
+
+<Meta title="Getting Started/Theming/Light & dark mode" />
+
+# Light & dark mode
+
+One component set serves both themes. Nothing in a component changes between modes; the tokens do.
+
+## How it works
+
+- **Primitives never change.** `neutral-0` is the same white in both themes.
+- **Semantic tokens point at different primitives per mode.** `background-surface` resolves to one primitive in light and another in dark.
+- Components only use semantic tokens, so they follow the mode automatically.
+
+At launch there are two themes: light and dark.
+
+## A worked example
+
+<TokenBothThemes name="color-background-surface" />
+
+## The same components in both themes
+
+<ThemeSideBySide />

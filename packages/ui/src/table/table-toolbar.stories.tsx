@@ -20,9 +20,10 @@ const TableToolbarWithTheme = ({ theme = 'light', searchPlaceholder, ...props }:
 );
 
 const meta = {
-	title: 'Components/Table/TableToolbar',
+	title: 'Components/Data & tables/Table/Toolbar',
 	component: TableToolbarWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The bar above a table: title, search and filters.\n\n> Use only the parts the table needs.` } } },
 	argTypes: {
 		layout: {
 			control: 'select',

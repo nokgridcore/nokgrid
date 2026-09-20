@@ -21,9 +21,10 @@ const TabWithTheme = ({ theme = 'light', ...props }: TabStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Tab/Tab',
+	title: 'Components/Navigation/Tabs/Tabs',
 	component: TabWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Switches between views on the same page. This page covers a single tab.` } } },
 	argTypes: {
 		direction: {
 			control: 'select',

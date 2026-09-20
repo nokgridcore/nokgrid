@@ -35,30 +35,32 @@ export function linearPath(pts: { x: number; y: number }[]) {
 export function smoothPath(pts: { x: number; y: number }[]) {
 	const n = pts.length;
 	if (n < 3) return linearPath(pts);
-	const dx = pts.slice(1).map((p, i) => p.x - pts[i].x);
-	const slope = pts.slice(1).map((p, i) => (p.y - pts[i].y) / dx[i]);
-	const m = [slope[0]];
-	for (let i = 1; i < n - 1; i++) m.push(slope[i - 1] * slope[i] <= 0 ? 0 : (slope[i - 1] + slope[i]) / 2);
-	m.push(slope[n - 2]);
+	const X = (i: number) => pts[i]!.x;
+	const Y = (i: number) => pts[i]!.y;
+	const dx = Array.from({ length: n - 1 }, (_, i) => X(i + 1) - X(i));
+	const slope = Array.from({ length: n - 1 }, (_, i) => (Y(i + 1) - Y(i)) / dx[i]!);
+	const m = [slope[0]!];
+	for (let i = 1; i < n - 1; i++) m.push(slope[i - 1]! * slope[i]! <= 0 ? 0 : (slope[i - 1]! + slope[i]!) / 2);
+	m.push(slope[n - 2]!);
 	for (let i = 0; i < n - 1; i++) {
 		if (slope[i] === 0) {
 			m[i] = 0;
 			m[i + 1] = 0;
 			continue;
 		}
-		const a = m[i] / slope[i];
-		const b = m[i + 1] / slope[i];
+		const a = m[i]! / slope[i]!;
+		const b = m[i + 1]! / slope[i]!;
 		const s = a * a + b * b;
 		if (s > 9) {
 			const t = 3 / Math.sqrt(s);
-			m[i] = t * a * slope[i];
-			m[i + 1] = t * b * slope[i];
+			m[i] = t * a * slope[i]!;
+			m[i + 1] = t * b * slope[i]!;
 		}
 	}
-	let d = `M${pts[0].x} ${pts[0].y}`;
+	let d = `M${X(0)} ${Y(0)}`;
 	for (let i = 0; i < n - 1; i++) {
-		const h = dx[i] / 3;
-		d += ` C${pts[i].x + h} ${pts[i].y + m[i] * h} ${pts[i + 1].x - h} ${pts[i + 1].y - m[i + 1] * h} ${pts[i + 1].x} ${pts[i + 1].y}`;
+		const h = dx[i]! / 3;
+		d += ` C${X(i) + h} ${Y(i) + m[i]! * h} ${X(i + 1) - h} ${Y(i + 1) - m[i + 1]! * h} ${X(i + 1)} ${Y(i + 1)}`;
 	}
 	return d;
 }

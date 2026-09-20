@@ -1,0 +1,35 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { Callout } from './blocks';
+
+<Meta title="Getting Started/Theming/Theming in code" />
+
+# Theming in code
+
+## How the theme is applied
+
+The dark values are scoped to a `data-theme="dark"` attribute. Light values are the default on `:root`, so no attribute is needed for light.
+
+<Callout tone="draft">
+TODO: Kelvin to confirm the mechanism. This page describes what the generated CSS does today (a data attribute); confirm before publishing.
+</Callout>
+
+## Switching
+
+```html
+<html data-theme="dark">
+```
+
+```ts
+document.documentElement.dataset.theme = 'dark'; // dark
+delete document.documentElement.dataset.theme; // light
+```
+
+The attribute can also sit on any element, and everything inside it follows.
+
+## In Storybook
+
+Stories expose a `theme` control (light or dark) that sets the attribute on the story wrapper. There is no global toolbar switch.
+
+## Rule
+
+Components use semantic tokens only. A component that reads a primitive will not change with the theme.

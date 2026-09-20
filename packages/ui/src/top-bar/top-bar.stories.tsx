@@ -50,9 +50,10 @@ const TopBarWithTheme = ({ theme = 'light', ...props }: TopBarStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/TopBar',
+	title: 'Components/Navigation/Topbar',
 	component: TopBarWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The application header across the content area.\n\n> Identity on the left, page context in the centre, global actions on the right.` } } },
 	argTypes: {
 		logo: { control: 'select', options: iconNames },
 		showSidebarToggle: { control: 'boolean' },

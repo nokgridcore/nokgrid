@@ -21,9 +21,10 @@ const ChipWithTheme = ({ theme = 'light', ...props }: ChipStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Chip',
+	title: 'Components/Input & control/Chip/Chip',
 	component: ChipWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A value the user chose and can remove: a filter, a selection, an entered token.\n\n> If it can't be dismissed, it's probably a badge.` } } },
 	argTypes: {
 		appearance: {
 			control: 'select',
