@@ -60,7 +60,12 @@
 		"./skeleton": "./src/chart-frame/skeleton.tsx",
 		"./chart-bar-segment": "./src/chart-bar/chart-bar-segment.tsx",
 		"./chart-bar-stack": "./src/chart-bar/chart-bar-stack.tsx",
-		"./chart-bar": "./src/chart-bar/chart-bar.tsx"
+		"./chart-bar": "./src/chart-bar/chart-bar.tsx",
+		"./chart-donut-segment": "./src/chart-donut/chart-donut-segment.tsx",
+		"./chart-donut": "./src/chart-donut/chart-donut.tsx",
+		"./chart-line-series": "./src/chart-line/chart-line-series.tsx",
+		"./chart-line": "./src/chart-line/chart-line.tsx",
+		"./chart-spark": "./src/chart-spark/chart-spark.tsx"
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",

@@ -25,7 +25,8 @@ export interface ChartBarProps extends HTMLAttributes<HTMLDivElement> {
 	categories: string[];
 	series: ChartBarSeries[];
 	showGridLines?: boolean;
-	/** Category axis (the Jan/Feb… or Equities/Bonds… labels). */
+	/** Solid baseline rule at the zero-value line. Category labels (Jan/Feb…)
+	 * always render as part of each bar — there's no separate toggle for them. */
 	showAxis?: boolean;
 	/** Value axis (the 0/50/100… numbers) — named for its vertical-orientation
 	 * position, same as the literal spec given for it. */
@@ -43,6 +44,7 @@ export interface ChartBarProps extends HTMLAttributes<HTMLDivElement> {
 const BAR_THICKNESS = 40;
 const BAR_GAP_PX = 8;
 const BAR_GAP = 'var(--nok-spacing-component-sm, 8px)';
+const ROOT_GAP = 'var(--nok-spacing-component-md, 12px)';
 // Reserved space for the category-axis label row — literal value given for
 // the Y-axis's own padding-bottom, reused here so the two stay in lockstep.
 const LABEL_ROW_SIZE = 20.9;
@@ -57,20 +59,36 @@ const valueAxisLabelStyle: CSSProperties = {
 	lineHeight: 'var(--nok-typography-line-height-15-4, 15.4px)',
 };
 
-// TODO: category-axis label styling wasn't given yet — reusing the value
-// axis's own spec as a placeholder (same caption/sm + tertiary color reads
-// consistently with the mock's light-gray category labels).
-const categoryAxisLabelStyle: CSSProperties = valueAxisLabelStyle;
+const categoryAxisLabelStyle: CSSProperties = {
+	color: 'var(--nok-color-text-secondary, #5C5C5C)',
+	fontFamily: 'var(--nok-typography-font-family-body, Roboto)',
+	fontSize: 'var(--nok-typography-font-size-11, 11px)',
+	fontStyle: 'normal',
+	fontWeight: 400,
+	lineHeight: 'var(--nok-typography-line-height-15-4, 15.4px)',
+};
+
+// Target line's own label — same caption/sm typography as the axes, but a
+// distinct `chart-label` color token rather than either axis's own color.
+const targetLabelStyle: CSSProperties = { ...valueAxisLabelStyle, color: 'var(--nok-color-chart-label, #5C5C5C)' };
 
 const gridLineStyle = (isVertical: boolean): CSSProperties =>
 	isVertical ?
 		{ borderTop: 'var(--nok-size-chart-grid, 1px) solid var(--nok-color-chart-grid, #EDEDED)', height: 0 }
 	:	{ borderLeft: 'var(--nok-size-chart-grid, 1px) solid var(--nok-color-chart-grid, #EDEDED)', width: 0 };
 
+// The target line's dash pattern is a literal 4px-on/4px-off, 1px stroke —
+// CSS `border-style: dashed` doesn't reproduce that ratio, so it's built from
+// a repeating gradient instead.
+const dashedLineStyle = (isVertical: boolean): CSSProperties =>
+	isVertical ?
+		{ height: '1px', backgroundImage: 'repeating-linear-gradient(to right, var(--nok-color-chart-axis, #BFBFBF) 0 4px, transparent 4px 8px)' }
+	:	{ width: '1px', backgroundImage: 'repeating-linear-gradient(to bottom, var(--nok-color-chart-axis, #BFBFBF) 0 4px, transparent 4px 8px)' };
+
 // Rounds the plot's max data value up to a "nice" number so `tickCount + 1`
 // evenly-spaced ticks (0..niceMax) land on round values — same 5-tick
 // (0/50/100/150/200-style) shape as the mock.
-function computeNiceMax(max: number, tickCount = 4): number {
+export function computeNiceMax(max: number, tickCount = 4): number {
 	if (max <= 0) return tickCount;
 	const rough = max / tickCount;
 	const magnitude = 10 ** Math.floor(Math.log10(rough));
@@ -145,9 +163,6 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 		const niceMax = computeNiceMax(dataMax, tickCount);
 		const ticks = Array.from({ length: tickCount + 1 }, (_, i) => Math.round((niceMax / tickCount) * i));
 
-		// TODO: no literal CSS given for the line/label — dashed stroke reuses
-		// the chart-axis token (same family as gridlines), label reuses the
-		// value-axis tick typography for visual consistency.
 		const targetPct = showTargetLine && targetValue !== undefined && niceMax > 0 ? (targetValue / niceMax) * 100 : null;
 		const targetLineContent = targetPct !== null && (
 			<>
@@ -155,16 +170,16 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 					className='absolute'
 					style={
 						isVertical ?
-							{ left: 0, right: 0, bottom: `${targetPct}%`, borderTop: '1px dashed var(--nok-color-chart-axis, #BFBFBF)', zIndex: 2 }
-						:	{ top: 0, bottom: 0, left: `${targetPct}%`, borderLeft: '1px dashed var(--nok-color-chart-axis, #BFBFBF)', zIndex: 2 }
+							{ left: 0, right: 0, bottom: `${targetPct}%`, ...dashedLineStyle(true), zIndex: 2 }
+						:	{ top: 0, bottom: 0, left: `${targetPct}%`, ...dashedLineStyle(false), zIndex: 2 }
 					}
 				/>
 				<span
 					className='absolute'
 					style={
 						isVertical ?
-							{ ...valueAxisLabelStyle, right: 0, bottom: `${targetPct}%`, transform: 'translateY(-100%)', whiteSpace: 'nowrap', zIndex: 2 }
-						:	{ ...valueAxisLabelStyle, top: 0, left: `${targetPct}%`, transform: 'translateX(8px)', whiteSpace: 'nowrap', zIndex: 2 }
+							{ ...targetLabelStyle, right: 0, bottom: `${targetPct}%`, transform: 'translateY(-100%)', whiteSpace: 'nowrap', zIndex: 2 }
+						:	{ ...targetLabelStyle, top: 0, left: `${targetPct}%`, transform: 'translateX(8px)', whiteSpace: 'nowrap', zIndex: 2 }
 					}>
 					Target {targetValue}
 				</span>
@@ -274,7 +289,7 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 				<div
 					ref={ref}
 					className={['flex flex-col', className].filter(Boolean).join(' ')}
-					style={{ width: '100%', height: '100%', gap: 'var(--nok-spacing-component-lg, 16px)', ...style }}
+					style={{ width: '100%', height: '100%', gap: ROOT_GAP, ...style }}
 					{...props}>
 					{/* flex:1 so this row (and everything under it) fills whatever
 					    height the root gets from its own container, unless `plotSize`
@@ -332,20 +347,30 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 										))}
 									</div>
 								)}
+								{showAxis && (
+									<div
+										className='absolute'
+										style={{
+											left: 0,
+											right: 0,
+											bottom: plotSize !== undefined ? `${LABEL_ROW_SIZE}px` : 0,
+											height: '1px',
+											background: 'var(--nok-color-chart-axis, #BFBFBF)',
+										}}
+									/>
+								)}
 								{bars}
 								{targetLine}
 								{cursorTooltip}
 							</div>
 
-							{showAxis && (
-								<div className='flex shrink-0' style={{ gap: BAR_GAP, height: `${LABEL_ROW_SIZE}px` }}>
-									{categories.map((category) => (
-										<span key={category} style={{ ...categoryAxisLabelStyle, flex: 1, textAlign: 'center' }}>
-											{category}
-										</span>
-									))}
-								</div>
-							)}
+							<div className='flex shrink-0' style={{ gap: BAR_GAP, height: `${LABEL_ROW_SIZE}px` }}>
+								{categories.map((category) => (
+									<span key={category} style={{ ...categoryAxisLabelStyle, flex: 1, textAlign: 'center' }}>
+										{category}
+									</span>
+								))}
+							</div>
 						</div>
 					</div>
 					{legend}
@@ -360,7 +385,7 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 			<div
 				ref={ref}
 				className={['flex flex-col', className].filter(Boolean).join(' ')}
-				style={{ width: '100%', height: plotSize !== undefined ? undefined : '100%', gap: 'var(--nok-spacing-component-lg, 16px)', ...style }}
+				style={{ width: '100%', height: plotSize !== undefined ? undefined : '100%', gap: ROOT_GAP, ...style }}
 				{...props}>
 				<div
 					style={{
@@ -377,15 +402,13 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 						rowGap: BAR_GAP,
 						flex: plotSize !== undefined ? 'none' : 1,
 					}}>
-					{showAxis && (
-						<div style={{ gridColumn: 1, gridRow: 1, display: 'flex', flexDirection: 'column', gap: BAR_GAP }}>
-							{categories.map((category) => (
-								<span key={category} style={{ ...categoryAxisLabelStyle, flex: 1, display: 'flex', alignItems: 'center' }}>
-									{category}
-								</span>
-							))}
-						</div>
-					)}
+					<div style={{ gridColumn: 1, gridRow: 1, display: 'flex', flexDirection: 'column', gap: BAR_GAP }}>
+						{categories.map((category) => (
+							<span key={category} style={{ ...categoryAxisLabelStyle, flex: 1, display: 'flex', alignItems: 'center' }}>
+								{category}
+							</span>
+						))}
+					</div>
 
 					<div
 						ref={plotRef}
@@ -398,6 +421,12 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 									<div key={i} style={gridLineStyle(false)} />
 								))}
 							</div>
+						)}
+						{showAxis && (
+							<div
+								className='absolute'
+								style={{ top: 0, bottom: 0, left: 0, width: '1px', background: 'var(--nok-color-chart-axis, #BFBFBF)' }}
+							/>
 						)}
 						{bars}
 						{targetLine}
