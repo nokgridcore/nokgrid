@@ -139,7 +139,7 @@ export const Kpi = forwardRef<HTMLDivElement, KpiProps>(
 				{subtitlePosition === 'inline' ?
 					// Inline wraps the arrow + value in their own frame so the 2px
 					// (arrow↔value) and 4px (delta↔subtitle) gaps stay independent.
-					<span className='inline-flex items-baseline' style={{ gap: 'var(--nok-spacing-component-xs, 4px)' }}>
+					<span className='inline-flex' style={{ alignItems: 'center', gap: 'var(--nok-spacing-component-xs, 4px)' }}>
 						{deltaFrame}
 						{subtitleEl}
 					</span>
