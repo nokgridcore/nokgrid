@@ -23,10 +23,6 @@ const meta = {
 	tags: ['autodocs'],
 	parameters: { docs: { description: { component: `One filled segment inside progress.` } } },
 	argTypes: {
-		shape: {
-			control: 'select',
-			options: ['linear', 'circular'],
-		},
 		state: {
 			control: 'select',
 			options: ['upcoming', 'active', 'completed'],
@@ -46,7 +42,6 @@ const meta = {
 		},
 	},
 	args: {
-		shape: 'linear',
 		state: 'upcoming',
 		color: 'primary',
 		size: 'sm',

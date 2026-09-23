@@ -13,7 +13,10 @@ const SelectWithTheme = ({ theme = 'light', ...props }: SelectStoryProps) => (
 	<div
 		data-theme={theme === 'dark' ? 'dark' : undefined}
 		style={{
-			background: 'var(--nok-color-background-surface)',
+			// The outlined trigger has no fill of its own — on background-surface
+			// (its own default fill color) the border-only box nearly disappears.
+			// canvas is the more realistic context it actually sits on.
+			background: 'var(--nok-color-background-canvas)',
 			width: '100%',
 			padding: '2rem',
 		}}>

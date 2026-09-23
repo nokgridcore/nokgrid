@@ -190,11 +190,16 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 
 		const borderColorClass = isError ? 'border-border-error' : 'border-border-default';
 
+		// Figma's own trigger box carries no background of its own in any state
+		// (outlined or underlined, default/focused/active) — it's border-only,
+		// letting whatever it sits on show through. Error is the one exception:
+		// a literal bg-background-sunken, confirmed against the design (not
+		// inferred, unlike the rest of this map).
 		const backgroundClass = disabled
 			? 'bg-background-overlay cursor-not-allowed'
-			: isUnderline
-				? 'bg-transparent'
-				: 'bg-background-surface';
+			: isError
+				? 'bg-background-sunken'
+				: 'bg-transparent';
 
 		const fieldClasses = [
 			'flex items-center justify-between w-full flex-shrink-0 transition-[background-color,border-color,border-width] duration-200 ease-in-out',
