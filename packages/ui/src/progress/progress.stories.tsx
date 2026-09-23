@@ -68,7 +68,7 @@ const meta = {
 		state: 'determinate',
 		color: 'primary',
 		size: 'sm',
-		showPercentage: false,
+		showPercentage: true,
 		value: 40,
 		showLabel: false,
 		label: 'Label',

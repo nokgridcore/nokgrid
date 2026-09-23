@@ -157,7 +157,10 @@ export const Kpi = forwardRef<HTMLDivElement, KpiProps>(
 				className={classes}
 				style={{
 					width: '260px',
-					minHeight: heightForSize[size],
+					// The fixed height reserves room for the delta/subtitle row —
+					// without it, keeping that height would leave a dead gap at the
+					// bottom instead of the card shrinking to fit its content.
+					minHeight: deltaStack ? heightForSize[size] : undefined,
 					position: iconPosition === 'corner' ? 'relative' : undefined,
 					gap: 'var(--nok-spacing-component-lg, 16px)',
 					...style,

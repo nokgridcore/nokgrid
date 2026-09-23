@@ -2,6 +2,7 @@ import { HTMLAttributes } from 'react';
 import { nokTailwindTheme } from '@nokgridcore/tokens/tailwind-theme';
 import { Icon, IconName } from '../icons/Icon.js';
 import { BadgeVariant, BadgeAppearance, badgeColorClasses } from './badge-colors.js';
+import { StatusDot } from './status-dot.js';
 
 export type { BadgeVariant, BadgeAppearance };
 
@@ -69,7 +70,7 @@ export const Badge = ({
 
 	return (
 		<span className={classes} style={badgeStyle} {...props}>
-			{dot && <span className='w-1.5 h-1.5 rounded-full bg-current shrink-0' />}
+			{dot && <StatusDot color={variant} size={size} />}
 			{leadingIcon && (
 				<Icon name={leadingIcon} size={iconSizeForBadgeSize[size]} />
 			)}

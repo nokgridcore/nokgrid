@@ -73,3 +73,22 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
+
+// The Playground's own wrapper padding would hide bleed's whole point (its
+// left/right edges reaching the container) — this one sits flush instead, so
+// bleed's edge-to-edge, top/bottom-only border is actually visible.
+export const Bleed: Story = {
+	args: { bleed: true },
+	decorators: [
+		(Story) => (
+			<div style={{ width: '100%', maxWidth: '480px' }}>
+				<Story />
+			</div>
+		),
+	],
+	render: (args) => (
+		<div data-theme={args.theme === 'dark' ? 'dark' : undefined} style={{ background: 'var(--nok-color-background-surface)', width: '100%' }}>
+			<Alert {...args} />
+		</div>
+	),
+};

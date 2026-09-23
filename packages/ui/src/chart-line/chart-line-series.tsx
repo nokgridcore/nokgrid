@@ -16,6 +16,10 @@ export interface ChartLineSeriesProps extends Omit<HTMLAttributes<HTMLDivElement
 	max: number;
 	/** Index whose marker is drawn enlarged with a ring — the point being read. */
 	activeIndex?: number | null;
+	/** Draws the line in left-to-right instead of showing it fully drawn —
+	 * `ChartLine` owns the mount-triggered timing, same split as
+	 * `ChartBarSegment` (dumb, externally driven) vs `ChartBar` (owns `grown`). */
+	grown?: boolean;
 }
 
 const PLOT_INSET = 'var(--nok-size-chart-plot-inset, 12px)';
@@ -66,13 +70,28 @@ export function smoothPath(pts: { x: number; y: number }[]) {
 }
 
 export const ChartLineSeries = forwardRef<HTMLDivElement, ChartLineSeriesProps>(
-	({ color = 1, curve = 'linear', showAreaFill = false, showDots = false, values, max, activeIndex = null, style, ...props }, ref) => {
+	({ color = 1, curve = 'linear', showAreaFill = false, showDots = false, values, max, activeIndex = null, grown = true, style, ...props }, ref) => {
 		const pts = toPoints(values, max);
 		const linePath = curve === 'smooth' ? smoothPath(pts) : linearPath(pts);
 		const stroke = `var(--nok-color-chart-${color})`;
 
 		return (
-			<div ref={ref} style={{ position: 'absolute', inset: 0, pointerEvents: 'none', ...style }} {...props}>
+			<div
+				ref={ref}
+				style={{
+					position: 'absolute',
+					inset: 0,
+					pointerEvents: 'none',
+					// Reveals left-to-right on mount, same grow-in spirit as ChartBar — a
+					// clip-path wipe rather than a stroke-dasharray/pathLength trick,
+					// since the latter produces visible seams at this line's sharp
+					// vertices under the SVG's non-uniform (preserveAspectRatio: none)
+					// scaling. Clips area, line and dots together as one unit.
+					clipPath: grown ? 'inset(0 0% 0 0)' : 'inset(0 100% 0 0)',
+					transition: 'clip-path 700ms ease',
+					...style,
+				}}
+				{...props}>
 				<svg
 					viewBox='0 0 100 100'
 					preserveAspectRatio='none'

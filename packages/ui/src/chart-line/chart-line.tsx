@@ -1,6 +1,6 @@
 'use client';
 
-import { CSSProperties, HTMLAttributes, MouseEvent, forwardRef, useRef, useState } from 'react';
+import { CSSProperties, HTMLAttributes, MouseEvent, forwardRef, useEffect, useRef, useState } from 'react';
 import { Legend } from '../legend/legend.js';
 import { Tooltip } from '../tooltip/tooltip.js';
 import { TooltipRow } from '../tooltip/tooltip-row.js';
@@ -78,6 +78,15 @@ export const ChartLine = forwardRef<HTMLDivElement, ChartLineProps>(
 		const plotRef = useRef<HTMLDivElement>(null);
 		const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 		const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+
+		// Draws each series in on mount, same grow-in spirit as ChartBar. A
+		// single rAF is enough here since `grown` only ever flips once (there's
+		// no orientation-style prop that would need it to replay).
+		const [grown, setGrown] = useState(false);
+		useEffect(() => {
+			const raf = requestAnimationFrame(() => setGrown(true));
+			return () => cancelAnimationFrame(raf);
+		}, []);
 
 		const dataMax = Math.max(0, showTargetLine ? (targetValue ?? 0) : 0, ...series.flatMap((s) => s.values));
 		const niceMax = computeNiceMax(dataMax, tickCount);
@@ -176,6 +185,7 @@ export const ChartLine = forwardRef<HTMLDivElement, ChartLineProps>(
 									values={s.values}
 									max={niceMax}
 									activeIndex={hoverIndex}
+									grown={grown}
 								/>
 							))}
 

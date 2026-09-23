@@ -1,13 +1,21 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ChartFrame, ChartFrameProps } from './chart-frame.js';
+import { ChartBar } from '../chart-bar/chart-bar.js';
 
 interface ChartFrameStoryProps extends ChartFrameProps {
 	theme?: 'light' | 'dark';
 }
 
+const CATEGORIES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+const SERIES = [{ label: 'Bookings', color: 1 as const, values: [55, 80, 40, 95, 65, 90, 55] }];
+
+// The frame's plot slot is otherwise just an empty box — a real chart
+// (ChartBar fills 100% of whatever it's given) shows what actually goes there.
 const ChartFrameWithTheme = ({ theme = 'light', ...props }: ChartFrameStoryProps) => (
 	<div data-theme={theme === 'dark' ? 'dark' : undefined} style={{ background: 'var(--nok-color-background-canvas)', padding: '2rem' }}>
-		<ChartFrame {...props} />
+		<ChartFrame {...props}>
+			<ChartBar categories={CATEGORIES} series={SERIES} />
+		</ChartFrame>
 	</div>
 );
 
