@@ -70,7 +70,11 @@ export const Badge = ({
 
 	return (
 		<span className={classes} style={badgeStyle} {...props}>
-			{dot && <StatusDot color={variant} size={size} />}
+			{/* StatusDot's own variant colour can match the badge's own fill
+			(e.g. filled+neutral is background-sunken on both), making it
+			disappear — `currentColor` instead inherits the badge's own content
+			colour, which already contrasts correctly in every appearance. */}
+			{dot && <StatusDot color={variant} size={size} style={{ background: 'currentColor' }} />}
 			{leadingIcon && (
 				<Icon name={leadingIcon} size={iconSizeForBadgeSize[size]} />
 			)}

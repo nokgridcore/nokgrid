@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert, AlertProps } from './alert.js';
 
@@ -76,19 +77,28 @@ export const Playground: Story = {};
 
 // The Playground's own wrapper padding would hide bleed's whole point (its
 // left/right edges reaching the container) — this one sits flush instead, so
-// bleed's edge-to-edge, top/bottom-only border is actually visible.
+// bleed's edge-to-edge, top/bottom-only border is actually visible. Also
+// wires up a real dismiss (Alert takes `onDismiss` but doesn't remove itself —
+// that's the consumer's job) so the interaction is actually visible, not just
+// a static render of the dismiss button.
 export const Bleed: Story = {
-	args: { bleed: true },
-	decorators: [
-		(Story) => (
-			<div style={{ width: '100%', maxWidth: '480px' }}>
-				<Story />
+	args: { bleed: true, dismissible: true },
+	render: function Render(args) {
+		const [visible, setVisible] = useState(true);
+		return (
+			<div
+				data-theme={args.theme === 'dark' ? 'dark' : undefined}
+				style={{ background: 'var(--nok-color-background-surface)', width: '100%', maxWidth: '480px' }}>
+				{visible ?
+					<Alert {...args} onDismiss={() => setVisible(false)} />
+				:	<button
+						type='button'
+						onClick={() => setVisible(true)}
+						style={{ margin: '1rem', color: 'var(--nok-color-text-brand)', fontSize: '13px' }}>
+						Show alert again
+					</button>
+				}
 			</div>
-		),
-	],
-	render: (args) => (
-		<div data-theme={args.theme === 'dark' ? 'dark' : undefined} style={{ background: 'var(--nok-color-background-surface)', width: '100%' }}>
-			<Alert {...args} />
-		</div>
-	),
+		);
+	},
 };
