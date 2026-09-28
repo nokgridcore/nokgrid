@@ -159,12 +159,6 @@ importers:
       '@nokgridcore/tokens':
         specifier: workspace:^
         version: link:../tokens
-      react:
-        specifier: ^19.2.0
-        version: 19.2.0
-      react-dom:
-        specifier: ^19.2.0
-        version: 19.2.0(react@19.2.0)
     devDependencies:
       '@nokgridcore/eslint-config':
         specifier: workspace:*
@@ -217,6 +211,12 @@ importers:
       postcss-import:
         specifier: ^16.1.1
         version: 16.1.1(postcss@8.5.19)
+      react:
+        specifier: ^19.2.0
+        version: 19.2.0
+      react-dom:
+        specifier: ^19.2.0
+        version: 19.2.0(react@19.2.0)
       storybook:
         specifier: ^10.5.2
         version: 10.5.2(@types/react@19.2.2)(prettier@3.7.4)(react@19.2.0)
