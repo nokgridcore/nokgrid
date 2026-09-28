@@ -4,7 +4,7 @@
 	"private": false,
 	"description": "Design tokens for NokGridCore",
 	"type": "module",
-	"license": "UNLICENSED",
+	"license": "MIT",
 	"main": "dist/js/tokens.js",
 	"types": "dist/ts/tokens.d.ts",
 	"files": [
