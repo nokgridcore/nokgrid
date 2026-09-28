@@ -4,6 +4,7 @@
 	"description": "React components for the NokGridCore design system",
 	"type": "module",
 	"license": "MIT",
+	"homepage": "https://nokgrid-ui.vercel.app/",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/nokgridcore/nokgrid.git",

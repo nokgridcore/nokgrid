@@ -5,6 +5,7 @@
 	"description": "Design tokens for NokGridCore",
 	"type": "module",
 	"license": "MIT",
+	"homepage": "https://nokgrid-ui.vercel.app/",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/nokgridcore/nokgrid.git",

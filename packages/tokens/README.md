@@ -1,6 +1,6 @@
 # @nokgridcore/tokens
 
-Design tokens for the NokGridCore design system: colour, typography, spacing and radius, with light and dark themes. Generated from the NokGridCore Figma library.
+Design tokens for the NokGridCore design system: colour, typography, spacing and radius, with light and dark themes. Generated from the NokGridCore Figma library. See every token's live value in the [Storybook](https://nokgrid-ui.vercel.app/) under Foundations.
 
 If you're using the React components in [`@nokgridcore/ui`](https://www.npmjs.com/package/@nokgridcore/ui), you don't need to install this separately. It comes with them, and `@nokgridcore/ui/styles.css` already includes the tokens. Install this package directly when you want the tokens without the components.
 
