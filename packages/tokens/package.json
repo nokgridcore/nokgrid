@@ -4,12 +4,19 @@
 	"private": false,
 	"description": "Design tokens for NokGridCore",
 	"type": "module",
+	"license": "UNLICENSED",
 	"main": "dist/js/tokens.js",
 	"types": "dist/ts/tokens.d.ts",
+	"files": [
+		"dist"
+	],
+	"sideEffects": [
+		"*.css"
+	],
 	"exports": {
 		".": {
-			"import": "./dist/js/tokens.js",
-			"types": "./dist/ts/tokens.d.ts"
+			"types": "./dist/ts/tokens.d.ts",
+			"import": "./dist/js/tokens.js"
 		},
 		"./tailwind-theme": "./dist/js/tailwind-theme.js",
 		"./css/primitives.css": "./dist/css/primitives.css",
@@ -22,12 +29,11 @@
 	"scripts": {
 		"convert": "node scripts/convert.js",
 		"build": "node config.js",
-		"tokens": "node scripts/convert.js && node config.js"
+		"tokens": "node scripts/convert.js && node config.js",
+		"prepack": "pnpm run tokens"
 	},
 	"devDependencies": {
+		"dotenv": "^17.4.2",
 		"style-dictionary": "^4.4.0"
-	},
-	"dependencies": {
-		"dotenv": "^17.4.2"
 	}
 }
