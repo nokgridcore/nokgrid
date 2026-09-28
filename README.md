@@ -1,159 +1,65 @@
-# Turborepo starter
+# NokGridCore
 
-This Turborepo starter is maintained by the Turborepo core team.
+An open-source design system: design tokens and React components, built from the NokGridCore Figma library.
 
-## Using this example
+## Packages
 
-Run the following command:
+| Package                                     | What it is                                                                        |
+| ------------------------------------------- | --------------------------------------------------------------------------------- |
+| [`@nokgridcore/ui`](packages/ui)            | React components with light and dark themes. Most people only need this one.      |
+| [`@nokgridcore/tokens`](packages/tokens)    | Design tokens as CSS variables, a Tailwind theme and JavaScript constants.        |
 
-```sh
-npx create-turbo@latest
+To use the design system in your app, see the [`@nokgridcore/ui` README](packages/ui/README.md).
+
+## Repository layout
+
+```
+packages/
+  ui/                 React components and the Storybook for them
+  tokens/             Design tokens and the build that turns them into CSS/JS
+  eslint-config/      Shared lint config (internal)
+  typescript-config/  Shared TypeScript config (internal)
+apps/
+  web/, docs/         Next.js sandbox apps (internal, not published)
 ```
 
-## What's inside?
+## Development
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+Requires Node 18+ and [pnpm](https://pnpm.io).
 
 ```sh
-cd my-turborepo
-turbo build
+pnpm install
+pnpm tokens                                  # build the design tokens
+pnpm --filter @nokgridcore/ui storybook      # component workshop at http://localhost:6006
 ```
 
-Without global `turbo`, use your package manager:
+Storybook is where components are built and reviewed. It also has the Getting Started and Foundations docs.
+
+Other commands, run from the repo root:
 
 ```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
+pnpm build         # build all packages
+pnpm lint          # lint all packages
+pnpm check-types   # type-check all packages
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+### Updating the design tokens
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+The tokens come from the Figma library via the Tokens Studio plugin:
 
-```sh
-turbo build --filter=docs
-```
+1. Export the tokens from Tokens Studio as JSON and save the file as `packages/tokens/tokens.raw.json`.
+2. Run `pnpm tokens`. This regenerates the CSS, Tailwind theme and JS output.
+3. Check the result in Storybook (Foundations pages), then commit.
 
-Without global `turbo`:
+## Releasing
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+Versioning uses [changesets](https://github.com/changesets/changesets). In short:
 
-### Develop
+1. With each change to a published package, run `pnpm changeset` and describe the change.
+2. To release, run `pnpm version-packages`, commit, then run `pnpm release`.
 
-To develop all apps and packages, run the following command:
+See [.changeset/README.md](.changeset/README.md) for details.
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+## License
 
-```sh
-cd my-turborepo
-turbo dev
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+[MIT](LICENSE)

@@ -1,8 +1,14 @@
 {
 	"name": "@nokgridcore/ui",
 	"version": "0.1.0",
+	"description": "React components for the NokGridCore design system",
 	"type": "module",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nokgridcore/nokgrid.git",
+		"directory": "packages/ui"
+	},
 	"files": [
 		"dist"
 	],

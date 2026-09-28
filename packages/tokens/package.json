@@ -5,6 +5,11 @@
 	"description": "Design tokens for NokGridCore",
 	"type": "module",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nokgridcore/nokgrid.git",
+		"directory": "packages/tokens"
+	},
 	"main": "dist/js/tokens.js",
 	"types": "dist/ts/tokens.d.ts",
 	"files": [
