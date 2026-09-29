@@ -24,9 +24,10 @@ const KpiWithTheme = ({ theme = 'light', iconName, ...props }: KpiStoryProps) =>
 );
 
 const meta = {
-	title: 'Components/Kpi',
+	title: 'Components/Data display/KPI value delta',
 	component: KpiWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A single metric with its change against the previous period.\n\n> Pair it with a sparkline to show the trend.` } } },
 	argTypes: {
 		size: {
 			control: 'select',

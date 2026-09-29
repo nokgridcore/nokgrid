@@ -23,7 +23,7 @@ const ModalWithTheme = ({ theme = 'light', ...props }: ModalStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Modal/Modal',
+	title: 'Components/Surfaces/Modal/Modal',
 	component: ModalWithTheme,
 	tags: ['autodocs'],
 	// Storybook's default 'padded' layout wraps every story in its own
@@ -33,7 +33,7 @@ const meta = {
 	// the "gray border around the backdrop" seen in the Canvas view. This is
 	// the actual cause (not something CSS in the story can reach), and
 	// 'fullscreen' is Storybook's own built-in opt-out for exactly this case.
-	parameters: { layout: 'fullscreen' },
+	parameters: { layout: 'fullscreen', docs: { description: { component: `A blocking overlay for a decision or a focused task.\n\n> Use sparingly, and keep the content short.` } } },
 	argTypes: {
 		position: {
 			control: 'select',

@@ -200,13 +200,18 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
 							border: 'none',
 							outline: 'none',
 						}}
-						className={
+						className={[
+							// Suppresses the browser's own resize grip glyph so it doesn't
+							// double up with the drawn one below — dragging still works.
+							resizeEnabled && 'nok-textarea',
 							isDisabled || isReadOnly
 								? 'text-text-disabled placeholder:text-text-disabled'
 								// text-secondary, not -tertiary — matches the design system's
 								// own contrast fix (tertiary placeholder text failed 4.5:1).
-								: 'text-text-primary placeholder:text-text-secondary'
-						}
+								: 'text-text-primary placeholder:text-text-secondary',
+						]
+							.filter(Boolean)
+							.join(' ')}
 						{...props}
 					/>
 

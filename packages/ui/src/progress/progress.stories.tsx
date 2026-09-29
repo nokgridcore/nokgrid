@@ -18,9 +18,10 @@ const ProgressWithTheme = ({ theme = 'light', ...props }: ProgressStoryProps) =>
 );
 
 const meta = {
-	title: 'Components/Progress',
+	title: 'Components/Data display/Progress/Progress',
 	component: ProgressWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Progress through a known quantity.\n\n> For discrete named steps, use stepped progress.` } } },
 	argTypes: {
 		type: {
 			control: 'select',
@@ -67,7 +68,7 @@ const meta = {
 		state: 'determinate',
 		color: 'primary',
 		size: 'sm',
-		showPercentage: false,
+		showPercentage: true,
 		value: 40,
 		showLabel: false,
 		label: 'Label',

@@ -24,9 +24,10 @@ const ChartBarWithTheme = ({ theme = 'light', ...props }: ChartBarStoryProps) =>
 );
 
 const meta = {
-	title: 'Components/ChartBar/ChartBar',
+	title: 'Components/Charts/Bar chart/Bar chart',
 	component: ChartBarWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Compares discrete categories.\n\n> For continuous trends over time, use a line chart.` } } },
 	argTypes: {
 		orientation: { control: 'select', options: ['vertical', 'horizontal'] },
 		layout: { control: 'select', options: ['single', 'stacked'] },

@@ -21,9 +21,10 @@ const BadgeWithTheme = ({ theme = 'light', ...props }: BadgeStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Badge/Badge',
+	title: 'Components/Data display/Badge/Badge',
 	component: BadgeWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A read-only status the system sets, such as a state or category.\n\n> Never interactive. If the user chose it and can remove it, use chip.` } } },
 	argTypes: {
 		variant: {
 			control: 'select',

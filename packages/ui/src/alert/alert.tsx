@@ -1,6 +1,6 @@
 'use client';
 
-import { HTMLAttributes, forwardRef } from 'react';
+import { HTMLAttributes, forwardRef, useEffect, useState } from 'react';
 import { Icon, IconName } from '../icons/Icon.js';
 
 type AlertVariant = 'success' | 'warning' | 'error' | 'info';
@@ -65,6 +65,10 @@ const iconColorForState: Record<AlertVariant, Record<AlertAppearance, 'success' 
 	info: { subtle: 'info', strong: 'white' },
 };
 
+// Shared with Toast — both are ephemeral, dismiss-driven surfaces, so they
+// get the same enter/exit timing and motion.
+const TRANSITION_MS = 200;
+
 export const Alert = forwardRef<HTMLDivElement, AlertProps>(
 	(
 		{
@@ -83,6 +87,22 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
 		},
 		ref,
 	) => {
+		// Fades/slides in on mount, and — since the parent owns whether Alert
+		// renders at all — fades/slides back out on dismiss *before* calling
+		// onDismiss, so the parent's removal lands after the exit is already
+		// finished instead of cutting it off mid-transition.
+		const [entered, setEntered] = useState(false);
+		const [exiting, setExiting] = useState(false);
+		useEffect(() => {
+			const raf = requestAnimationFrame(() => setEntered(true));
+			return () => cancelAnimationFrame(raf);
+		}, []);
+
+		const handleDismiss = () => {
+			setExiting(true);
+			setTimeout(() => onDismiss?.(), TRANSITION_MS);
+		};
+
 		const classes = [
 			'flex items-start gap-component-sm p-component-lg',
 			bleed ? 'rounded-none' : 'rounded-lg',
@@ -94,11 +114,20 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
 			.filter(Boolean)
 			.join(' ');
 
+		const visible = entered && !exiting;
+
 		return (
 			<div
 				ref={ref}
 				className={classes}
-				style={{ width: '100%', maxWidth: bleed ? undefined : '400px', ...style }}
+				style={{
+					width: '100%',
+					maxWidth: bleed ? undefined : '400px',
+					opacity: visible ? 1 : 0,
+					transform: visible ? 'translateY(0)' : 'translateY(-4px)',
+					transition: `opacity ${TRANSITION_MS}ms ease, transform ${TRANSITION_MS}ms ease`,
+					...style,
+				}}
 				{...props}>
 				<Icon
 					name={variantIcon[variant]}
@@ -118,7 +147,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(
 				</div>
 
 				{dismissible && (
-					<button type='button' onClick={onDismiss} aria-label='Dismiss' className='shrink-0'>
+					<button type='button' onClick={handleDismiss} aria-label='Dismiss' className='shrink-0'>
 						<Icon name='X' color={iconColorForState[variant][appearance]} />
 					</button>
 				)}

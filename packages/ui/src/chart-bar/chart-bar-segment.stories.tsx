@@ -17,9 +17,10 @@ const ChartBarSegmentWithTheme = ({ theme = 'light', ...props }: ChartBarSegment
 );
 
 const meta = {
-	title: 'Components/ChartBar/ChartBarSegment',
+	title: 'Components/Charts/Bar chart/Segment',
 	component: ChartBarSegmentWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One bar inside a bar chart.` } } },
 	argTypes: {
 		orientation: { control: 'select', options: ['vertical', 'horizontal'] },
 		state: { control: 'select', options: ['default', 'focused', 'unfocused'] },

@@ -14,9 +14,10 @@ const SkeletonWithTheme = ({ theme = 'light', ...props }: SkeletonStoryProps) =>
 );
 
 const meta = {
-	title: 'Components/ChartFrame/Skeleton',
+	title: 'Components/Charts/Chart skeleton',
 	component: SkeletonWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The placeholder a chart loads into.\n\n> Match its type to the chart it stands in for.` } } },
 	argTypes: {
 		type: { control: 'select', options: ['bars', 'line', 'pie'] },
 		theme: { name: 'Theme', control: 'select', options: ['light', 'dark'] },

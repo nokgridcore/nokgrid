@@ -1,0 +1,46 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { TypeFamilies, TypeScale, Callout } from './blocks';
+
+<Meta title="Foundations/Typography" />
+
+# Typography
+
+The type scale as a live specimen. Each step shows its family, size / line height and weight, read from the generated tokens.
+
+<Callout>
+Colour is never part of a type token. Set text colour separately with a `text-*` semantic token.
+</Callout>
+
+## Families
+
+<TypeFamilies />
+
+## Display
+
+<TypeScale group="display" sample="Revenue overview" />
+
+## Heading
+
+<TypeScale group="heading" sample="Section heading" />
+
+## Body
+
+<TypeScale group="body" />
+
+## Label
+
+<TypeScale group="label" sample="Button label" />
+
+## Caption
+
+<TypeScale group="caption" sample="Updated 2 minutes ago" />
+
+## KPI value
+
+<Callout tone="draft">
+The KPI value token is emitted by the token pipeline as `[object Object]` rather than a usable value, so it cannot be shown here yet. See the open issues list.
+</Callout>
+
+## Mono
+
+<TypeScale group="mono" sample="0123456789 4,120.50" />

@@ -15,9 +15,10 @@ const SidebarGroupWithTheme = ({ theme = 'light', ...props }: SidebarGroupStoryP
 );
 
 const meta = {
-	title: 'Components/Sidebar/SidebarGroup',
+	title: 'Components/Navigation/Sidebar/Group',
 	component: SidebarGroupWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A labelled section of navigation items.` } } },
 	argTypes: {
 		state: { control: 'select', options: ['expanded', 'collapsed'] },
 		theme: { name: 'Theme', control: 'select', options: ['light', 'dark'] },

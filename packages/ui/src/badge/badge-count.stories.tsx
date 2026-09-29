@@ -18,9 +18,10 @@ const BadgeCountWithTheme = ({ theme = 'light', ...props }: BadgeCountStoryProps
 );
 
 const meta = {
-	title: 'Components/Badge/Count',
+	title: 'Components/Data display/Badge/Count',
 	component: BadgeCountWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A number pinned to an icon, for unread or pending counts.\n\n> Use only where the count is actionable.` } } },
 	argTypes: {
 		variant: {
 			control: 'select',

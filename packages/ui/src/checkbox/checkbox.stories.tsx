@@ -19,9 +19,10 @@ const CheckboxWithTheme = ({ theme = 'light', ...props }: CheckboxStoryProps) =>
 );
 
 const meta = {
-	title: 'Components/Checkbox',
+	title: 'Components/Input & control/Checkbox',
 	component: CheckboxWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A binary control for options that aren't mutually exclusive, or a single opt-in.\n\n> Indeterminate means some but not all, as in a table's select-all.` } } },
 	argTypes: {
 		size: {
 			control: 'select',

@@ -1,0 +1,26 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { BaseUnit, PrimitiveSpacing, SemanticSpacing } from './blocks';
+
+<Meta title="Foundations/Spacing" />
+
+# Spacing
+
+Spacing runs on a <BaseUnit /> grid. Primitive steps are multiples of it; semantic tokens name where the space is used.
+
+## Component spacing
+
+Space inside and between the parts of a single component.
+
+<SemanticSpacing group="component" />
+
+## Layout spacing
+
+Space between components, sections and the page edge.
+
+<SemanticSpacing group="layout" />
+
+## Primitive scale
+
+Each row is the token, its value and a bar drawn at that width.
+
+<PrimitiveSpacing />

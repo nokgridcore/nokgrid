@@ -5,3 +5,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* TextArea draws its own resize grip glyph — this hides the browser's
+   native one so only one grip icon shows, not two. Resizing itself still
+   works; only the drawn corner triangle is suppressed. */
+.nok-textarea::-webkit-resizer {
+	display: none;
+}

@@ -7,9 +7,13 @@
 		"lint": "turbo run lint",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
 		"check-types": "turbo run check-types",
-		"tokens": "pnpm --filter @nokgridcore/tokens tokens"
+		"tokens": "pnpm --filter @nokgridcore/tokens tokens",
+		"changeset": "changeset",
+		"version-packages": "changeset version",
+		"release": "turbo run build --filter=@nokgridcore/tokens --filter=@nokgridcore/ui && changeset publish"
 	},
 	"devDependencies": {
+		"@changesets/cli": "^3.0.3",
 		"prettier": "^3.7.4",
 		"turbo": "^2.9.16",
 		"typescript": "5.9.2"

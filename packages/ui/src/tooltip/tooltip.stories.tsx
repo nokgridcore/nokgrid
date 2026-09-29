@@ -15,9 +15,10 @@ const TooltipWithTheme = ({ theme = 'light', ...props }: TooltipStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Tooltip/Tooltip',
+	title: 'Components/Feedback & status/Tooltip/Tooltip',
 	component: TooltipWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A short label shown on hover or focus that explains a control.\n\n> Never put anything interactive inside. Use popover instead.` } } },
 	argTypes: {
 		placement: { control: 'select', options: ['top', 'left', 'bottom', 'right'] },
 		theme: { name: 'Theme', control: 'select', options: ['light', 'dark'] },

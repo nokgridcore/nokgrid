@@ -19,9 +19,10 @@ const ToggleWithTheme = ({ theme = 'light', ...props }: ToggleStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Toggle',
+	title: 'Components/Input & control/Toggle',
 	component: ToggleWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `An instant on/off for a setting that applies immediately.\n\n> If the change needs a Save button, use checkbox.` } } },
 	argTypes: {
 		size: {
 			control: 'select',

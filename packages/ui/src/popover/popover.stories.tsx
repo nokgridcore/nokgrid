@@ -20,9 +20,10 @@ const PopoverWithTheme = ({ theme = 'light', bodyText, ...props }: PopoverStoryP
 );
 
 const meta = {
-	title: 'Components/Popover',
+	title: 'Components/Surfaces/Popover',
 	component: PopoverWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A floating panel anchored to a trigger, holding rich or interactive content.\n\n> For a short, non-interactive label, use tooltip.` } } },
 	argTypes: {
 		trigger: { control: 'select', options: ['click', 'hover'] },
 		width: { control: 'select', options: ['small', 'medium', 'large'] },

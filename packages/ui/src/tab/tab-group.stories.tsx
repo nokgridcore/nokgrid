@@ -27,9 +27,10 @@ function mapAppearance(appearance?: TabGroupProps['appearance']): 'border' | 'fi
 }
 
 const meta = {
-	title: 'Components/Tab/Group',
+	title: 'Components/Navigation/Tabs/Group',
 	component: TabGroupWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A horizontal set of tabs for switching views without leaving the page.` } } },
 	argTypes: {
 		direction: {
 			control: 'select',

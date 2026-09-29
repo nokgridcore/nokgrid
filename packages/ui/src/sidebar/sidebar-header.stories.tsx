@@ -14,9 +14,10 @@ const SidebarHeaderWithTheme = ({ theme = 'light', ...props }: SidebarHeaderStor
 );
 
 const meta = {
-	title: 'Components/Sidebar/SidebarHeader',
+	title: 'Components/Navigation/Sidebar/Header',
 	component: SidebarHeaderWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Workspace identity at the top of the sidebar, with the collapse trigger.` } } },
 	argTypes: {
 		logo: { control: 'select', options: ['LayoutGrid', 'LayoutDashboard', 'LayoutList'] },
 		theme: { name: 'Theme', control: 'select', options: ['light', 'dark'] },

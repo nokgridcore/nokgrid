@@ -1,15 +1,29 @@
 {
 	"name": "@nokgridcore/tokens",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"private": false,
 	"description": "Design tokens for NokGridCore",
 	"type": "module",
+	"license": "MIT",
+	"homepage": "https://nokgrid-ui.vercel.app/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nokgridcore/nokgrid.git",
+		"directory": "packages/tokens"
+	},
 	"main": "dist/js/tokens.js",
 	"types": "dist/ts/tokens.d.ts",
+	"files": [
+		"dist",
+		"lib"
+	],
+	"sideEffects": [
+		"*.css"
+	],
 	"exports": {
 		".": {
-			"import": "./dist/js/tokens.js",
-			"types": "./dist/ts/tokens.d.ts"
+			"types": "./dist/ts/tokens.d.ts",
+			"import": "./dist/js/tokens.js"
 		},
 		"./tailwind-theme": "./dist/js/tailwind-theme.js",
 		"./css/primitives.css": "./dist/css/primitives.css",
@@ -17,17 +31,18 @@
 		"./css/semantic-dark.css": "./dist/css/semantic-dark.css",
 		"./dist/css/primitives.css": "./dist/css/primitives.css",
 		"./dist/css/semantic-light.css": "./dist/css/semantic-light.css",
-		"./dist/css/semantic-dark.css": "./dist/css/semantic-dark.css"
+		"./dist/css/semantic-dark.css": "./dist/css/semantic-dark.css",
+		"./lib/convert": "./lib/convert.js",
+		"./lib/css": "./lib/css.js"
 	},
 	"scripts": {
 		"convert": "node scripts/convert.js",
 		"build": "node config.js",
-		"tokens": "node scripts/convert.js && node config.js"
+		"tokens": "node scripts/convert.js && node config.js",
+		"prepack": "pnpm run tokens"
 	},
 	"devDependencies": {
+		"dotenv": "^17.4.2",
 		"style-dictionary": "^4.4.0"
-	},
-	"dependencies": {
-		"dotenv": "^17.4.2"
 	}
 }

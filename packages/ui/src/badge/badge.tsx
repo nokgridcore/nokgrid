@@ -2,6 +2,7 @@ import { HTMLAttributes } from 'react';
 import { nokTailwindTheme } from '@nokgridcore/tokens/tailwind-theme';
 import { Icon, IconName } from '../icons/Icon.js';
 import { BadgeVariant, BadgeAppearance, badgeColorClasses } from './badge-colors.js';
+import { StatusDot } from './status-dot.js';
 
 export type { BadgeVariant, BadgeAppearance };
 
@@ -69,7 +70,11 @@ export const Badge = ({
 
 	return (
 		<span className={classes} style={badgeStyle} {...props}>
-			{dot && <span className='w-1.5 h-1.5 rounded-full bg-current shrink-0' />}
+			{/* StatusDot's own variant colour can match the badge's own fill
+			(e.g. filled+neutral is background-sunken on both), making it
+			disappear — `currentColor` instead inherits the badge's own content
+			colour, which already contrasts correctly in every appearance. */}
+			{dot && <StatusDot color={variant} size={size} style={{ background: 'currentColor' }} />}
 			{leadingIcon && (
 				<Icon name={leadingIcon} size={iconSizeForBadgeSize[size]} />
 			)}

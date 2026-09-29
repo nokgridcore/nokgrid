@@ -17,9 +17,10 @@ const DividerWithTheme = ({ theme = 'light', ...props }: DividerStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Divider',
+	title: 'Components/Data display/Divider',
 	component: DividerWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A rule separating content.\n\n> Try spacing first. Use a divider when proximity alone isn't enough.` } } },
 	argTypes: {
 		orientation: {
 			control: 'select',

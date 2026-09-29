@@ -1,159 +1,163 @@
-# Turborepo starter
+# NokGridCore
 
-This Turborepo starter is maintained by the Turborepo core team.
+**The design system for data-dense products.** Tokens, a Figma library and React components, all generated from one source.
 
-## Using this example
+[![@nokgridcore/ui](https://img.shields.io/npm/v/@nokgridcore/ui?label=%40nokgridcore%2Fui&style=flat-square&color=F05D23)](https://www.npmjs.com/package/@nokgridcore/ui)
+[![@nokgridcore/tokens](https://img.shields.io/npm/v/@nokgridcore/tokens?label=%40nokgridcore%2Ftokens&style=flat-square&color=2f3d34)](https://www.npmjs.com/package/@nokgridcore/tokens)
+[![MIT](https://img.shields.io/badge/license-MIT-2f3d34?style=flat-square)](LICENSE)
 
-Run the following command:
+**[Browse the Storybook](https://nokgrid-ui.vercel.app/)**: every component, variant and token, live.
 
-```sh
-npx create-turbo@latest
+<!-- Add when public: Figma library link -->
+
+---
+
+## The idea
+
+A design file and a codebase usually start in sync and drift apart one small change at a time: a colour tweaked in Figma but not in CSS, a new button state that only exists in code.
+
+NokGridCore removes that gap. Every colour, size, space and radius is defined once, as a Figma variable, and a build step turns those variables into the CSS, Tailwind and TypeScript the components are written with. Change the design and the code follows. There is no second copy to keep up to date.
+
+## Built for dashboards
+
+Most component libraries are designed around forms and marketing pages. NokGridCore is designed around the screens where people read data.
+
+| On a dashboard you need…                  | NokGridCore gives you                                                     |
+| ----------------------------------------- | ------------------------------------------------------------------------- |
+| Numbers people can read at a glance       | KPI cards with value, delta and trend direction                           |
+| Charts that survive real data             | Bar, line, donut and sparkline charts in a frame with built-in loading, empty and error states |
+| Tables that stay readable when dense      | Table with toolbar, header cells and row states                           |
+| Navigation that scales with the product   | A sidebar kit, top bar, tabs, menus, breadcrumbs and pagination           |
+| A dark mode that isn't an afterthought    | Every component in light and dark, switched with one attribute            |
+
+## For developers
+
+```bash
+pnpm add @nokgridcore/ui    # or npm install @nokgridcore/ui
 ```
 
-## What's inside?
+Import the stylesheet once. It includes the tokens and every component style, so you don't need Tailwind in your app:
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo build
+```tsx
+import '@nokgridcore/ui/styles.css';
 ```
 
-Without global `turbo`, use your package manager:
+Then import components one at a time:
 
-```sh
-cd my-turborepo
-npx turbo build
-pnpm dlx turbo build
-pnpm exec turbo build
+```tsx
+import { Kpi } from '@nokgridcore/ui/kpi';
+import { ChartFrame } from '@nokgridcore/ui/chart-frame';
+import { ChartLine } from '@nokgridcore/ui/chart-line';
+
+export const RevenuePanel = () => (
+	<>
+		<Kpi label='Revenue' value={48120} showDelta deltaValue='+12.5%' deltaDirection='positive' />
+
+		<ChartFrame title='Bookings over time' showSubtitle subtitle='Last 30 days'>
+			<ChartLine
+				categories={['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']}
+				series={[{ label: 'Bookings', color: 1, values: [120, 180, 150, 220, 210, 260] }]}
+			/>
+		</ChartFrame>
+	</>
+);
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+For dark mode, put `data-theme="dark"` on any element; everything inside it switches.
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+Everything is typed, including all 252 icon names, and interactive components are marked `'use client'` for the Next.js App Router. Requires React 19. Full setup, including fonts, is in the [`@nokgridcore/ui` README](packages/ui/README.md).
 
-```sh
-turbo build --filter=docs
+## For designers
+
+The Figma library is built on the same variables the code uses, in two collections:
+
+- **Primitive**: the raw palette and scales. No modes, because they never change.
+- **Semantic**: purpose-named variables (`background/surface`, `text/primary`, `action/primary-hover`) with a **light** and a **dark** mode.
+
+To preview a design in dark, select the frame, open the Variables panel and switch the Semantic collection's mode. Everything inside follows, including nested components, with no detaching or duplicating.
+
+Components in Figma carry the same names, variants and states as their React counterparts, so a handoff note can say "Select, underlined, error state" and mean exactly one thing on both sides.
+
+## Bring your own brand
+
+NokGrid's look is only its default. Your team can give every component your own colours, type and spacing, without forking anything:
+
+1. **Designers** start from the NokGrid Tokens Studio file and change the values, keeping the token names. Rename the palettes freely.
+2. **Developers** export it and run one command in your project:
+
+   ```bash
+   npx @nokgridcore/cli theme ./tokens/brand.json
+   ```
+
+3. Import the generated `nokgrid-theme.css` after NokGrid's stylesheet. Every component, in light and dark, now wears your brand.
+
+When the designers change a value, export and re-run. The command tells you if your file is missing any token NokGrid needs. Details in the [`@nokgridcore/cli` README](packages/cli/README.md).
+
+## One source, every output
+
+```mermaid
+flowchart LR
+    A[Figma variables] --> B[Tokens Studio export]
+    B --> C[Style Dictionary]
+    C --> D[CSS variables]
+    C --> E[Tailwind theme]
+    C --> F[TypeScript constants]
+    D & E & F --> G[React components]
 ```
 
-Without global `turbo`:
+Components only ever use **semantic** tokens, which point at primitives:
 
-```sh
-npx turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```
+--nok-color-action-primary-default  →  nokflame-500  →  #F05D23
 ```
 
-### Develop
+That indirection is what makes theming work: dark mode swaps where the semantic tokens point, and no component has to change.
 
-To develop all apps and packages, run the following command:
+## The Nok palette
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
+Three brand families carry the identity, alongside neutral, red, green and blue scales:
 
-```sh
-cd my-turborepo
-turbo dev
+| Family        | Core      | Where you'll see it                                            |
+| ------------- | --------- | -------------------------------------------------------------- |
+| **NokFlame**  | `#F05D23` | Primary actions, brand text and icons, focus rings, chart series 1 |
+| **NokMoss**   | `#2F3D34` | Secondary actions, secondary brand surfaces, chart series 2    |
+| **NokBanana** | `#EDE06A` | Warnings, chart series 3                                       |
+
+## What's inside
+
+| Category          | Components                                                                                   |
+| ----------------- | -------------------------------------------------------------------------------------------- |
+| Action            | Button                                                                                       |
+| Input & control   | Input, Textarea, Search input, Select, Checkbox, Radio, Toggle, Chip, Calendar              |
+| Data display      | KPI, Badge, Status dot, Avatar, Progress (linear, circular, stepped), Legend, Divider, Icon  |
+| Data & tables     | Table, Row, Cell, Header cell, Toolbar                                                       |
+| Charts            | Chart frame, Bar (grouped and stacked), Line, Donut, Sparkline, Skeleton                     |
+| Feedback & status | Alert, Toast, Tooltip                                                                        |
+| Surfaces          | Card, Modal, Popover                                                                         |
+| Navigation        | Sidebar, Top bar, Tabs, Menu, Breadcrumb, Pagination                                         |
+
+Every component is documented in [Storybook](https://nokgrid-ui.vercel.app/) with its variants and states in both themes, next to Foundations pages that show each token's live value.
+
+## Status
+
+NokGridCore is at **0.1**. The components are in active use and development, and the API may still change before 1.0. Breaking changes are called out in each package's changelog.
+
+Next up: shadow and elevation tokens, and bringing the remaining Figma components into code.
+
+## Working on NokGridCore
+
+```bash
+git clone https://github.com/nokgridcore/nokgrid.git && cd nokgrid
+pnpm install && pnpm tokens
+pnpm --filter @nokgridcore/ui storybook
 ```
 
-Without global `turbo`, use your package manager:
+Setup, token updates, adding components and releasing are covered in [CONTRIBUTING.md](CONTRIBUTING.md).
 
-```sh
-cd my-turborepo
-npx turbo dev
-pnpm exec turbo dev
-pnpm exec turbo dev
-```
+## Credits
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+Design lead: **Emmanuel Anthony** ([emmanuelanthony.site](https://emmanuelanthony.site/)) · Engineering: **Kelvin Ochubili** ([@Iykekelvins](https://github.com/Iykekelvins))
 
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
+## License
 
-```sh
-turbo dev --filter=web
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended):
-
-```sh
-cd my-turborepo
-turbo login
-```
-
-Without global `turbo`, use your package manager:
-
-```sh
-cd my-turborepo
-npx turbo login
-pnpm exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed:
-
-```sh
-turbo link
-```
-
-Without global `turbo`:
-
-```sh
-npx turbo link
-pnpm exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+[MIT](LICENSE) © 2026 NokGrid

@@ -14,9 +14,10 @@ const CalendarPickerCellWithTheme = ({ theme = 'light', ...props }: CalendarPick
 );
 
 const meta = {
-	title: 'Components/Calendar/CalendarPickerCell',
+	title: 'Components/Input & control/Calendar/Picker cell',
 	component: CalendarPickerCellWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One month or year option inside the picker.` } } },
 	argTypes: {
 		state: { control: 'select', options: ['default', 'hovered', 'selected', 'disabled'] },
 		theme: { name: 'Theme', control: 'select', options: ['light', 'dark'] },

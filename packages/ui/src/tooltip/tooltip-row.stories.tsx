@@ -14,9 +14,10 @@ const TooltipRowWithTheme = ({ theme = 'light', ...props }: TooltipRowStoryProps
 );
 
 const meta = {
-	title: 'Components/Tooltip/TooltipRow',
+	title: 'Components/Feedback & status/Tooltip/Row',
 	component: TooltipRowWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One label-and-value row inside a tooltip, for chart readouts.` } } },
 	argTypes: {
 		color: { control: 'select', options: [1, 2, 3, 4, 5, 6, 7, 8] },
 		theme: { name: 'Theme', control: 'select', options: ['light', 'dark'] },

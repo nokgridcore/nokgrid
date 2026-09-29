@@ -23,9 +23,10 @@ const LegendWithTheme = ({ theme = 'light', color, ...props }: LegendStoryProps)
 );
 
 const meta = {
-	title: 'Components/Legend',
+	title: 'Components/Data display/Legend/Legend',
 	component: LegendWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Maps colours to series names for any chart.` } } },
 	argTypes: {
 		swatchShape: { control: 'select', options: ['line', 'square', 'circle'] },
 		color: { control: 'select', options: COLOR_OPTIONS },

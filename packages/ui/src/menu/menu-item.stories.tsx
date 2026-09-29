@@ -23,9 +23,10 @@ const MenuItemWithTheme = ({ theme = 'light', ...props }: MenuItemStoryProps) =>
 );
 
 const meta = {
-	title: 'Components/Menu/MenuItem',
+	title: 'Components/Navigation/Menu/Item',
 	component: MenuItemWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One row in a menu.` } } },
 	argTypes: {
 		state: {
 			control: 'select',
