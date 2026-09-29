@@ -36,7 +36,7 @@ const shapeClasses: Record<AvatarShape, string> = {
 };
 
 // No caption-lg exists — falls back to caption-md (largest available).
-const initialsStyleKey: Record<AvatarSize, string> = {
+const initialsStyleKey: Record<AvatarSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'caption-sm',
 	md: 'caption-md',
 	lg: 'caption-md',

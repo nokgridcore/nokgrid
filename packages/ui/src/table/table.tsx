@@ -97,11 +97,14 @@ export const Table = forwardRef<HTMLDivElement, TableProps>(
 				return;
 			}
 
-			const updateWidth = () => setHeaderContentWidth(node.getBoundingClientRect().width);
+			// Measure the header row itself: the wrapper stretches to the table
+			// width so a full-width header (flexible columns) can fill it.
+			const measured = (node.firstElementChild as HTMLElement | null) ?? node;
+			const updateWidth = () => setHeaderContentWidth(measured.getBoundingClientRect().width);
 			updateWidth();
 
 			const observer = new ResizeObserver(updateWidth);
-			observer.observe(node);
+			observer.observe(measured);
 			return () => observer.disconnect();
 		}, [header]);
 
@@ -140,7 +143,7 @@ export const Table = forwardRef<HTMLDivElement, TableProps>(
 								? { position: 'sticky', top: 0, zIndex: 1, background: 'var(--nok-color-background-surface)' }
 								: undefined),
 						}}>
-						<div ref={headerContentRef} style={{ display: 'inline-block' }}>
+						<div ref={headerContentRef} style={{ display: 'inline-block', minWidth: '100%' }}>
 							{headerWithDensity}
 						</div>
 					</div>
