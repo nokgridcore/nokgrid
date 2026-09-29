@@ -1,6 +1,6 @@
 'use client';
 
-import { CSSProperties, HTMLAttributes, ReactNode, forwardRef } from 'react';
+import { CSSProperties, HTMLAttributes, ReactNode, forwardRef, useEffect, useState } from 'react';
 import { Icon, IconName } from '../icons/Icon.js';
 
 type ToastColor = 'neutral' | 'primary' | 'success' | 'warning' | 'error';
@@ -93,6 +93,9 @@ const textStyle: CSSProperties = {
 	lineHeight: 'var(--nok-typography-line-height-19-5, 19.5px)',
 };
 
+// Same enter/exit timing as Alert — both are ephemeral, dismiss-driven surfaces.
+const TRANSITION_MS = 200;
+
 export const Toast = forwardRef<HTMLDivElement, ToastProps>(
 	(
 		{
@@ -119,11 +122,30 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
 		},
 		ref,
 	) => {
-		void position;
 		void stacked;
 
 		const isVertical = orientation === 'vertical';
 		const classes = ['flex', colorClasses[color], className].filter(Boolean).join(' ');
+
+		// Slides in from the edge it's mounted against (top toast drops down,
+		// bottom toast rises up), and — since the parent owns whether Toast
+		// renders at all — reverses that same slide on close *before* calling
+		// onClose, so the parent's removal lands after the exit already
+		// finished instead of cutting it off mid-transition.
+		const [entered, setEntered] = useState(false);
+		const [exiting, setExiting] = useState(false);
+		useEffect(() => {
+			const raf = requestAnimationFrame(() => setEntered(true));
+			return () => cancelAnimationFrame(raf);
+		}, []);
+
+		const handleClose = () => {
+			setExiting(true);
+			setTimeout(() => onClose?.(), TRANSITION_MS);
+		};
+
+		const visible = entered && !exiting;
+		const offscreenY = position === 'top' ? '-8px' : '8px';
 
 		const containerStyle: CSSProperties = {
 			width: '420px',
@@ -133,13 +155,16 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
 			borderRadius: 'var(--nok-spacing-radius-lg, 8px)',
 			boxShadow: '0 2px 8px 0 rgba(0, 0, 0, 0.10)',
 			color: titleColor[color],
+			opacity: visible ? 1 : 0,
+			transform: visible ? 'translateY(0)' : `translateY(${offscreenY})`,
+			transition: `opacity ${TRANSITION_MS}ms ease, transform ${TRANSITION_MS}ms ease`,
 			...style,
 		};
 
 		const startIcon = showStartSlot && <Icon name={variantIcon[color]} className='shrink-0' />;
 
 		const closeButton = showClose && (
-			<button type='button' aria-label='Close' onClick={onClose} className='inline-flex shrink-0'>
+			<button type='button' aria-label='Close' onClick={handleClose} className='inline-flex shrink-0'>
 				<Icon name='X' size='sm' />
 			</button>
 		);

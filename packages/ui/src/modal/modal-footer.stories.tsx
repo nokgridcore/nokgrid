@@ -20,9 +20,10 @@ const ModalFooterWithTheme = ({ theme = 'light', ...props }: ModalFooterStoryPro
 );
 
 const meta = {
-	title: 'Components/Modal/ModalFooter',
+	title: 'Components/Surfaces/Modal/Footer',
 	component: ModalFooterWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The action row of a modal.\n\n> The primary action sits on the right.` } } },
 	argTypes: {
 		layout: {
 			control: 'select',

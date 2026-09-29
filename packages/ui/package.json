@@ -1,8 +1,21 @@
 {
 	"name": "@nokgridcore/ui",
-	"version": "0.0.0",
-	"private": true,
+	"version": "0.2.0",
+	"description": "React components for the NokGridCore design system",
 	"type": "module",
+	"license": "MIT",
+	"homepage": "https://nokgrid-ui.vercel.app/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nokgridcore/nokgrid.git",
+		"directory": "packages/ui"
+	},
+	"files": [
+		"dist"
+	],
+	"sideEffects": [
+		"*.css"
+	],
 	"exports": {
 		"./button": "./src/button/button.tsx",
 		"./textarea": "./src/textarea/textarea.tsx",
@@ -60,7 +73,275 @@
 		"./skeleton": "./src/chart-frame/skeleton.tsx",
 		"./chart-bar-segment": "./src/chart-bar/chart-bar-segment.tsx",
 		"./chart-bar-stack": "./src/chart-bar/chart-bar-stack.tsx",
-		"./chart-bar": "./src/chart-bar/chart-bar.tsx"
+		"./chart-bar": "./src/chart-bar/chart-bar.tsx",
+		"./chart-donut-segment": "./src/chart-donut/chart-donut-segment.tsx",
+		"./chart-donut": "./src/chart-donut/chart-donut.tsx",
+		"./chart-line-series": "./src/chart-line/chart-line-series.tsx",
+		"./chart-line": "./src/chart-line/chart-line.tsx",
+		"./chart-spark": "./src/chart-spark/chart-spark.tsx",
+		"./input": "./src/input/input.tsx",
+		"./icon": "./src/icons/Icon.tsx"
+	},
+	"publishConfig": {
+		"exports": {
+			"./button": {
+				"types": "./dist/button/button.d.ts",
+				"import": "./dist/button/button.js"
+			},
+			"./textarea": {
+				"types": "./dist/textarea/textarea.d.ts",
+				"import": "./dist/textarea/textarea.js"
+			},
+			"./checkbox": {
+				"types": "./dist/checkbox/checkbox.d.ts",
+				"import": "./dist/checkbox/checkbox.js"
+			},
+			"./radio": {
+				"types": "./dist/radio/radio.d.ts",
+				"import": "./dist/radio/radio.js"
+			},
+			"./toggle": {
+				"types": "./dist/toggle/toggle.d.ts",
+				"import": "./dist/toggle/toggle.js"
+			},
+			"./badge": {
+				"types": "./dist/badge/badge.d.ts",
+				"import": "./dist/badge/badge.js"
+			},
+			"./badge-count": {
+				"types": "./dist/badge/badge-count.d.ts",
+				"import": "./dist/badge/badge-count.js"
+			},
+			"./status-dot": {
+				"types": "./dist/badge/status-dot.d.ts",
+				"import": "./dist/badge/status-dot.js"
+			},
+			"./chip": {
+				"types": "./dist/chip/chip.d.ts",
+				"import": "./dist/chip/chip.js"
+			},
+			"./tab": {
+				"types": "./dist/tab/tab.d.ts",
+				"import": "./dist/tab/tab.js"
+			},
+			"./tab-group": {
+				"types": "./dist/tab/tab-group.d.ts",
+				"import": "./dist/tab/tab-group.js"
+			},
+			"./search-input": {
+				"types": "./dist/search-input/search-input.d.ts",
+				"import": "./dist/search-input/search-input.js"
+			},
+			"./select": {
+				"types": "./dist/select/select.d.ts",
+				"import": "./dist/select/select.js"
+			},
+			"./option": {
+				"types": "./dist/option/option.d.ts",
+				"import": "./dist/option/option.js"
+			},
+			"./kpi": {
+				"types": "./dist/kpi/kpi.d.ts",
+				"import": "./dist/kpi/kpi.js"
+			},
+			"./alert": {
+				"types": "./dist/alert/alert.d.ts",
+				"import": "./dist/alert/alert.js"
+			},
+			"./avatar": {
+				"types": "./dist/avatar/avatar.d.ts",
+				"import": "./dist/avatar/avatar.js"
+			},
+			"./progress": {
+				"types": "./dist/progress/progress.d.ts",
+				"import": "./dist/progress/progress.js"
+			},
+			"./segment": {
+				"types": "./dist/segment/segment.d.ts",
+				"import": "./dist/segment/segment.js"
+			},
+			"./progress-stepped": {
+				"types": "./dist/progress-stepped/progress-stepped.d.ts",
+				"import": "./dist/progress-stepped/progress-stepped.js"
+			},
+			"./card": {
+				"types": "./dist/card/card.d.ts",
+				"import": "./dist/card/card.js"
+			},
+			"./divider": {
+				"types": "./dist/divider/divider.d.ts",
+				"import": "./dist/divider/divider.js"
+			},
+			"./menu-item": {
+				"types": "./dist/menu/menu-item.d.ts",
+				"import": "./dist/menu/menu-item.js"
+			},
+			"./menu": {
+				"types": "./dist/menu/menu.d.ts",
+				"import": "./dist/menu/menu.js"
+			},
+			"./pagination-button": {
+				"types": "./dist/pagination/pagination-button.d.ts",
+				"import": "./dist/pagination/pagination-button.js"
+			},
+			"./pagination": {
+				"types": "./dist/pagination/pagination.d.ts",
+				"import": "./dist/pagination/pagination.js"
+			},
+			"./table-header-cell": {
+				"types": "./dist/table/table-header-cell.d.ts",
+				"import": "./dist/table/table-header-cell.js"
+			},
+			"./table-cell": {
+				"types": "./dist/table/table-cell.d.ts",
+				"import": "./dist/table/table-cell.js"
+			},
+			"./table-toolbar": {
+				"types": "./dist/table/table-toolbar.d.ts",
+				"import": "./dist/table/table-toolbar.js"
+			},
+			"./table-row": {
+				"types": "./dist/table/table-row.d.ts",
+				"import": "./dist/table/table-row.js"
+			},
+			"./table": {
+				"types": "./dist/table/table.d.ts",
+				"import": "./dist/table/table.js"
+			},
+			"./modal-header": {
+				"types": "./dist/modal/modal-header.d.ts",
+				"import": "./dist/modal/modal-header.js"
+			},
+			"./modal-body": {
+				"types": "./dist/modal/modal-body.d.ts",
+				"import": "./dist/modal/modal-body.js"
+			},
+			"./modal-footer": {
+				"types": "./dist/modal/modal-footer.d.ts",
+				"import": "./dist/modal/modal-footer.js"
+			},
+			"./modal": {
+				"types": "./dist/modal/modal.d.ts",
+				"import": "./dist/modal/modal.js"
+			},
+			"./toast": {
+				"types": "./dist/toast/toast.d.ts",
+				"import": "./dist/toast/toast.js"
+			},
+			"./tooltip-row": {
+				"types": "./dist/tooltip/tooltip-row.d.ts",
+				"import": "./dist/tooltip/tooltip-row.js"
+			},
+			"./tooltip": {
+				"types": "./dist/tooltip/tooltip.d.ts",
+				"import": "./dist/tooltip/tooltip.js"
+			},
+			"./sidebar-header": {
+				"types": "./dist/sidebar/sidebar-header.d.ts",
+				"import": "./dist/sidebar/sidebar-header.js"
+			},
+			"./sidebar-footer": {
+				"types": "./dist/sidebar/sidebar-footer.d.ts",
+				"import": "./dist/sidebar/sidebar-footer.js"
+			},
+			"./sidebar-group": {
+				"types": "./dist/sidebar/sidebar-group.d.ts",
+				"import": "./dist/sidebar/sidebar-group.js"
+			},
+			"./sidebar-content": {
+				"types": "./dist/sidebar/sidebar-content.d.ts",
+				"import": "./dist/sidebar/sidebar-content.js"
+			},
+			"./sidebar": {
+				"types": "./dist/sidebar/sidebar.d.ts",
+				"import": "./dist/sidebar/sidebar.js"
+			},
+			"./breadcrumb-item": {
+				"types": "./dist/breadcrumb/breadcrumb-item.d.ts",
+				"import": "./dist/breadcrumb/breadcrumb-item.js"
+			},
+			"./breadcrumb": {
+				"types": "./dist/breadcrumb/breadcrumb.d.ts",
+				"import": "./dist/breadcrumb/breadcrumb.js"
+			},
+			"./calendar-day": {
+				"types": "./dist/calendar/calendar-day.d.ts",
+				"import": "./dist/calendar/calendar-day.js"
+			},
+			"./calendar-picker-cell": {
+				"types": "./dist/calendar/calendar-picker-cell.d.ts",
+				"import": "./dist/calendar/calendar-picker-cell.js"
+			},
+			"./calendar-picker": {
+				"types": "./dist/calendar/calendar-picker.d.ts",
+				"import": "./dist/calendar/calendar-picker.js"
+			},
+			"./calendar": {
+				"types": "./dist/calendar/calendar.d.ts",
+				"import": "./dist/calendar/calendar.js"
+			},
+			"./popover": {
+				"types": "./dist/popover/popover.d.ts",
+				"import": "./dist/popover/popover.js"
+			},
+			"./top-bar": {
+				"types": "./dist/top-bar/top-bar.d.ts",
+				"import": "./dist/top-bar/top-bar.js"
+			},
+			"./legend": {
+				"types": "./dist/legend/legend.d.ts",
+				"import": "./dist/legend/legend.js"
+			},
+			"./chart-frame": {
+				"types": "./dist/chart-frame/chart-frame.d.ts",
+				"import": "./dist/chart-frame/chart-frame.js"
+			},
+			"./skeleton": {
+				"types": "./dist/chart-frame/skeleton.d.ts",
+				"import": "./dist/chart-frame/skeleton.js"
+			},
+			"./chart-bar-segment": {
+				"types": "./dist/chart-bar/chart-bar-segment.d.ts",
+				"import": "./dist/chart-bar/chart-bar-segment.js"
+			},
+			"./chart-bar-stack": {
+				"types": "./dist/chart-bar/chart-bar-stack.d.ts",
+				"import": "./dist/chart-bar/chart-bar-stack.js"
+			},
+			"./chart-bar": {
+				"types": "./dist/chart-bar/chart-bar.d.ts",
+				"import": "./dist/chart-bar/chart-bar.js"
+			},
+			"./chart-donut-segment": {
+				"types": "./dist/chart-donut/chart-donut-segment.d.ts",
+				"import": "./dist/chart-donut/chart-donut-segment.js"
+			},
+			"./chart-donut": {
+				"types": "./dist/chart-donut/chart-donut.d.ts",
+				"import": "./dist/chart-donut/chart-donut.js"
+			},
+			"./chart-line-series": {
+				"types": "./dist/chart-line/chart-line-series.d.ts",
+				"import": "./dist/chart-line/chart-line-series.js"
+			},
+			"./chart-line": {
+				"types": "./dist/chart-line/chart-line.d.ts",
+				"import": "./dist/chart-line/chart-line.js"
+			},
+			"./chart-spark": {
+				"types": "./dist/chart-spark/chart-spark.d.ts",
+				"import": "./dist/chart-spark/chart-spark.js"
+			},
+			"./input": {
+				"types": "./dist/input/input.d.ts",
+				"import": "./dist/input/input.js"
+			},
+			"./icon": {
+				"types": "./dist/icons/Icon.d.ts",
+				"import": "./dist/icons/Icon.js"
+			},
+			"./styles.css": "./dist/styles.css"
+		}
 	},
 	"scripts": {
 		"lint": "eslint . --max-warnings 0",
@@ -69,7 +350,16 @@
 		"icons": "svgr --config-file svgr.config.js --out-dir src/icons/generated src/icons/svg && node scripts/fix-icon-exports.js",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
-		"deploy": "pnpm --filter @nokgridcore/tokens run tokens && pnpm run build-storybook"
+		"deploy": "pnpm --filter @nokgridcore/tokens run tokens && pnpm run build-storybook",
+		"clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+		"build": "pnpm run clean && pnpm run build:js && pnpm run build:css",
+		"build:js": "tsc -p tsconfig.build.json",
+		"build:css": "postcss src/globals.css -o dist/styles.css",
+		"prepack": "pnpm run build"
+	},
+	"peerDependencies": {
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
 	},
 	"devDependencies": {
 		"@nokgridcore/eslint-config": "workspace:*",
@@ -89,13 +379,13 @@
 		"postcss": "^8.5.19",
 		"postcss-cli": "^11.0.1",
 		"postcss-import": "^16.1.1",
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0",
 		"storybook": "^10.5.2",
 		"tailwindcss": "^3.4.19",
 		"typescript": "5.9.2"
 	},
 	"dependencies": {
-		"@nokgridcore/tokens": "workspace:^",
-		"react": "^19.2.0",
-		"react-dom": "^19.2.0"
+		"@nokgridcore/tokens": "workspace:^"
 	}
 }

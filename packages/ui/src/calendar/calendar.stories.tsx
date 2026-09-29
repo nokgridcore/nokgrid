@@ -14,9 +14,10 @@ const CalendarWithTheme = ({ theme = 'light', ...props }: CalendarStoryProps) =>
 );
 
 const meta = {
-	title: 'Components/Calendar/Calendar',
+	title: 'Components/Input & control/Calendar/Calendar',
 	component: CalendarWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A month grid for picking a single date or a range.` } } },
 	argTypes: {
 		selection: { control: 'select', options: ['single', 'range'] },
 		firstDay: { control: 'select', options: ['monday', 'sunday'] },

@@ -21,9 +21,10 @@ const TableRowWithTheme = ({ theme = 'light', ...props }: TableRowStoryProps) =>
 );
 
 const meta = {
-	title: 'Components/Table/TableRow',
+	title: 'Components/Data & tables/Table/Row',
 	component: TableRowWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One row of cells, with selection and hover actions.` } } },
 	argTypes: {
 		state: {
 			control: 'select',

@@ -1,0 +1,47 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Getting Started/Theming/Theming in code" />
+
+# Theming in code
+
+## How the theme is applied
+
+The dark values are scoped to a `data-theme="dark"` attribute. Light values are the default on `:root`, so no attribute is needed for light.
+
+## Switching
+
+```html
+<html data-theme="dark">
+```
+
+```ts
+document.documentElement.dataset.theme = 'dark'; // dark
+delete document.documentElement.dataset.theme; // light
+```
+
+The attribute can also sit on any element, and everything inside it follows.
+
+## In Storybook
+
+Stories expose a `theme` control (light or dark) that sets the attribute on the story wrapper. There is no global toolbar switch.
+
+## Your own brand
+
+Teams can give every component their own look without touching component code. Designers change the token **values** in a copy of the NokGrid Tokens Studio file, keeping the token **names**. Developers turn the export into CSS:
+
+```sh
+npx @nokgridcore/cli theme ./tokens/brand.json
+```
+
+and import it after NokGrid's stylesheet:
+
+```ts
+import '@nokgridcore/ui/styles.css';
+import './nokgrid-theme.css';
+```
+
+Light and dark both follow. The command lists any NokGrid token the file is missing; those keep NokGrid's default. See the [`@nokgridcore/cli` README](https://www.npmjs.com/package/@nokgridcore/cli) for options, including using your own variable prefix.
+
+## Rule
+
+Components take their colours from semantic tokens only. A component that reads a colour primitive won't change with the theme.

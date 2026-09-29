@@ -21,9 +21,10 @@ const AvatarWithTheme = ({ theme = 'light', ...props }: AvatarStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Avatar',
+	title: 'Components/Data display/Avatar',
 	component: AvatarWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Identifies a person or entity.\n\n> Falls back from photo to initials to icon. Never show an empty circle.` } } },
 	argTypes: {
 		type: {
 			control: 'select',

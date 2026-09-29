@@ -29,9 +29,10 @@ const ModalHeaderWithTheme = ({ theme = 'light', ...props }: ModalHeaderStoryPro
 };
 
 const meta = {
-	title: 'Components/Modal/ModalHeader',
+	title: 'Components/Surfaces/Modal/Header',
 	component: ModalHeaderWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The title, optional subtitle and close control of a modal.` } } },
 	argTypes: {
 		artworkType: {
 			control: 'select',

@@ -14,9 +14,10 @@ const CalendarDayWithTheme = ({ theme = 'light', ...props }: CalendarDayStoryPro
 );
 
 const meta = {
-	title: 'Components/Calendar/CalendarDay',
+	title: 'Components/Input & control/Calendar/Day',
 	component: CalendarDayWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One cell in the calendar grid.` } } },
 	argTypes: {
 		state: {
 			control: 'select',

@@ -18,9 +18,10 @@ const PaginationButtonWithTheme = ({ theme = 'light', ...props }: PaginationButt
 );
 
 const meta = {
-	title: 'Components/Pagination/PaginationButton',
+	title: 'Components/Navigation/Pagination/Pagination.Button',
 	component: PaginationButtonWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One page number inside pagination.` } } },
 	argTypes: {
 		state: {
 			control: 'select',

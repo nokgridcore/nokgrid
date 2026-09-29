@@ -20,9 +20,10 @@ const RadioWithTheme = ({ theme = 'light', ...props }: RadioStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Radio',
+	title: 'Components/Input & control/Radio',
 	component: RadioWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Choose exactly one option from a short list.\n\n> Always give the group a heading; the options alone don't state the question.` } } },
 	argTypes: {
 		size: {
 			control: 'select',

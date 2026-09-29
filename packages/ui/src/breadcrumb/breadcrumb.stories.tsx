@@ -23,9 +23,10 @@ const BreadcrumbWithTheme = ({ separator = 'chevron', theme = 'light' }: Breadcr
 );
 
 const meta = {
-	title: 'Components/Breadcrumb/Breadcrumb',
+	title: 'Components/Navigation/Breadcrumb/Breadcrumb',
 	component: BreadcrumbWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Shows where the current page sits in the hierarchy.\n\n> The last item is the current page and isn't a link.` } } },
 	argTypes: {
 		separator: { control: 'select', options: ['chevron', 'slash'] },
 		theme: { name: 'Theme', control: 'select', options: ['light', 'dark'] },

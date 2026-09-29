@@ -18,9 +18,10 @@ const PaginationWithTheme = ({ theme = 'light', ...props }: PaginationStoryProps
 );
 
 const meta = {
-	title: 'Components/Pagination',
+	title: 'Components/Navigation/Pagination/Pagination',
 	component: PaginationWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Moves through pages of a long list.\n\n> Place it under the content it pages, matching its width.` } } },
 	argTypes: {
 		type: {
 			control: 'select',

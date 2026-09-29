@@ -18,9 +18,10 @@ const StatusDotWithTheme = ({ theme = 'light', ...props }: StatusDotStoryProps) 
 );
 
 const meta = {
-	title: 'Components/Badge/StatusDot',
+	title: 'Components/Data display/Status dot',
 	component: StatusDotWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The smallest possible status indicator.\n\n> Use only where a label would crowd the row and the colour's meaning is clear from elsewhere.` } } },
 	argTypes: {
 		color: {
 			control: 'select',

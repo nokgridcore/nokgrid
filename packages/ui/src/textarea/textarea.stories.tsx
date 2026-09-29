@@ -18,9 +18,10 @@ const TextAreaWithTheme = ({ theme = 'light', ...props }: TextAreaStoryProps) =>
 );
 
 const meta = {
-	title: 'Components/Input/TextArea',
+	title: 'Components/Input & control/Input/Textarea',
 	component: TextAreaWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A multi-line field for longer text, such as notes.\n\n> Size the box to the answer you expect.` } } },
 	argTypes: {
 		variant: {
 			control: 'select',

@@ -1,0 +1,52 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { ColourPrimitives, ColourSemantics, Callout } from './blocks';
+
+<Meta title="Foundations/Colour" />
+
+# Colour
+
+Colour is defined in two layers. **Primitives** are the raw palette: named steps such as `nokflame-500` that never change between themes. **Semantic** tokens describe a job (`background-surface`, `text-primary`) and point at a different primitive in each theme. Components only ever use semantic tokens.
+
+## Primitives
+
+Every value below is read from the generated `primitives.css`.
+
+<ColourPrimitives />
+
+## Semantic
+
+Each row shows the token, then its resolved value and the primitive it points at, in light and dark.
+
+### Background
+
+<ColourSemantics group="background" />
+
+### Text
+
+<ColourSemantics group="text" />
+
+### Icon
+
+<ColourSemantics group="icon" />
+
+### Border
+
+<ColourSemantics group="border" />
+
+### Action
+
+<ColourSemantics group="action" />
+
+### Chart
+
+<ColourSemantics group="chart" />
+
+## Do and don't
+
+<Callout>
+**Do** pick the token by the job it does: text on a surface is `text-primary`, not "dark grey".
+</Callout>
+
+<Callout>
+**Don't** use a primitive (`neutral-900`) in a component. It will not change when the theme does.
+</Callout>

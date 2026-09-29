@@ -21,9 +21,10 @@ const InputWithTheme = ({ theme = 'light', ...props }: InputStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Input/Text',
+	title: 'Components/Input & control/Input/Text',
 	component: InputWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A single-line field for short freeform text.\n\n> Always give it a label. A placeholder is an example, not a label.` } } },
 	argTypes: {
 		variant: {
 			control: 'select',

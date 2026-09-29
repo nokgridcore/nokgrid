@@ -1,20 +1,29 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { ChartFrame, ChartFrameProps } from './chart-frame.js';
+import { ChartBar } from '../chart-bar/chart-bar.js';
 
 interface ChartFrameStoryProps extends ChartFrameProps {
 	theme?: 'light' | 'dark';
 }
 
+const CATEGORIES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'];
+const SERIES = [{ label: 'Bookings', color: 1 as const, values: [55, 80, 40, 95, 65, 90, 55] }];
+
+// The frame's plot slot is otherwise just an empty box — a real chart
+// (ChartBar fills 100% of whatever it's given) shows what actually goes there.
 const ChartFrameWithTheme = ({ theme = 'light', ...props }: ChartFrameStoryProps) => (
 	<div data-theme={theme === 'dark' ? 'dark' : undefined} style={{ background: 'var(--nok-color-background-canvas)', padding: '2rem' }}>
-		<ChartFrame {...props} />
+		<ChartFrame {...props}>
+			<ChartBar categories={CATEGORIES} series={SERIES} />
+		</ChartFrame>
 	</div>
 );
 
 const meta = {
-	title: 'Components/ChartFrame/ChartFrame',
+	title: 'Components/Charts/Chart frame',
 	component: ChartFrameWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The wrapper a chart sits in. It owns the title and the loading, empty and error states.\n\n> The chart goes in its slot and brings its own legend.` } } },
 	argTypes: {
 		state: { control: 'select', options: ['default', 'loading', 'empty', 'error'] },
 		density: { control: 'select', options: ['comfortable', 'compact'] },

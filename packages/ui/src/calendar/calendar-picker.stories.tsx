@@ -14,9 +14,10 @@ const CalendarPickerWithTheme = ({ theme = 'light', ...props }: CalendarPickerSt
 );
 
 const meta = {
-	title: 'Components/Calendar/CalendarPicker',
+	title: 'Components/Input & control/Calendar/Picker',
 	component: CalendarPickerWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The month and year views the calendar caption opens.` } } },
 	argTypes: {
 		view: { control: 'select', options: ['month', 'year'] },
 		showTabs: { control: 'boolean' },

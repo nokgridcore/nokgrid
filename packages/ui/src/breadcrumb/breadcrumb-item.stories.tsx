@@ -18,9 +18,10 @@ const BreadcrumbItemWithTheme = ({ theme = 'light', ...props }: BreadcrumbItemSt
 );
 
 const meta = {
-	title: 'Components/Breadcrumb/BreadcrumbItem',
+	title: 'Components/Navigation/Breadcrumb/Item',
 	component: BreadcrumbItemWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One level in a breadcrumb.` } } },
 	argTypes: {
 		state: { control: 'select', options: ['default', 'hover', 'current', 'collapsed'] },
 		separator: { control: 'select', options: ['chevron', 'slash'] },

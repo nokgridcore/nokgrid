@@ -21,9 +21,10 @@ const ButtonWithTheme = ({ theme = 'light', ...props }: ButtonStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Button',
+	title: 'Components/Action/Button',
 	component: ButtonWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Triggers a single action.\n\n> Use primary for the one action you most want taken, secondary for supporting actions, tertiary inside dense UI, and destructive only for irreversible actions.` } } },
 	argTypes: {
 		variant: {
 			control: 'select',

@@ -18,9 +18,10 @@ const ProgressSteppedWithTheme = ({ theme = 'light', ...props }: ProgressStepped
 );
 
 const meta = {
-	title: 'Components/Progress/ProgressStepped',
+	title: 'Components/Data display/Progress/Stepped',
 	component: ProgressSteppedWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `Progress across discrete named steps, for wizards and multi-stage flows.` } } },
 	argTypes: {
 		shape: {
 			control: 'select',

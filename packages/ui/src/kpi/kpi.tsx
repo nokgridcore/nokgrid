@@ -139,7 +139,7 @@ export const Kpi = forwardRef<HTMLDivElement, KpiProps>(
 				{subtitlePosition === 'inline' ?
 					// Inline wraps the arrow + value in their own frame so the 2px
 					// (arrow↔value) and 4px (delta↔subtitle) gaps stay independent.
-					<span className='inline-flex items-baseline' style={{ gap: 'var(--nok-spacing-component-xs, 4px)' }}>
+					<span className='inline-flex' style={{ alignItems: 'center', gap: 'var(--nok-spacing-component-xs, 4px)' }}>
 						{deltaFrame}
 						{subtitleEl}
 					</span>
@@ -157,7 +157,10 @@ export const Kpi = forwardRef<HTMLDivElement, KpiProps>(
 				className={classes}
 				style={{
 					width: '260px',
-					minHeight: heightForSize[size],
+					// The fixed height reserves room for the delta/subtitle row —
+					// without it, keeping that height would leave a dead gap at the
+					// bottom instead of the card shrinking to fit its content.
+					minHeight: deltaStack ? heightForSize[size] : undefined,
 					position: iconPosition === 'corner' ? 'relative' : undefined,
 					gap: 'var(--nok-spacing-component-lg, 16px)',
 					...style,

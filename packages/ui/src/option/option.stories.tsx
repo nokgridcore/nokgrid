@@ -22,9 +22,10 @@ const OptionWithTheme = ({ theme = 'light', ...props }: OptionStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Select/Option',
+	title: 'Components/Input & control/Select/Option',
 	component: OptionWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A single row inside the select menu.` } } },
 	argTypes: {
 		variant: {
 			control: 'select',

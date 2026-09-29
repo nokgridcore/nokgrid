@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Sidebar, SidebarProps } from './sidebar.js';
 import { SidebarHeader } from './sidebar-header.js';
@@ -17,9 +18,10 @@ const SidebarWithTheme = ({ theme = 'light', ...props }: SidebarStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Sidebar/Sidebar',
+	title: 'Components/Navigation/Sidebar/Sidebar',
 	component: SidebarWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `The primary navigation rail.` } } },
 	argTypes: {
 		state: {
 			control: 'select',
@@ -34,34 +36,38 @@ const meta = {
 		showBorder: true,
 		theme: 'light',
 	},
-	render: (args) => (
-		<SidebarWithTheme {...args}>
-			<SidebarHeader logo='LayoutGrid' title='My dashboard' subtext='Enterprise' />
-			<SidebarContent>
-				<SidebarGroup label='Section' showDivider>
-					<MenuItem
-						state='active'
-						showLeadingIcon
-						icon='LayoutGrid'
-						showLabel
-						label='Playground'
-						showTrailingIcon
-						trailingIcon='ChevronRight'
-					/>
-					<MenuItem showLeadingIcon icon='Users' showLabel label='Models' showTrailingIcon trailingIcon='ChevronRight' />
-					<MenuItem
-						showLeadingIcon
-						icon='Settings'
-						showLabel
-						label='Documentation'
-						showTrailingIcon
-						trailingIcon='ChevronRight'
-					/>
-				</SidebarGroup>
-			</SidebarContent>
-			<SidebarFooter profileImage='https://i.pravatar.cc/64?img=47' profileName='Maryann Thony' profileEmail='m@example.com' />
-		</SidebarWithTheme>
-	),
+	render: function Render(args) {
+		// Clicking a nav item is core sidebar interaction, same as the
+		// collapse toggle — MenuItem itself is a dumb/controlled component (its
+		// `state` is just a prop), so the demo has to own which one is active.
+		const [active, setActive] = useState('Playground');
+		const items = ['Playground', 'Models', 'Documentation'] as const;
+		const iconForItem = { Playground: 'LayoutGrid', Models: 'Users', Documentation: 'Settings' } as const;
+
+		return (
+			<SidebarWithTheme {...args}>
+				<SidebarHeader logo='LayoutGrid' title='My dashboard' subtext='Enterprise' />
+				<SidebarContent>
+					<SidebarGroup label='Section' showDivider>
+						{items.map((label) => (
+							<MenuItem
+								key={label}
+								state={label === active ? 'active' : 'default'}
+								onClick={() => setActive(label)}
+								showLeadingIcon
+								icon={iconForItem[label]}
+								showLabel
+								label={label}
+								showTrailingIcon
+								trailingIcon='ChevronRight'
+							/>
+						))}
+					</SidebarGroup>
+				</SidebarContent>
+				<SidebarFooter profileImage='https://i.pravatar.cc/64?img=47' profileName='Maryann Thony' profileEmail='m@example.com' />
+			</SidebarWithTheme>
+		);
+	},
 } satisfies Meta<typeof SidebarWithTheme>;
 
 export default meta;

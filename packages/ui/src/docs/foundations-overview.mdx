@@ -1,0 +1,64 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { TokenBothThemes } from './blocks';
+
+<Meta title="Foundations/Overview" />
+
+# Foundations
+
+Foundations are the design decisions every component is built from: colour, type, space, size and radius. They are stored as **design tokens**.
+
+## What a token is
+
+A token is a named design decision. Instead of writing `#ffffff` in a component, you write `background-surface`. The name says what the value is for; the value can change (for example between light and dark) without touching the component.
+
+## Two layers
+
+- **Primitive** tokens are the raw scale: `color-neutral-0`, `space-4`, `radius-100`. They describe what exists, not what it is for.
+- **Semantic** tokens describe a job and point at a primitive: `color-background-surface`. Components use semantic tokens only.
+
+A worked example, resolved in both themes:
+
+<TokenBothThemes name="color-background-surface" />
+
+## Naming
+
+Tokens follow `category.context.variant.state`. In CSS the dots become hyphens and the name is prefixed with `--nok-`:
+
+| Token | Reads as |
+|---|---|
+| `color.background.surface` | colour, used as a background, the surface variant |
+| `color.action.primary-hover` | colour, used on actions, the primary variant in its hover state |
+| `spacing.component.md` | spacing, inside a component, medium |
+| `size.control.md` | a fixed size, for controls, medium |
+
+## The pipeline
+
+Figma Variables → Token Studio → Style Dictionary → CSS, Tailwind and TypeScript outputs → React components → Storybook.
+
+Tokens are authored once in Figma. Running the token build regenerates every output, so the design library and the code cannot drift apart.
+
+## Using a token
+
+```css
+/* CSS variable */
+.panel {
+  background: var(--nok-color-background-surface);
+  padding: var(--nok-spacing-component-md);
+}
+```
+
+```tsx
+// Tailwind class (from the generated theme)
+<div className="bg-background-surface p-component-md" />
+```
+
+```ts
+// TypeScript token map
+import { nokTailwindTheme } from '@nokgridcore/tokens/tailwind-theme';
+
+nokTailwindTheme.colors['background-surface']; // "var(--nok-color-background-surface)"
+```
+
+## In this section
+
+Colour, Typography, Spacing, Sizing and Radius each list every token in that family with its resolved value.

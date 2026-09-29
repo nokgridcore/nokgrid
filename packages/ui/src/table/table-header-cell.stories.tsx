@@ -19,9 +19,10 @@ const TableHeaderCellWithTheme = ({ theme = 'light', ...props }: TableHeaderCell
 );
 
 const meta = {
-	title: 'Components/Table/TableHeaderCell',
+	title: 'Components/Data & tables/Table/Header cell',
 	component: TableHeaderCellWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One column header, with its column type and sort state.` } } },
 	argTypes: {
 		columnType: {
 			control: 'select',

@@ -24,9 +24,10 @@ const TableCellWithTheme = ({ theme = 'light', ...props }: TableCellStoryProps) 
 );
 
 const meta = {
-	title: 'Components/Table/TableCell',
+	title: 'Components/Data & tables/Table/Cell',
 	component: TableCellWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `One table cell. Its column type decides what it shows: text, number, status, person or icon.` } } },
 	argTypes: {
 		columnType: {
 			control: 'select',

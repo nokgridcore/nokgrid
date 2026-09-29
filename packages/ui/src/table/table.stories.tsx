@@ -75,9 +75,10 @@ const TableWithTheme = ({ theme = 'light', ...props }: TableStoryProps) => (
 );
 
 const meta = {
-	title: 'Components/Table/Table',
+	title: 'Components/Data & tables/Table/Record',
 	component: TableWithTheme,
 	tags: ['autodocs'],
+	parameters: { docs: { description: { component: `A record table with toolbar, sortable headers, selectable rows and pagination.` } } },
 	argTypes: {
 		variant: {
 			control: 'select',
