@@ -78,6 +78,21 @@ To preview a design in dark, select the frame, open the Variables panel and swit
 
 Components in Figma carry the same names, variants and states as their React counterparts, so a handoff note can say "Select, underlined, error state" and mean exactly one thing on both sides.
 
+## Bring your own brand
+
+NokGrid's look is only its default. Your team can give every component your own colours, type and spacing, without forking anything:
+
+1. **Designers** start from the NokGrid Tokens Studio file and change the values, keeping the token names. Rename the palettes freely.
+2. **Developers** export it and run one command in your project:
+
+   ```bash
+   npx @nokgridcore/cli theme ./tokens/brand.json
+   ```
+
+3. Import the generated `nokgrid-theme.css` after NokGrid's stylesheet. Every component, in light and dark, now wears your brand.
+
+When the designers change a value, export and re-run. The command tells you if your file is missing any token NokGrid needs. Details in the [`@nokgridcore/cli` README](packages/cli/README.md).
+
 ## One source, every output
 
 ```mermaid

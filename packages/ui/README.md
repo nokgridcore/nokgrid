@@ -75,6 +75,15 @@ Set `data-theme="dark"` on any element. Everything inside it switches to the dar
 
 Remove the attribute to go back to light.
 
+### Your own brand
+
+To give the components your team's colours, fonts and spacing, build a theme from your Tokens Studio file with [`@nokgridcore/cli`](https://www.npmjs.com/package/@nokgridcore/cli) and import it after the stylesheet:
+
+```tsx
+import '@nokgridcore/ui/styles.css';
+import './nokgrid-theme.css'; // from: npx @nokgridcore/cli theme ./tokens/brand.json
+```
+
 ### Icons
 
 ```tsx

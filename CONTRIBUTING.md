@@ -20,6 +20,8 @@ Storybook is where components are built and reviewed.
 packages/
   ui/                 React components and their Storybook
   tokens/             Design tokens and the build that turns them into CSS/JS
+                      (lib/ holds the conversion and CSS build, shared with cli/)
+  cli/                The `nokgrid theme` command teams use to build their own theme
   eslint-config/      Shared lint config (internal)
   typescript-config/  Shared TypeScript config (internal)
 apps/

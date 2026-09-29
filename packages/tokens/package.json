@@ -14,7 +14,8 @@
 	"main": "dist/js/tokens.js",
 	"types": "dist/ts/tokens.d.ts",
 	"files": [
-		"dist"
+		"dist",
+		"lib"
 	],
 	"sideEffects": [
 		"*.css"
@@ -30,7 +31,9 @@
 		"./css/semantic-dark.css": "./dist/css/semantic-dark.css",
 		"./dist/css/primitives.css": "./dist/css/primitives.css",
 		"./dist/css/semantic-light.css": "./dist/css/semantic-light.css",
-		"./dist/css/semantic-dark.css": "./dist/css/semantic-dark.css"
+		"./dist/css/semantic-dark.css": "./dist/css/semantic-dark.css",
+		"./lib/convert": "./lib/convert.js",
+		"./lib/css": "./lib/css.js"
 	},
 	"scripts": {
 		"convert": "node scripts/convert.js",

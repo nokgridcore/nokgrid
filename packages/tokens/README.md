@@ -4,6 +4,8 @@ Design tokens for the NokGridCore design system: colour, typography, spacing and
 
 If you're using the React components in [`@nokgridcore/ui`](https://www.npmjs.com/package/@nokgridcore/ui), you don't need to install this separately. It comes with them, and `@nokgridcore/ui/styles.css` already includes the tokens. Install this package directly when you want the tokens without the components.
 
+Want NokGrid's components in your own brand instead? Use [`@nokgridcore/cli`](https://www.npmjs.com/package/@nokgridcore/cli) to build a theme from your team's Tokens Studio file.
+
 ## Install
 
 ```sh

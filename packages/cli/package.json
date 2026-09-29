@@ -1,0 +1,27 @@
+{
+	"name": "@nokgridcore/cli",
+	"version": "0.1.0",
+	"description": "Build a NokGridCore theme from your team's Tokens Studio file",
+	"type": "module",
+	"license": "MIT",
+	"homepage": "https://nokgrid-ui.vercel.app/",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/nokgridcore/nokgrid.git",
+		"directory": "packages/cli"
+	},
+	"bin": {
+		"nokgrid": "./bin/nokgrid.js"
+	},
+	"files": [
+		"bin",
+		"lib"
+	],
+	"engines": {
+		"node": ">=18"
+	},
+	"dependencies": {
+		"@nokgridcore/tokens": "workspace:^",
+		"style-dictionary": "^4.4.0"
+	}
+}

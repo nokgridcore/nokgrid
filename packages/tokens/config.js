@@ -1,31 +1,30 @@
 import 'dotenv/config';
 
+import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import StyleDictionary from 'style-dictionary';
+import { buildCss } from './lib/css.js';
+
 const PREFIX = process.env.NOK_TOKEN_PREFIX ?? 'nok';
 
-// --- Light build ---
+// --- CSS (shared with @nokgridcore/cli) ---
+const readTree = (name) => JSON.parse(readFileSync(`src/${name}.json`, 'utf8'));
+const css = await buildCss(StyleDictionary, {
+	primitives: readTree('primitives'),
+	light: readTree('semantic-light'),
+	dark: readTree('semantic-dark'),
+	prefix: PREFIX,
+	verbosity: 'default',
+});
+mkdirSync('dist/css', { recursive: true });
+writeFileSync('dist/css/primitives.css', css.primitives);
+writeFileSync('dist/css/semantic-light.css', css.light);
+writeFileSync('dist/css/semantic-dark.css', css.dark);
+
+// --- JS, TypeScript and Tailwind ---
 const light = new StyleDictionary({
 	source: ['src/primitives.json', 'src/semantic-light.json'],
 	log: { verbosity: 'default' },
 	platforms: {
-		css: {
-			transformGroup: 'css',
-			prefix: PREFIX,
-			buildPath: 'dist/css/',
-			files: [
-				{
-					destination: 'primitives.css',
-					format: 'css/variables',
-					filter: (token) => token.filePath.includes('primitives'),
-				},
-				{
-					destination: 'semantic-light.css',
-					format: 'css/variables',
-					selector: ':root',
-					filter: (token) => token.filePath.includes('semantic-light'),
-				},
-			],
-		},
 		js: {
 			transformGroup: 'js',
 			buildPath: 'dist/js/',
@@ -121,37 +120,4 @@ light.registerFormat({
 	},
 });
 
-// --- Dark build ---
-const dark = new StyleDictionary({
-	source: ['src/primitives.json', 'src/semantic-dark.json'],
-	log: { verbosity: 'default' },
-	platforms: {
-		css: {
-			transformGroup: 'css',
-			prefix: PREFIX,
-			buildPath: 'dist/css/',
-			files: [
-				{
-					destination: 'semantic-dark.css',
-					format: 'css/variables-dark',
-					filter: (token) => token.filePath.includes('semantic-dark'),
-				},
-			],
-		},
-	},
-});
-
-// Register custom dark format before building
-dark.registerFormat({
-	name: 'css/variables-dark',
-	format: ({ dictionary }) => {
-		const vars = dictionary.allTokens.map(
-			(token) =>
-				`  --${PREFIX}-${token.path.join('-')}: ${token.$value ?? token.value};`,
-		);
-		return `[data-theme="dark"] {\n${vars.join('\n')}\n}\n`;
-	},
-});
-
 await light.buildAllPlatforms();
-await dark.buildAllPlatforms();
