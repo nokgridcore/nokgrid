@@ -412,6 +412,9 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 											whiteSpace: 'nowrap',
 											visibility: i % labelStep === 0 ? undefined : 'hidden',
 										}}>
+							<div className='flex shrink-0' style={{ gap: BAR_GAP, height: `${LABEL_ROW_SIZE}px` }}>
+								{categories.map((category) => (
+									<span key={category} style={{ ...categoryAxisLabelStyle, flex: 1, textAlign: 'center' }}>
 										{category}
 									</span>
 								))}
