@@ -78,7 +78,6 @@ export const ChartLine = forwardRef<HTMLDivElement, ChartLineProps>(
 		const plotRef = useRef<HTMLDivElement>(null);
 		const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 		const [mousePos, setMousePos] = useState<{ x: number; y: number; flip: boolean } | null>(null);
-		const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
 
 		// Draws each series in on mount, same grow-in spirit as ChartBar. A
 		// single rAF is enough here since `grown` only ever flips once (there's
@@ -104,7 +103,6 @@ export const ChartLine = forwardRef<HTMLDivElement, ChartLineProps>(
 			// Past the midpoint the tooltip opens to the left, so it never overflows
 			// the chart's right edge.
 			setMousePos({ x, y: e.clientY - rect.top, flip: x > rect.width / 2 });
-			setMousePos({ x, y: e.clientY - rect.top });
 		};
 
 		const pointX = (i: number) => `calc(${INSET}px + (100% - ${INSET * 2}px) * ${categories.length > 1 ? i / (categories.length - 1) : 0})`;
@@ -259,9 +257,6 @@ export const ChartLine = forwardRef<HTMLDivElement, ChartLineProps>(
 									left: mousePos.flip ? mousePos.x - 12 : mousePos.x + 12,
 									top: mousePos.y - 12,
 									transform: mousePos.flip ? 'translate(-100%, -100%)' : 'translateY(-100%)',
-									left: mousePos.x + 12,
-									top: mousePos.y - 12,
-									transform: 'translateY(-100%)',
 									zIndex: 20,
 									whiteSpace: 'nowrap',
 									pointerEvents: 'none',
