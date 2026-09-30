@@ -21,9 +21,12 @@ export const SidebarContent = forwardRef<HTMLDivElement, SidebarContentProps>(
 			<div
 				ref={ref}
 				className={classes}
-				// Gap above the first group (separating it from the header) wasn't
-				// given — using spacing-sm as a placeholder.
-				style={{ paddingTop: 'var(--nok-spacing-component-sm, 8px)', ...style }}
+				// Figma sidebar content: 8px above the first group, 16px between groups.
+				style={{
+					paddingTop: 'var(--nok-spacing-component-sm, 8px)',
+					gap: 'var(--nok-spacing-component-lg, 16px)',
+					...style,
+				}}
 				{...props}>
 				{children}
 			</div>

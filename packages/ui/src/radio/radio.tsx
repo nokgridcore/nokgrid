@@ -28,12 +28,12 @@ const checkedBorderWidth: Record<RadioSize, string> = {
 	md: '6px',
 };
 
-const labelStyleKey: Record<RadioSize, string> = {
+const labelStyleKey: Record<RadioSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'body-sm',
 	md: 'body-md',
 };
 
-const helperStyleKey: Record<RadioSize, string> = {
+const helperStyleKey: Record<RadioSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'caption-sm',
 	md: 'caption-md',
 };

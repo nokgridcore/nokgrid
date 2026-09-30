@@ -35,7 +35,7 @@ const searchIconSizeForInputSize: Record<SearchInputSize, IconSize> = {
 	lg: 'md',
 };
 
-const bodyStyleKey: Record<SearchInputSize, string> = {
+const bodyStyleKey: Record<SearchInputSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'body-sm',
 	md: 'body-md',
 	lg: 'body-lg',

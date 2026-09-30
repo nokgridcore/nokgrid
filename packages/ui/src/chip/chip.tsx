@@ -26,7 +26,7 @@ const sizeClasses: Record<ChipSize, string> = {
 	medium: 'h-control-sm px-component-md gap-component-xs',
 };
 
-const labelStyleKey: Record<ChipSize, string> = {
+const labelStyleKey: Record<ChipSize, keyof typeof nokTailwindTheme.textStyles> = {
 	small: 'label-md',
 	medium: 'label-lg',
 };

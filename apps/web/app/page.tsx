@@ -1,29 +1,27 @@
-import { Button } from '@nokgridcore/ui/button';
-import styles from './page.module.css';
+import { Faq } from "./_landing/faq";
+import { FinalCta } from "./_landing/final-cta";
+import { Footer } from "./_landing/footer";
+import { Gallery } from "./_landing/gallery";
+import { Hero } from "./_landing/hero";
+import { HowItWorks } from "./_landing/how-it-works";
+import { Metrics } from "./_landing/metrics";
+import { Nav } from "./_landing/nav";
+import { Team } from "./_landing/team";
 
 export default function Home() {
-	return (
-		<div className={styles.page}>
-			<div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-				<Button variant='primary'>Primary</Button>
-				<Button variant='secondary'>Secondary</Button>
-				<Button variant='tertiary'>Tertiary</Button>
-				<Button variant='destructive'>Destructive</Button>
-			</div>
-			<div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-				<Button state="disabled" variant='primary'>
-					Primary Disabled
-				</Button>
-				<Button state="disabled" variant='secondary'>
-					Secondary Disabled
-				</Button>
-				<Button state="disabled" variant='tertiary'>
-					Tertiary Disabled
-				</Button>
-				<Button state="disabled" variant='destructive'>
-					Destructive Disabled
-				</Button>
-			</div>
-		</div>
-	);
+  return (
+    <>
+      <Nav />
+      <main id="main" tabIndex={-1} className="outline-none">
+        <Hero />
+        <Metrics />
+        <HowItWorks />
+        <Gallery />
+        <Team />
+        <Faq />
+        <FinalCta />
+      </main>
+      <Footer />
+    </>
+  );
 }

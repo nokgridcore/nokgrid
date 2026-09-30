@@ -12,7 +12,8 @@ export interface KpiProps extends HTMLAttributes<HTMLDivElement> {
 	size?: KpiSize;
 	deltaDirection?: KpiDeltaDirection;
 	label: string;
-	value: number;
+	/** A number, or a pre-formatted string such as "96.4%" or "$48,210". */
+	value: number | string;
 	showIcon?: boolean;
 	/**
 	 * A slot, not an icon swap — matches the design system's own fix (icon

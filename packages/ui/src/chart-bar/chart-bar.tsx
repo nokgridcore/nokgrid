@@ -1,6 +1,6 @@
 'use client';
 
-import { CSSProperties, HTMLAttributes, MouseEvent, forwardRef, useEffect, useRef, useState } from 'react';
+import { CSSProperties, HTMLAttributes, MouseEvent, forwardRef, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Legend } from '../legend/legend.js';
 import { Tooltip } from '../tooltip/tooltip.js';
 import { TooltipRow } from '../tooltip/tooltip-row.js';
@@ -120,7 +120,7 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 		const isVertical = orientation === 'vertical';
 		const tickCount = 4;
 		const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-		const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
+		const [mousePos, setMousePos] = useState<{ x: number; y: number; flip: boolean } | null>(null);
 		const plotRef = useRef<HTMLDivElement>(null);
 
 		// Bars grow from 0 on mount, and again whenever orientation flips (the
@@ -134,6 +134,34 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 		// with nothing to animate from. A second rAF guarantees a real paint
 		// happens in between.
 		const [grown, setGrown] = useState(false);
+
+		// On a narrow chart the category labels can't all sit side by side (nine
+		// "10am"-style labels need ~250px). Measure the widest label against the
+		// space each one gets and show every 2nd (or 3rd…) label when they'd
+		// collide. The bars stay; hovering one still names its category.
+		const labelRowRef = useRef<HTMLDivElement>(null);
+		const [labelStep, setLabelStep] = useState(1);
+		useLayoutEffect(() => {
+			const row = labelRowRef.current;
+			if (!row || categories.length === 0) return;
+			const update = () => {
+				// Measure each label's text, not its box (the box is always the slot width).
+				const range = document.createRange();
+				const widest = Math.max(
+					...Array.from(row.children).map((label) => {
+						range.selectNodeContents(label);
+						return range.getBoundingClientRect().width;
+					}),
+				);
+				// Centre-to-centre distance between neighbouring labels.
+				const spacing = (row.clientWidth + BAR_GAP_PX) / categories.length;
+				setLabelStep(spacing > 0 ? Math.max(1, Math.ceil((widest + BAR_GAP_PX) / spacing)) : 1);
+			};
+			update();
+			const observer = new ResizeObserver(update);
+			observer.observe(row);
+			return () => observer.disconnect();
+		}, [categories]);
 		useEffect(() => {
 			setGrown(false);
 			let raf2 = 0;
@@ -151,7 +179,10 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 		const handlePlotMouseMove = (e: MouseEvent<HTMLDivElement>) => {
 			const rect = plotRef.current?.getBoundingClientRect();
 			if (!rect) return;
-			setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+			const x = e.clientX - rect.left;
+			// Past the midpoint the tooltip opens to the left, so it never overflows
+			// the chart's right edge (which made the last bars jump).
+			setMousePos({ x, y: e.clientY - rect.top, flip: x > rect.width / 2 });
 		};
 
 		const categoryTotal = (index: number) =>
@@ -223,6 +254,9 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 			// 8px between them constant instead of the bars themselves.
 			const sizeStyle: CSSProperties = {
 				flex: 1,
+				// Without this a flex item won't shrink below its content, so on a
+				// narrow screen the bars overflow instead of sharing the width.
+				minWidth: 0,
 				position: 'relative',
 				zIndex: 1,
 				[isVertical ? 'height' : 'width']: `${grown ? pct : 0}%`,
@@ -233,9 +267,9 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 				<div key={category} className='flex' style={sizeStyle} onMouseEnter={() => setHoveredIndex(i)} onMouseLeave={() => setHoveredIndex(null)}>
 					{layout === 'stacked' ?
 						<ChartBarStack orientation={orientation} showLabel={false}>
-							{series.map((s) => (
+							{series.map((s, si) => (
 								<ChartBarSegment
-									key={s.label}
+									key={`${s.label}-${si}`}
 									orientation={orientation}
 									color={s.color}
 									state={stateForIndex(i)}
@@ -257,16 +291,16 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 				title={categories[hoveredIndex]}
 				style={{
 					position: 'absolute',
-					left: mousePos.x + 12,
+					left: mousePos.flip ? mousePos.x - 12 : mousePos.x + 12,
 					top: mousePos.y - 12,
-					transform: 'translateY(-100%)',
+					transform: mousePos.flip ? 'translate(-100%, -100%)' : 'translateY(-100%)',
 					zIndex: 20,
 					whiteSpace: 'nowrap',
 					pointerEvents: 'none',
 				}}>
 				<div className='flex flex-col' style={{ gap: 'var(--nok-spacing-component-xs, 4px)' }}>
-					{(layout === 'stacked' ? series : series.slice(0, 1)).map((s) => (
-						<TooltipRow key={s.label} color={s.color} label={s.label} value={String(s.values[hoveredIndex] ?? 0)} />
+					{(layout === 'stacked' ? series : series.slice(0, 1)).map((s, si) => (
+						<TooltipRow key={`${s.label}-${si}`} color={s.color} label={s.label} value={String(s.values[hoveredIndex] ?? 0)} />
 					))}
 				</div>
 			</Tooltip>
@@ -278,8 +312,8 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 
 		const legend = showLegend && (
 			<div className='flex flex-wrap' style={{ gap: 'var(--nok-spacing-component-md, 12px)' }}>
-				{visibleSeries.map((s) => (
-					<Legend key={s.label} swatchShape='square' color={s.color} label={s.label} />
+				{visibleSeries.map((s, si) => (
+					<Legend key={`${s.label}-${si}`} swatchShape='square' color={s.color} label={s.label} />
 				))}
 			</div>
 		);
@@ -319,7 +353,7 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 						    full reserved region; an extra gap here would eat into the
 						    plot's own flex:1 height, throwing it out of sync with the
 						    Y-axis's tick area (which only reserves LABEL_ROW_SIZE). */}
-						<div className='flex flex-1 flex-col'>
+						<div className='flex flex-1 flex-col' style={{ minWidth: 0 }}>
 							<div
 								ref={plotRef}
 								onMouseMove={handlePlotMouseMove}
@@ -364,9 +398,20 @@ export const ChartBar = forwardRef<HTMLDivElement, ChartBarProps>(
 								{cursorTooltip}
 							</div>
 
-							<div className='flex shrink-0' style={{ gap: BAR_GAP, height: `${LABEL_ROW_SIZE}px` }}>
-								{categories.map((category) => (
-									<span key={category} style={{ ...categoryAxisLabelStyle, flex: 1, textAlign: 'center' }}>
+							<div ref={labelRowRef} className='flex shrink-0' style={{ gap: BAR_GAP, height: `${LABEL_ROW_SIZE}px` }}>
+								{categories.map((category, i) => (
+									// minWidth 0 lets the labels share a narrow row with the bars
+									// above them; nowrap keeps each label on one centred line.
+									<span
+										key={category}
+										style={{
+											...categoryAxisLabelStyle,
+											flex: 1,
+											minWidth: 0,
+											textAlign: 'center',
+											whiteSpace: 'nowrap',
+											visibility: i % labelStep === 0 ? undefined : 'hidden',
+										}}>
 										{category}
 									</span>
 								))}
