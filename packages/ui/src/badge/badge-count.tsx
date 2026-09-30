@@ -29,7 +29,7 @@ const sizeStyle: Record<
 	},
 };
 
-const labelStyleKey: Record<BadgeCountSize, string> = {
+const labelStyleKey: Record<BadgeCountSize, keyof typeof nokTailwindTheme.textStyles> = {
 	small: 'caption-sm',
 	medium: 'caption-md',
 };

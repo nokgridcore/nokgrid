@@ -77,6 +77,7 @@ export const ChartLine = forwardRef<HTMLDivElement, ChartLineProps>(
 		const tickCount = 4;
 		const plotRef = useRef<HTMLDivElement>(null);
 		const [hoverIndex, setHoverIndex] = useState<number | null>(null);
+		const [mousePos, setMousePos] = useState<{ x: number; y: number; flip: boolean } | null>(null);
 		const [mousePos, setMousePos] = useState<{ x: number; y: number } | null>(null);
 
 		// Draws each series in on mount, same grow-in spirit as ChartBar. A
@@ -100,6 +101,9 @@ export const ChartLine = forwardRef<HTMLDivElement, ChartLineProps>(
 			const span = rect.width - INSET * 2;
 			const ratio = span > 0 ? (x - INSET) / span : 0;
 			setHoverIndex(Math.min(categories.length - 1, Math.max(0, Math.round(ratio * Math.max(categories.length - 1, 1)))));
+			// Past the midpoint the tooltip opens to the left, so it never overflows
+			// the chart's right edge.
+			setMousePos({ x, y: e.clientY - rect.top, flip: x > rect.width / 2 });
 			setMousePos({ x, y: e.clientY - rect.top });
 		};
 
@@ -252,6 +256,9 @@ export const ChartLine = forwardRef<HTMLDivElement, ChartLineProps>(
 								title={categories[hoverIndex]}
 								style={{
 									position: 'absolute',
+									left: mousePos.flip ? mousePos.x - 12 : mousePos.x + 12,
+									top: mousePos.y - 12,
+									transform: mousePos.flip ? 'translate(-100%, -100%)' : 'translateY(-100%)',
 									left: mousePos.x + 12,
 									top: mousePos.y - 12,
 									transform: 'translateY(-100%)',

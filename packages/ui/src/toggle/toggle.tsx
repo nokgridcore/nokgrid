@@ -43,7 +43,7 @@ const thumbTravel: Record<ToggleSize, string> = {
 	md: '16px',
 };
 
-const labelStyleKey: Record<ToggleSize, string> = {
+const labelStyleKey: Record<ToggleSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'body-sm',
 	md: 'body-md',
 };

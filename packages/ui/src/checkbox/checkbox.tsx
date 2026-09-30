@@ -30,12 +30,12 @@ const iconSizeForCheckboxSize: Record<CheckboxSize, 'xs' | 'sm'> = {
 	md: 'sm',
 };
 
-const labelStyleKey: Record<CheckboxSize, string> = {
+const labelStyleKey: Record<CheckboxSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'body-sm',
 	md: 'body-md',
 };
 
-const helperStyleKey: Record<CheckboxSize, string> = {
+const helperStyleKey: Record<CheckboxSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'caption-sm',
 	md: 'caption-md',
 };

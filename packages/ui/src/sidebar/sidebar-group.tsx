@@ -75,7 +75,13 @@ export const SidebarGroup = forwardRef<HTMLDivElement, SidebarGroupProps>(
 		return (
 			<div ref={ref} className={classes} style={groupStyle} {...props}>
 				{showLabel && !isCollapsed && label && (
-					<span className='truncate' style={{ padding: '0 var(--nok-spacing-component-sm, 8px)', ...labelStyle }}>
+					<span
+						className='truncate'
+						style={{
+							// menu.header in Figma: 4px vertical, 12px horizontal — lines up with the items' text.
+							padding: 'var(--nok-spacing-component-xs, 4px) var(--nok-spacing-component-md, 12px)',
+							...labelStyle,
+						}}>
 						{label}
 					</span>
 				)}

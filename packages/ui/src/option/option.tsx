@@ -45,7 +45,7 @@ const checkboxSizeForOptionSize: Record<OptionSize, CheckboxSize> = {
 	lg: 'md',
 };
 
-const labelStyleKey: Record<OptionSize, string> = {
+const labelStyleKey: Record<OptionSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'body-sm',
 	md: 'body-md',
 	lg: 'body-lg',

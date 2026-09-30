@@ -31,7 +31,7 @@ const sizeClasses: Record<TabSize, string> = {
 	medium: 'h-control-md px-component-lg gap-component-sm',
 };
 
-const labelStyleKey: Record<TabSize, string> = {
+const labelStyleKey: Record<TabSize, keyof typeof nokTailwindTheme.textStyles> = {
 	small: 'label-md',
 	medium: 'label-lg',
 };

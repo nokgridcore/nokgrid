@@ -21,6 +21,8 @@ export interface ButtonProps extends Omit<
 	state?: ButtonState;
 	icon?: IconName;
 	iconPosition?: IconPosition;
+	/** Turns off the press scale where the motion would distract. */
+	static?: boolean;
 }
 
 const variantClasses: Record<ButtonVariant, string> = {
@@ -81,6 +83,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 			state = 'default',
 			icon,
 			iconPosition = 'left',
+			static: isStatic = false,
 			className,
 			style,
 			children,
@@ -100,7 +103,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 		}, [isIconOnly, ariaLabel]);
 
 		const classes = [
-			'inline-flex items-center justify-center font-body font-medium leading-none transition-colors',
+			'inline-flex items-center justify-center font-body font-medium leading-none',
+			// Colours change on hover; the press scales the whole button so the label
+			// and icon come with it. Motion-gated so reduced motion keeps the colour cue only.
+			'transition-colors motion-safe:transition-[color,background-color,border-color,transform] motion-safe:duration-150 motion-safe:ease-out',
+			!isStatic && 'motion-safe:enabled:active:scale-press',
 			isIconOnly ? 'rounded-full' : 'rounded-md',
 			'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--nok-color-border-focus)]',
 			'disabled:cursor-not-allowed',

@@ -6,7 +6,265 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Motion. One named set of curves, durations and scales for the whole page. */
+:root {
+  --motion-ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* entrances, reveals, presses */
+  --motion-ease-emphasized: cubic-bezier(0.2, 0, 0, 1); /* contextual icon swaps */
+  /* Hero entrance: easeOutCubic. Gentler than --motion-ease-out, so the long
+     rise spreads evenly instead of snapping most of the way in the first frames. */
+  --motion-ease-enter: cubic-bezier(0.33, 1, 0.68, 1);
+  --motion-duration-press: 150ms;
+  --motion-duration-state: 200ms; /* accordions, crossfades */
+  --motion-duration-icon: 300ms;
+  --motion-duration-enter: 700ms; /* hero entrance: long and soft, it only plays once */
+  --motion-enter-distance: var(--nok-space-6); /* everything in the hero rises this far */
+  --motion-stagger: 100ms;
+  --motion-scale-press: 0.96;
+  --motion-scale-icon-out: 0.25; /* contextual icon swap: 0.25 → 1 */
+  --motion-blur-icon-out: 4px; /* contextual icon swap: 4px → 0 */
+  --motion-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* moving on screen */
+  --motion-duration-reveal: 400ms; /* accordion and FAQ open/close */
+  --motion-duration-rise: 500ms; /* content and screenshots rising into place */
+  --motion-duration-slide: 250ms; /* tab indicator */
+  --motion-duration-draw: 700ms; /* charts drawing in */
+  --motion-duration-count: 900ms; /* metric count-up */
+  --motion-parallax: 0.12; /* hero dashboard drifts at 12% of scroll speed */
+
+  /* Material for the sticky nav. */
+  --material-opacity: 80%;
+  --material-blur: 20px;
+  --material-saturate: 180%;
+
+  /* 1px hairline on screenshots and photos, so they keep an edge on any surface. */
+  --image-outline: oklch(0 0 0 / 0.1);
+}
+
+[data-theme="dark"] {
+  --image-outline: oklch(1 0 0 / 0.1);
+}
+
+html {
+  /* Anchored sections land below the sticky nav, not under it. */
+  scroll-padding-top: var(--nok-space-20);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   background: var(--nok-color-background-canvas);
   color: var(--nok-color-text-primary);
+  font-family: var(--nok-typography-font-family-body), sans-serif;
+}
+
+@layer components {
+  /* Page-load entrance: the hero's parts rise into place in reading order, once. */
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(var(--motion-enter-distance));
+    }
+  }
+
+  @keyframes enter-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .enter-stagger > * {
+      animation: enter var(--motion-duration-enter) var(--motion-ease-enter) both;
+    }
+    .enter-stagger > :nth-child(2) {
+      animation-delay: var(--motion-stagger);
+    }
+    .enter-stagger > :nth-child(3) {
+      animation-delay: calc(var(--motion-stagger) * 2);
+    }
+    .enter-stagger > :nth-child(4) {
+      animation-delay: calc(var(--motion-stagger) * 3);
+    }
+    .enter-late {
+      animation: enter var(--motion-duration-enter) var(--motion-ease-enter) both;
+      animation-delay: calc(var(--motion-stagger) * 4);
+    }
+  }
+
+  /* Hold the entrance until the web fonts are in (see layout.tsx), so the
+     headline doesn't swap fonts and reflow halfway through rising. */
+  html:not([data-fonts-ready]) :is(.enter-stagger > *, .enter-late, .highlight-box, .highlight-text, .logo) {
+    animation-play-state: paused;
+  }
+
+  /* Reduced motion keeps the arrival, without the movement. */
+  @media (prefers-reduced-motion: reduce) {
+    .enter-stagger > *,
+    .enter-late {
+      animation: enter-fade var(--motion-duration-enter) ease both;
+    }
+  }
+
+  /* Translucent chrome: content scrolls under the sticky nav instead of behind a wall. */
+  .material-bar {
+    background: color-mix(
+      in oklab,
+      var(--nok-color-background-surface) var(--material-opacity),
+      transparent
+    );
+    backdrop-filter: blur(var(--material-blur)) saturate(var(--material-saturate));
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .material-bar {
+      background: var(--nok-color-background-surface);
+      backdrop-filter: none;
+    }
+  }
+
+  .image-outline {
+    outline: 1px solid var(--image-outline);
+    outline-offset: -1px;
+  }
+
+  /* Accordion reveal: animates to the content's own height without measuring it. */
+  .reveal {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+  .reveal[data-open="true"] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+  .reveal > * {
+    min-height: 0;
+    overflow: hidden;
+  }
+  .reveal > * > * {
+    opacity: 0;
+    transform: translateY(var(--nok-space-3));
+  }
+  .reveal[data-open="true"] > * > * {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      transition-property: grid-template-rows, opacity;
+      transition-duration: var(--motion-duration-reveal);
+      transition-timing-function: var(--motion-ease-out);
+    }
+    .reveal > * > * {
+      transition-property: opacity, transform;
+      transition-duration: var(--motion-duration-rise);
+      transition-timing-function: var(--motion-ease-out);
+    }
+    /* Opening: content follows the panel. Closing: it leaves first. */
+    .reveal[data-open="true"] > * > * {
+      transition-delay: var(--motion-stagger);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal > * > * {
+      transition: opacity var(--motion-duration-state) ease;
+    }
+    .reveal > * > * {
+      transform: none;
+    }
+  }
+
+  /* Rises into place once, when mounted (mobile accordion preview, CTA command). */
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(var(--rise-from, var(--nok-space-6)));
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .rise-in {
+      animation: rise var(--motion-duration-rise) var(--motion-ease-out) both;
+    }
+    .rise-in-quick {
+      --rise-from: 100%;
+      animation: rise var(--motion-duration-slide) var(--motion-ease-out) both;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rise-in,
+    .rise-in-quick {
+      animation: enter-fade var(--motion-duration-state) ease both;
+    }
+  }
+
+  /* Hero headline: the orange box grows up from its baseline, then "data-heavy"
+     rises up inside it. Everything in the hero moves bottom-up. */
+  @keyframes highlight-wipe {
+    from {
+      clip-path: inset(100% 0 0 0 round var(--nok-spacing-radius-sm));
+    }
+    to {
+      clip-path: inset(0 0 0 0 round var(--nok-spacing-radius-sm));
+    }
+  }
+  .highlight-text {
+    display: inline-block;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .highlight-box {
+      animation: highlight-wipe var(--motion-duration-enter) var(--motion-ease-enter) both;
+      animation-delay: calc(var(--motion-stagger) * 1.5);
+    }
+    .highlight-text {
+      --rise-from: 110%;
+      animation: rise var(--motion-duration-enter) var(--motion-ease-enter) both;
+      animation-delay: calc(var(--motion-stagger) * 3);
+    }
+  }
+
+  /* Hero logos rise in one after another, then react to a hover. */
+  @keyframes logo-rise {
+    from {
+      opacity: 0;
+      transform: translateY(var(--nok-space-3));
+    }
+  }
+  .logo {
+    display: inline-flex;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .logo {
+      animation: logo-rise var(--motion-duration-enter) var(--motion-ease-enter) backwards;
+      animation-delay: calc(var(--motion-stagger) * (2 + var(--logo-index, 0)));
+      transition: transform var(--motion-duration-rise) var(--motion-ease-out);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .logo:hover {
+        transform: translateY(calc(var(--nok-space-1) * -1));
+      }
+      .logo-spin:hover {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  /* Donut sweeps round from twelve o'clock when its cell scrolls into view. */
+  @property --sweep {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 360deg;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sweep-in svg {
+      --sweep: 0deg;
+      mask-image: conic-gradient(black var(--sweep), transparent 0);
+      transition: --sweep var(--motion-duration-draw) var(--motion-ease-out);
+    }
+    .sweep-in[data-visible="true"] svg {
+      --sweep: 360deg;
+    }
+  }
 }
