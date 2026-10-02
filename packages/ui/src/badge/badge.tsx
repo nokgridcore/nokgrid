@@ -30,7 +30,7 @@ const sizeStyle: Record<BadgeSize, { height: string; paddingInline: string }> = 
 	},
 };
 
-const labelStyleKey: Record<BadgeSize, string> = {
+const labelStyleKey: Record<BadgeSize, keyof typeof nokTailwindTheme.textStyles> = {
 	small: 'caption-sm',
 	medium: 'caption-md',
 };

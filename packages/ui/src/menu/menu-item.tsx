@@ -31,8 +31,8 @@ export interface MenuItemProps extends Omit<HTMLAttributes<HTMLDivElement>, 'onC
 const MENU_ITEM_WIDTH = '240px';
 
 const fieldSizeClasses: Record<MenuItemSize, string> = {
-	sm: 'h-control-sm px-component-sm gap-component-sm',
-	md: 'h-control-md px-component-sm gap-component-sm',
+	sm: 'h-control-sm px-component-md gap-component-sm',
+	md: 'h-control-md px-component-md gap-component-sm',
 };
 
 // disabled pending — only default/hovered/focused/active given so far.
@@ -143,10 +143,12 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
 					</span>
 				)}
 
-				{showBadge && <Badge variant={badgeVariant} label={badgeLabel ?? ''} />}
+				{showBadge && <Badge variant={badgeVariant} label={badgeLabel ?? ''} fullyRounded />}
 
 				{showTrailingLabel && trailingLabel && (
-					<span className='text-text-secondary'>{trailingLabel}</span>
+					<span style={nokTailwindTheme.textStyles['caption-md']} className='text-text-tertiary'>
+						{trailingLabel}
+					</span>
 				)}
 
 				{showTrailingIcon && trailingIcon && (

@@ -18,6 +18,8 @@ export interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
 	label?: string;
 	showMetadata?: boolean;
 	metadata?: string;
+	/** Linear only: stretch the track and metadata row to the container instead of the fixed 240px. */
+	fullWidth?: boolean;
 }
 
 const LINEAR_TRACK_WIDTH = 240;
@@ -96,6 +98,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
 			label,
 			showMetadata = false,
 			metadata,
+			fullWidth = false,
 			className,
 			...props
 		},
@@ -104,6 +107,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
 		const isDeterminate = state === 'determinate';
 		const clampedValue = Math.min(100, Math.max(0, value));
 		const showValueLabel = isDeterminate && showPercentage;
+		const linearWidth = fullWidth ? '100%' : LINEAR_TRACK_WIDTH;
 
 		if (type === 'circular') {
 			const diameter = circularSizePx[size];
@@ -163,16 +167,17 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
 		return (
 			<div
 				ref={ref}
-				className={['inline-flex flex-col items-start gap-1', className].filter(Boolean).join(' ')}
+				className={[fullWidth ? 'flex' : 'inline-flex', 'flex-col items-start gap-1', className].filter(Boolean).join(' ')}
 				{...props}>
 				<style>{INDETERMINATE_KEYFRAMES}</style>
 				{showLabel && label && <span style={labelStyle}>{label}</span>}
 				<div
 					className={`relative overflow-hidden rounded-full bg-background-overlay ${linearHeightClass[size]}`}
-					style={{ width: LINEAR_TRACK_WIDTH }}>
+					style={{ width: linearWidth }}>
 					{isDeterminate ? (
 						<div
-							className={`h-full rounded-full ${colorBgClass[color]}`}
+							// Fills to its value, matching the line chart's 700ms draw.
+							className={`h-full rounded-full ${colorBgClass[color]} motion-safe:transition-[width] motion-safe:duration-700 motion-safe:ease-out`}
 							style={{ width: `${clampedValue}%` }}
 						/>
 					) : (
@@ -188,7 +193,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
 				{(showValueLabel || (showMetadata && metadata)) && (
 					<div
 						className='flex items-center justify-between'
-						style={{ width: LINEAR_TRACK_WIDTH, ...linearValueStyle }}>
+						style={{ width: linearWidth, ...linearValueStyle }}>
 						{showMetadata && metadata && <span>{metadata}</span>}
 						{showValueLabel && <span>{clampedValue}%</span>}
 					</div>

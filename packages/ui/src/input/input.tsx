@@ -45,20 +45,20 @@ const iconSizeForInputSize: Record<InputSize, 'sm' | 'md' | 'lg'> = {
 	lg: 'lg',
 };
 
-const labelStyleKey: Record<InputSize, string> = {
+const labelStyleKey: Record<InputSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'label-sm',
 	md: 'label-md',
 	lg: 'label-lg',
 };
 
-const bodyStyleKey: Record<InputSize, string> = {
+const bodyStyleKey: Record<InputSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'body-sm',
 	md: 'body-md',
 	lg: 'body-lg',
 };
 
 // No caption-lg exists — falls back to caption-md (largest available).
-const helperStyleKey: Record<InputSize, string> = {
+const helperStyleKey: Record<InputSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'caption-sm',
 	md: 'caption-md',
 	lg: 'caption-md',

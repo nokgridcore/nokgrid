@@ -61,14 +61,14 @@ const iconSizeForSelectSize: Record<SelectSize, IconSize> = {
 	lg: 'lg',
 };
 
-const labelStyleKey: Record<SelectSize, string> = {
+const labelStyleKey: Record<SelectSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'label-sm',
 	md: 'label-md',
 	lg: 'label-lg',
 };
 
 // No caption-lg exists — falls back to caption-md (largest available).
-const helperStyleKey: Record<SelectSize, string> = {
+const helperStyleKey: Record<SelectSize, keyof typeof nokTailwindTheme.textStyles> = {
 	sm: 'caption-sm',
 	md: 'caption-md',
 	lg: 'caption-md',
