@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Badge } from "@nokgridcore/ui/badge";
+import { Icon } from "@nokgridcore/ui/icon";
 import { IconSwap } from "./icon-swap";
 import { LINKS } from "./links";
 
@@ -117,88 +118,139 @@ export function Nav() {
   const { theme, toggle } = useTheme();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Escape closes the mobile menu, as it does every other overlay.
+  // While the full-page menu is open: Escape closes it, the page behind can't
+  // scroll or take focus, and growing past the mobile breakpoint closes it.
   useEffect(() => {
     if (!menuOpen) return;
+    const behind = [
+      document.getElementById("main"),
+      document.querySelector("footer"),
+    ];
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const close = () => setMenuOpen(false);
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key === "Escape") close();
     };
+    const onBreakpoint = () => {
+      if (desktop.matches) close();
+    };
+
+    document.body.style.overflow = "hidden";
+    behind.forEach((node) => node?.setAttribute("inert", ""));
     document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
+    desktop.addEventListener("change", onBreakpoint);
+    return () => {
+      document.body.style.overflow = "";
+      behind.forEach((node) => node?.removeAttribute("inert"));
+      document.removeEventListener("keydown", onKeyDown);
+      desktop.removeEventListener("change", onBreakpoint);
+    };
   }, [menuOpen]);
 
+  // A same-page link (e.g. Components) has to wait for the menu to close and
+  // the page to unlock before it can scroll to its section.
+  const followMenuLink = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    setMenuOpen(false);
+    if (!href.startsWith("#")) return;
+    event.preventDefault();
+    requestAnimationFrame(() => {
+      document.querySelector(href)?.scrollIntoView();
+      history.pushState(null, "", href);
+    });
+  };
+
   return (
-    <header className="material-bar sticky top-0 z-10 border-b border-border-default">
-      <nav
-        aria-label="Main"
-        className="flex items-center justify-between px-layout-page-horizontal py-3 lg:py-5"
-      >
-        <a href="#top" className="flex items-center gap-2.5">
-          <Image
-            src="/landing/wordmark.svg"
-            alt="NokgridCore"
-            width={176}
-            height={28}
-            priority
-          />
-          <Badge
-            variant="neutral"
-            appearance="tinted"
-            size="small"
-            label="v1.0"
-          />
-        </a>
-
-        <div className="hidden items-center gap-8 lg:flex">
-          <ul className="flex items-center gap-6 text-style-body-md text-text-primary">
-            {NAV_LINKS.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  className="motion-safe:transition-colors motion-safe:duration-press hover:text-text-brand"
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <IconLinks theme={theme} onToggleTheme={toggle} />
-        </div>
-
-        <button
-          type="button"
-          className={`${ICON_HIT_AREA} text-icon-default lg:hidden`}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          onClick={() => setMenuOpen((open) => !open)}
+    <>
+      <header className="material-bar sticky top-0 z-20 border-b border-border-default">
+        <nav
+          aria-label="Main"
+          className="flex items-center justify-between px-layout-page-horizontal py-3 lg:py-5"
         >
-          <IconSwap
-            active={menuOpen}
-            activeIcon="X"
-            inactiveIcon="Menu"
-            size="lg"
-          />
-        </button>
-      </nav>
+          <a href="#top" className="flex items-center gap-2.5">
+            <Image
+              src="/landing/wordmark.svg"
+              alt="NokgridCore"
+              width={176}
+              height={28}
+              priority
+            />
+            <Badge
+              variant="neutral"
+              appearance="tinted"
+              size="small"
+              label="v1.0"
+            />
+          </a>
 
+          <div className="hidden items-center gap-8 lg:flex">
+            <ul className="flex items-center gap-6 text-style-body-md text-text-primary">
+              {NAV_LINKS.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="motion-safe:transition-colors motion-safe:duration-press hover:text-text-brand"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <IconLinks theme={theme} onToggleTheme={toggle} />
+          </div>
+
+          <button
+            type="button"
+            className={`${ICON_HIT_AREA} text-icon-default lg:hidden`}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <IconSwap
+              active={menuOpen}
+              activeIcon="X"
+              inactiveIcon="Menu"
+              size="lg"
+            />
+          </button>
+        </nav>
+      </header>
+
+      {/* Full-page menu on small screens: covers everything under the nav bar,
+          rather than pushing a strip open over the page. */}
       {menuOpen && (
         <div
           id="mobile-menu"
-          className="flex flex-col gap-4 border-t border-border-default px-layout-page-horizontal py-4 lg:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+          className="menu-in fixed inset-0 z-10 flex flex-col overflow-y-auto bg-background-surface px-layout-page-horizontal pb-10 pt-20 lg:hidden"
         >
-          <ul className="flex flex-col gap-3 text-style-body-md text-text-primary">
+          <ul className="flex flex-col">
             {NAV_LINKS.map((link) => (
-              <li key={link.label}>
-                <a href={link.href} onClick={() => setMenuOpen(false)}>
+              <li key={link.label} className="border-b border-border-default">
+                <a
+                  href={link.href}
+                  onClick={(event) => followMenuLink(event, link.href)}
+                  className="flex items-center justify-between py-5 text-style-display-sm text-text-primary"
+                >
                   {link.label}
+                  <Icon name="ArrowRight" size="md" color="secondary" />
                 </a>
               </li>
             ))}
           </ul>
-          <IconLinks theme={theme} onToggleTheme={toggle} />
+          <div className="mt-auto flex items-center justify-between border-t border-border-default pt-6">
+            <span className="text-style-body-sm text-text-secondary">
+              Figma, GitHub and theme
+            </span>
+            <IconLinks theme={theme} onToggleTheme={toggle} />
+          </div>
         </div>
       )}
-    </header>
+    </>
   );
 }

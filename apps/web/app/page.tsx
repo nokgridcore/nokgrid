@@ -7,10 +7,11 @@ import { HowItWorks } from "./_landing/how-it-works";
 import { Metrics } from "./_landing/metrics";
 import { Nav } from "./_landing/nav";
 import { Team } from "./_landing/team";
+import { ToastRegion } from "./_landing/toast-region";
 
 export default function Home() {
   return (
-    <>
+    <ToastRegion>
       <Nav />
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
@@ -22,6 +23,6 @@ export default function Home() {
         <FinalCta />
       </main>
       <Footer />
-    </>
+    </ToastRegion>
   );
 }

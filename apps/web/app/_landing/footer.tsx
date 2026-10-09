@@ -51,7 +51,7 @@ export function Footer() {
         >
           {COLUMNS.map((column) => (
             <div key={column.title} className="flex min-w-0 flex-col gap-3">
-              <p className="text-style-label-sm text-text-tertiary">
+              <p className="text-style-label-sm text-text-secondary">
                 {column.title}
               </p>
               <ul className="flex flex-col gap-3">

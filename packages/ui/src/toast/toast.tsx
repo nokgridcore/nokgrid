@@ -19,6 +19,8 @@ export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'conten
 	 */
 	position?: ToastPosition;
 	showStartSlot?: boolean;
+	/** Replaces the colour's default start icon, e.g. a check on a neutral confirmation. */
+	icon?: IconName;
 	title?: string;
 	showTitle?: boolean;
 	text?: string;
@@ -103,6 +105,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
 			orientation = 'horizontal',
 			position = 'top',
 			showStartSlot = true,
+			icon,
 			title,
 			showTitle = true,
 			text,
@@ -161,7 +164,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(
 			...style,
 		};
 
-		const startIcon = showStartSlot && <Icon name={variantIcon[color]} className='shrink-0' />;
+		const startIcon = showStartSlot && <Icon name={icon ?? variantIcon[color]} className='shrink-0' />;
 
 		const closeButton = showClose && (
 			<button type='button' aria-label='Close' onClick={handleClose} className='inline-flex shrink-0'>

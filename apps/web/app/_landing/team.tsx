@@ -3,31 +3,30 @@ import { Avatar } from "@nokgridcore/ui/avatar";
 import { Divider } from "@nokgridcore/ui/divider";
 import { Section, SectionHeader } from "./section";
 
-// TODO: replace the "#" profile links with each person's real LinkedIn and GitHub.
 const TEAM = [
   {
     name: "Emmanuel Anthony",
     role: "Design lead",
     bio: "Design systems and dashboards, and the occasional 2am variant audit.",
     avatar: "/landing/avatar-emmanuel.png",
-    linkedin: "#",
-    github: "#",
+    linkedin: "https://www.linkedin.com/in/emmanuel-anthony-639b07122/",
+    github: "https://github.com/anthony-emmauel",
   },
   {
     name: "Kelvin",
     role: "Frontend engineer",
     bio: "React and TypeScript, with strong opinions about token naming.",
-    avatar: "/landing/avatar-kelvin.jpg",
-    linkedin: "#",
-    github: "#",
+    avatar: "/landing/avatar-kelvin-ochubili.jpg",
+    linkedin: "https://www.linkedin.com/in/kelvin-ochubili",
+    github: "https://github.com/iykekelvins",
   },
   {
     name: "Timmy",
     role: "Product designer",
     bio: "Turns dense data into screens people can actually read.",
     avatar: "/landing/avatar-timmy.png",
-    linkedin: "#",
-    github: "#",
+    linkedin: "https://www.linkedin.com/in/oluwatimilehinakapo",
+    github: "https://github.com/Oluwatimilehinakapo",
   },
 ];
 
@@ -41,7 +40,15 @@ function SocialLink({
   icon: "linkedin" | "github-social";
 }) {
   return (
-    <a href={href} aria-label={label} className="flex">
+    // Opens the profile in a new tab. The hover circle extends the hit area to
+    // 30px without moving the 18px icon.
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${label} (opens in a new tab)`}
+      className="-m-1.5 flex rounded-full p-1.5 motion-safe:transition-[background-color,transform] motion-safe:duration-press motion-safe:ease-out hover:bg-background-overlay motion-safe:active:scale-press"
+    >
       <Image
         src={`/landing/${icon}.svg`}
         alt=""
@@ -83,7 +90,7 @@ export function Team() {
                 src={person.avatar}
                 alt={person.name}
               />
-              <div className="flex items-center gap-2.5 pt-1">
+              <div className="flex items-center gap-3 pt-1">
                 <SocialLink
                   href={person.linkedin}
                   label={`${person.name} on LinkedIn`}
