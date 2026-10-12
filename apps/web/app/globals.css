@@ -177,6 +177,14 @@ body {
     }
   }
 
+  /* Mobile menu: fades in with a small rise, quick enough not to slow navigation. */
+  @media (prefers-reduced-motion: no-preference) {
+    .menu-in {
+      --rise-from: var(--nok-space-2);
+      animation: rise var(--motion-duration-slide) var(--motion-ease-out) both;
+    }
+  }
+
   /* Rises into place once, when mounted (mobile accordion preview, CTA command). */
   @keyframes rise {
     from {

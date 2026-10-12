@@ -155,7 +155,14 @@ export function HowItWorks() {
                       type="button"
                       aria-expanded={isOpen}
                       aria-controls={panelId}
-                      onClick={() => setOpenIndex(index)}
+                      // One step is always open, since the preview always shows a
+                      // screenshot. Closing the open step moves on to the next one
+                      // (wrapping round), so its image comes up in its place.
+                      onClick={() =>
+                        setOpenIndex(
+                          isOpen ? (index + 1) % STEPS.length : index,
+                        )
+                      }
                       className="flex w-full items-center text-left"
                     >
                       <span
@@ -192,9 +199,12 @@ export function HowItWorks() {
                         </p>
                         <a
                           href={step.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="flex items-center gap-1.5 self-start text-style-label-md text-text-brand hover:underline"
                         >
                           {step.linkLabel}
+                          <span className="sr-only"> (opens in a new tab)</span>
                           <Icon name="ArrowRight" size="sm" />
                         </a>
                       </div>
