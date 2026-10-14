@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  // Resolves the social preview image (app/opengraph-image.jpg) to a full URL.
+  metadataBase: new URL("https://nokgrid.vercel.app"),
   title: "NokGridCore — the design system for data-heavy dashboards",
   description:
     "Ship the same tokens, the same component names and the same behaviour in Figma and in code.",

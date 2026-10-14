@@ -30,8 +30,10 @@ const variantClasses: Record<ButtonVariant, string> = {
 		'bg-action-primary-default text-white hover:bg-action-primary-hover active:bg-action-primary-pressed disabled:bg-action-primary-disabled disabled:text-white',
 	secondary:
 		'bg-action-secondary-default text-action-secondary-text hover:bg-action-secondary-hover active:bg-action-secondary-pressed disabled:bg-action-secondary-disabled disabled:text-text-disabled',
+	// The border brightens on hover and press too: in dark mode the hover fill
+	// alone (#080708 → #141414) is too close to the resting fill to see.
 	tertiary:
-		'bg-action-tertiary-background border border-action-tertiary-border text-action-tertiary-text hover:bg-action-tertiary-hover active:bg-action-tertiary-pressed disabled:bg-action-tertiary-disabled-background disabled:border-action-tertiary-disabled-border disabled:text-action-tertiary-disabled-text',
+		'bg-action-tertiary-background border border-action-tertiary-border text-action-tertiary-text hover:bg-action-tertiary-hover hover:border-border-strong active:bg-action-tertiary-pressed active:border-border-strong disabled:bg-action-tertiary-disabled-background disabled:border-action-tertiary-disabled-border disabled:text-action-tertiary-disabled-text',
 	destructive:
 		'bg-action-destructive-default text-action-destructive-text hover:bg-action-destructive-hover active:bg-action-destructive-pressed disabled:bg-action-destructive-disabled disabled:text-action-destructive-disabled-text',
 };
