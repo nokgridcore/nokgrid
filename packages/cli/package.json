@@ -1,6 +1,6 @@
 {
 	"name": "@nokgridcore/cli",
-	"version": "0.2.1",
+	"version": "0.2.2",
 	"description": "Build a NokGridCore theme from your team's Tokens Studio file",
 	"type": "module",
 	"license": "MIT",

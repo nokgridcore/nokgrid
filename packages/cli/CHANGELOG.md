@@ -1,5 +1,13 @@
 # @nokgridcore/cli
 
+## 0.2.2
+
+### Patch Changes
+
+- 2982f6f: Fix: themes from Tokens Studio files that export sizes as plain numbers (Figma's pixel values, `$type: "number"`) came out unitless (`padding: 12`), which browsers ignore, so components lost all spacing, sizes and radii. Numbers in size groups (space, spacing, size, radius, font size, line height) are now converted to rem, the same way NokGrid's own tokens are stored.
+- Updated dependencies [2982f6f]
+  - @nokgridcore/tokens@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes
