@@ -1,5 +1,13 @@
 # @nokgridcore/cli
 
+## 0.2.1
+
+### Patch Changes
+
+- 7716774: Token sets are now matched by role instead of exact name, so real Tokens Studio exports work as-is: Figma's default "Mode 1" mode name and collection names like "Theme - semantic tokens" are accepted. The CLI prints which sets it read.
+- Updated dependencies [7716774]
+  - @nokgridcore/tokens@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes
