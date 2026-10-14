@@ -30,6 +30,33 @@ function convertAlias(value) {
 	});
 }
 
+// Figma exports FLOAT variables as bare pixel numbers ($type "number",
+// e.g. 16), while NokGrid's own file stores them as rem dimensions ("1rem").
+// A bare number is invalid as a CSS length, so numbers in size groups are
+// converted the same way NokGrid's are: px / 16, in rem.
+const DIMENSION_GROUPS = new Set(['space', 'spacing', 'size', 'radius']);
+const TYPOGRAPHY_DIMENSIONS = new Set(['font-size', 'line-height', 'letter-spacing']);
+
+function isDimensionPath(path) {
+	return DIMENSION_GROUPS.has(path[0]) || (path[0] === 'typography' && TYPOGRAPHY_DIMENSIONS.has(path[1]));
+}
+
+const pxToRem = (px) => `${parseFloat((px / 16).toFixed(4))}rem`;
+
+function normaliseValue(value, path) {
+	if (typeof value === 'number' && isDimensionPath(path)) return pxToRem(value);
+	return typeof value === 'string' ? convertAlias(value) : value;
+}
+
+// Composite typography: sizes as bare numbers are px; a line height of 4 or
+// less is a ratio (e.g. 1.5) and stays unitless.
+function normaliseTypographyPart(value, prop) {
+	if (typeof value !== 'number') return convertAlias(value);
+	if (prop === 'fontSize') return pxToRem(value);
+	if (prop === 'lineHeight') return value <= 4 ? value : pxToRem(value);
+	return value;
+}
+
 function setNested(obj, path, value) {
 	let cursor = obj;
 	for (let i = 0; i < path.length - 1; i++) {
@@ -58,13 +85,13 @@ function walkTokens(obj, out = {}, parentPath = []) {
 			// Composite typography tokens are flattened to one token per property.
 			if (value.$type === 'typography' && typeof rawValue === 'object') {
 				setNested(out, path, {
-					fontFamily: { value: convertAlias(rawValue.fontFamily) },
-					fontSize: { value: convertAlias(rawValue.fontSize) },
-					fontWeight: { value: convertAlias(rawValue.fontWeight) },
-					lineHeight: { value: convertAlias(rawValue.lineHeight) },
+					fontFamily: { value: normaliseTypographyPart(rawValue.fontFamily, 'fontFamily') },
+					fontSize: { value: normaliseTypographyPart(rawValue.fontSize, 'fontSize') },
+					fontWeight: { value: normaliseTypographyPart(rawValue.fontWeight, 'fontWeight') },
+					lineHeight: { value: normaliseTypographyPart(rawValue.lineHeight, 'lineHeight') },
 				});
 			} else {
-				setNested(out, path, { value: typeof rawValue === 'string' ? convertAlias(rawValue) : rawValue });
+				setNested(out, path, { value: normaliseValue(rawValue, path) });
 			}
 		} else if (value && typeof value === 'object') {
 			walkTokens(value, out, path);
