@@ -57,6 +57,9 @@ async function main() {
 
 	console.log(`\n✔ Wrote ${shownPath} (${result.tokenCount} tokens)`);
 	console.log(
+		`  Read sets: primitives "${result.setNames.primitives}", light "${result.setNames.light}", dark "${result.setNames.dark}".`,
+	);
+	console.log(
 		`  Checked against NokGrid ${result.contract.version} (${result.contract.size} required tokens` +
 			`${result.contract.source === 'cli' ? ', @nokgridcore/ui not found in this project' : ''}).`,
 	);

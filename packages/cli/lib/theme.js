@@ -69,7 +69,7 @@ export async function buildTheme({ input, out, prefix = NOK, cwd = process.cwd()
 		);
 	}
 
-	const trees = convertRaw(raw);
+	const { setNames, ...trees } = convertRaw(raw);
 	const css = await buildCss(StyleDictionary, { ...trees, prefix });
 	const contract = loadContract(cwd);
 
@@ -110,6 +110,7 @@ export async function buildTheme({ input, out, prefix = NOK, cwd = process.cwd()
 		missing,
 		missingDark,
 		tokenCount: theirs.size,
+		setNames,
 		contract: { size: contract.required.size, version: contract.version, source: contract.source },
 	};
 }

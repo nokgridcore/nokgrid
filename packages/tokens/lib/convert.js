@@ -73,22 +73,49 @@ function walkTokens(obj, out = {}, parentPath = []) {
 	return out;
 }
 
-/** @returns {{ primitives: object, light: object, dark: object }} */
-export function convertRaw(raw) {
-	const missing = Object.values(TOKEN_SETS).filter((name) => !raw[name]);
-	if (missing.length) {
-		const found = Object.keys(raw).filter((k) => !k.startsWith('$'));
-		throw new Error(
-			`Token file is missing the set(s): ${missing.map((m) => `"${m}"`).join(', ')}.\n` +
-				`Found: ${found.length ? found.map((f) => `"${f}"`).join(', ') : 'none'}.\n` +
-				'Start from the NokGrid Tokens Studio file and keep its set names.',
-		);
+// Figma names collections and modes freely ("Mode 1", "Theme - semantic
+// tokens"), so sets are matched by role rather than exact name.
+const SET_ROLES = {
+	primitives: { label: 'a primitive set (name containing "primitive")', test: (n) => n.includes('primitive') },
+	light: { label: 'a semantic light set (name containing "semantic", ending "/light")', test: (n) => n.includes('semantic') && n.endsWith('/light') },
+	dark: { label: 'a semantic dark set (name containing "semantic", ending "/dark")', test: (n) => n.includes('semantic') && n.endsWith('/dark') },
+};
+
+function findSets(raw) {
+	const names = Object.keys(raw).filter((k) => !k.startsWith('$'));
+	const found = {};
+	const problems = [];
+
+	for (const [role, { label, test }] of Object.entries(SET_ROLES)) {
+		if (raw[TOKEN_SETS[role]]) {
+			found[role] = TOKEN_SETS[role];
+			continue;
+		}
+		const matches = names.filter((n) => test(n.toLowerCase().trim()));
+		if (matches.length === 1) found[role] = matches[0];
+		else if (matches.length === 0) problems.push(`No ${label}.`);
+		else problems.push(`More than one match for ${label}: ${matches.map((m) => `"${m}"`).join(', ')}.`);
 	}
 
+	if (problems.length) {
+		throw new Error(
+			`${problems.join('\n')}\n` +
+				`Sets in this file: ${names.length ? names.map((n) => `"${n}"`).join(', ') : 'none'}.\n` +
+				'Start from the NokGrid Tokens Studio file and keep one primitive set and one semantic set with light and dark modes.',
+		);
+	}
+	return found;
+}
+
+/** @returns {{ primitives: object, light: object, dark: object, setNames: { primitives: string, light: string, dark: string } }} */
+export function convertRaw(raw) {
+	const setNames = findSets(raw);
+
 	return {
-		primitives: walkTokens(raw[TOKEN_SETS.primitives]),
-		light: walkTokens(raw[TOKEN_SETS.light]),
-		dark: walkTokens(raw[TOKEN_SETS.dark]),
+		primitives: walkTokens(raw[setNames.primitives]),
+		light: walkTokens(raw[setNames.light]),
+		dark: walkTokens(raw[setNames.dark]),
+		setNames,
 	};
 }
 
