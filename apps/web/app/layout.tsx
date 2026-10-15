@@ -1,12 +1,40 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { SITE_URL } from "./_landing/links";
 import "./globals.css";
 
+const title = "NokGridCore — the design system for data-heavy dashboards";
+const description =
+  "Ship the same tokens, the same component names and the same behaviour in Figma and in code.";
+
 export const metadata: Metadata = {
-  // Resolves the social preview image (app/opengraph-image.jpg) to a full URL.
-  metadataBase: new URL("https://nokgrid.vercel.app"),
-  title: "NokGridCore — the design system for data-heavy dashboards",
-  description:
-    "Ship the same tokens, the same component names and the same behaviour in Figma and in code.",
+  // Resolves relative URLs (canonical, social images) against the live site.
+  metadataBase: new URL(SITE_URL),
+  title,
+  description,
+  applicationName: "NokGridCore",
+  // Points search engines at the main address, not Vercel preview URLs.
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "NokGridCore",
+    locale: "en",
+    title,
+    description,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+  },
+};
+
+// Matches the browser's UI to the page canvas in light and dark.
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f6f6f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#080708" },
+  ],
 };
 
 // Runs before paint so a saved or system dark preference never flashes light.

@@ -1,1 +1,1 @@
-NokgridCore: Shared components and tokens, ready to use. Consistent design, built once and reused everywhere.
+NokgridCore logo in white on a NokFlame orange background

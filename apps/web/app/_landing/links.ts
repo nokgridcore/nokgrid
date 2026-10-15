@@ -1,3 +1,6 @@
+// The landing page's own address: metadata, canonical URL, robots and sitemap.
+export const SITE_URL = "https://nokgrid.vercel.app";
+
 // One place for every outbound link on the landing page.
 export const LINKS = {
   docs: "https://nokgrid-ui.vercel.app/",
