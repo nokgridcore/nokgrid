@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Badge } from "@nokgridcore/ui/badge";
 import { Icon } from "@nokgridcore/ui/icon";
@@ -150,19 +151,14 @@ export function Nav() {
     };
   }, [menuOpen]);
 
-  // A same-page link (e.g. #components) has to wait for the menu to close and
-  // the page to unlock before it can scroll to its section.
-  const followMenuLink = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
+  // The logo is a real link home (it works without JavaScript, and Cmd-click
+  // opens a new tab). Already on the home page, it scrolls to the top instead,
+  // leaving the address bar clean rather than adding "#top".
+  const goHome = (event: React.MouseEvent<HTMLAnchorElement>) => {
     setMenuOpen(false);
-    if (!href.startsWith("#")) return;
+    if (window.location.pathname !== "/") return;
     event.preventDefault();
-    requestAnimationFrame(() => {
-      document.querySelector(href)?.scrollIntoView();
-      history.pushState(null, "", href);
-    });
+    window.scrollTo({ top: 0 });
   };
 
   return (
@@ -172,7 +168,7 @@ export function Nav() {
           aria-label="Main"
           className="flex items-center justify-between px-layout-page-horizontal py-3 lg:py-5"
         >
-          <a href="#top" className="flex items-center gap-2.5">
+          <Link href="/" onClick={goHome} className="flex items-center gap-2.5">
             <Image
               src="/landing/wordmark.svg"
               alt="NokgridCore"
@@ -186,7 +182,7 @@ export function Nav() {
               size="small"
               label="v1.0"
             />
-          </a>
+          </Link>
 
           <div className="hidden items-center gap-8 lg:flex">
             <ul className="flex items-center gap-6 text-style-body-md text-text-primary">
@@ -239,7 +235,7 @@ export function Nav() {
                 <a
                   href={link.href}
                   {...(isExternal(link.href) ? newTab : {})}
-                  onClick={(event) => followMenuLink(event, link.href)}
+                  onClick={() => setMenuOpen(false)}
                   className="flex items-center justify-between py-5 text-style-display-sm text-text-primary"
                 >
                   {link.label}
