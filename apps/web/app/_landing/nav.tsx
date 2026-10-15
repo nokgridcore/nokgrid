@@ -9,10 +9,11 @@ import { LINKS } from "./links";
 
 type Theme = "light" | "dark";
 
-const NAV_LINKS = [
-  { label: "Documentation", href: LINKS.docs },
-  { label: "Components", href: "#components" },
-];
+const NAV_LINKS = [{ label: "Documentation", href: LINKS.docs }];
+
+// Links that leave the site open in a new tab, so the page stays where it was.
+const isExternal = (href: string) => href.startsWith("http");
+const newTab = { target: "_blank", rel: "noopener noreferrer" } as const;
 
 // 20px icons get a 40px hit area without changing how they sit in the row.
 const ICON_HIT_AREA = "-m-2.5 flex p-2.5";
@@ -68,14 +69,16 @@ function IconLinks({
     <div className="flex items-center gap-4">
       <a
         href={LINKS.figmaLibrary}
-        aria-label="Figma library"
+        {...newTab}
+        aria-label="Figma library (opens in a new tab)"
         className={ICON_HIT_AREA}
       >
         <Image src="/landing/figma-logo.svg" alt="" width={20} height={20} />
       </a>
       <a
         href={LINKS.github}
-        aria-label="GitHub repository"
+        {...newTab}
+        aria-label="GitHub repository (opens in a new tab)"
         className={ICON_HIT_AREA}
       >
         <span className="flex size-icon-md items-center justify-center">
@@ -147,7 +150,7 @@ export function Nav() {
     };
   }, [menuOpen]);
 
-  // A same-page link (e.g. Components) has to wait for the menu to close and
+  // A same-page link (e.g. #components) has to wait for the menu to close and
   // the page to unlock before it can scroll to its section.
   const followMenuLink = (
     event: React.MouseEvent<HTMLAnchorElement>,
@@ -191,6 +194,7 @@ export function Nav() {
                 <li key={link.label}>
                   <a
                     href={link.href}
+                    {...(isExternal(link.href) ? newTab : {})}
                     className="motion-safe:transition-colors motion-safe:duration-press hover:text-text-brand"
                   >
                     {link.label}
@@ -234,6 +238,7 @@ export function Nav() {
               <li key={link.label} className="border-b border-border-default">
                 <a
                   href={link.href}
+                  {...(isExternal(link.href) ? newTab : {})}
                   onClick={(event) => followMenuLink(event, link.href)}
                   className="flex items-center justify-between py-5 text-style-display-sm text-text-primary"
                 >
