@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Badge } from "@nokgridcore/ui/badge";
 import { Icon } from "@nokgridcore/ui/icon";
@@ -9,10 +10,11 @@ import { LINKS } from "./links";
 
 type Theme = "light" | "dark";
 
-const NAV_LINKS = [
-  { label: "Documentation", href: LINKS.docs },
-  { label: "Components", href: "#components" },
-];
+const NAV_LINKS = [{ label: "Documentation", href: LINKS.docs }];
+
+// Links that leave the site open in a new tab, so the page stays where it was.
+const isExternal = (href: string) => href.startsWith("http");
+const newTab = { target: "_blank", rel: "noopener noreferrer" } as const;
 
 // 20px icons get a 40px hit area without changing how they sit in the row.
 const ICON_HIT_AREA = "-m-2.5 flex p-2.5";
@@ -68,14 +70,16 @@ function IconLinks({
     <div className="flex items-center gap-4">
       <a
         href={LINKS.figmaLibrary}
-        aria-label="Figma library"
+        {...newTab}
+        aria-label="Figma library (opens in a new tab)"
         className={ICON_HIT_AREA}
       >
         <Image src="/landing/figma-logo.svg" alt="" width={20} height={20} />
       </a>
       <a
         href={LINKS.github}
-        aria-label="GitHub repository"
+        {...newTab}
+        aria-label="GitHub repository (opens in a new tab)"
         className={ICON_HIT_AREA}
       >
         <span className="flex size-icon-md items-center justify-center">
@@ -147,19 +151,14 @@ export function Nav() {
     };
   }, [menuOpen]);
 
-  // A same-page link (e.g. Components) has to wait for the menu to close and
-  // the page to unlock before it can scroll to its section.
-  const followMenuLink = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    href: string,
-  ) => {
+  // The logo is a real link home (it works without JavaScript, and Cmd-click
+  // opens a new tab). Already on the home page, it scrolls to the top instead,
+  // leaving the address bar clean rather than adding "#top".
+  const goHome = (event: React.MouseEvent<HTMLAnchorElement>) => {
     setMenuOpen(false);
-    if (!href.startsWith("#")) return;
+    if (window.location.pathname !== "/") return;
     event.preventDefault();
-    requestAnimationFrame(() => {
-      document.querySelector(href)?.scrollIntoView();
-      history.pushState(null, "", href);
-    });
+    window.scrollTo({ top: 0 });
   };
 
   return (
@@ -169,7 +168,7 @@ export function Nav() {
           aria-label="Main"
           className="flex items-center justify-between px-layout-page-horizontal py-3 lg:py-5"
         >
-          <a href="#top" className="flex items-center gap-2.5">
+          <Link href="/" onClick={goHome} className="flex items-center gap-2.5">
             <Image
               src="/landing/wordmark.svg"
               alt="NokgridCore"
@@ -183,7 +182,7 @@ export function Nav() {
               size="small"
               label="v1.0"
             />
-          </a>
+          </Link>
 
           <div className="hidden items-center gap-8 lg:flex">
             <ul className="flex items-center gap-6 text-style-body-md text-text-primary">
@@ -191,6 +190,7 @@ export function Nav() {
                 <li key={link.label}>
                   <a
                     href={link.href}
+                    {...(isExternal(link.href) ? newTab : {})}
                     className="motion-safe:transition-colors motion-safe:duration-press hover:text-text-brand"
                   >
                     {link.label}
@@ -234,7 +234,8 @@ export function Nav() {
               <li key={link.label} className="border-b border-border-default">
                 <a
                   href={link.href}
-                  onClick={(event) => followMenuLink(event, link.href)}
+                  {...(isExternal(link.href) ? newTab : {})}
+                  onClick={() => setMenuOpen(false)}
                   className="flex items-center justify-between py-5 text-style-display-sm text-text-primary"
                 >
                   {link.label}

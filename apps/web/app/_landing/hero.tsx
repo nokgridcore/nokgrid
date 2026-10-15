@@ -81,7 +81,6 @@ export function Hero() {
 
   return (
     <section
-      id="top"
       aria-labelledby="hero-title"
       className="overflow-hidden bg-background-surface px-layout-page-horizontal py-12 lg:py-24 lg:pr-0"
     >
