@@ -1,6 +1,4 @@
 // One place for every outbound link on the landing page.
-// TODO: FIGMA_LIBRARY and the team profile links are placeholders until the
-// public Figma library and profile URLs are confirmed.
 export const LINKS = {
   docs: "https://nokgrid-ui.vercel.app/",
   install:
@@ -11,7 +9,8 @@ export const LINKS = {
   license: "https://github.com/nokgridcore/nokgrid/blob/main/LICENSE",
   npmUi: "https://www.npmjs.com/package/@nokgridcore/ui",
   npmTokens: "https://www.npmjs.com/package/@nokgridcore/tokens",
-  figmaLibrary: "#",
+  figmaLibrary:
+    "https://www.figma.com/community/file/1692201162310521890/nokgridcore-v1",
 } as const;
 
 export const INSTALL_PACKAGE = "@nokgridcore/ui";
