@@ -1,30 +1,182 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { Callout } from './blocks';
 
 <Meta title="Getting Started/Installation/For designers" />
 
-# Installation: for designers
+# NokGridCore for designers
 
-<Callout tone="draft">
-Draft: this page will be finalised after end-to-end QA.
-</Callout>
+Use NokGridCore in Figma: duplicate the Community file, make it your team's library, theme it to your brand, and keep it up to date.
 
-## Get the Figma library
+**Time:** about 15 minutes to set up, about 30 minutes to rebrand.
+**You need:** a Figma account. Some steps need a paid plan; they're marked **Paid plan**.
 
-TODO
+---
 
-## Enable it in your file
+## Which guide do I need?
 
-TODO
+| Your situation | Follow |
+| --- | --- |
+| You design in Figma; your developers aren't using NokGridCore (yet) | **This page** |
+| You're a developer installing the npm package | [For developers](?path=/docs/getting-started-installation-for-developers--docs) |
+| Your designers and developers want Figma and code to share one set of tokens | This page (steps 1–6), then [For product teams](?path=/docs/getting-started-installation-for-product-teams--docs) |
 
-## Switch light and dark mode
+---
 
-TODO
+## What's in the file
 
-## Understand token naming
+| Page group | What it contains |
+| --- | --- |
+| **Thumbnail** | Cover and version number |
+| **Foundation** | Colour, typography, spacing, radius, sizing and motion documentation |
+| **Components** | About 320 components and sub-components, with all their states |
 
-TODO
+| Variable collection | What it is | Modes |
+| --- | --- | --- |
+| **primitive tokens** | Raw values: colour scales (NokFlame, NokMoss, Neutral, NokBanana, Green, Red, Blue), radius, spacing and the type scale | One |
+| **Theme – semantic tokens** | Named intent: background, text, border, action, chart, icon, spacing, size, motion. Each one points to a primitive. | light, dark |
 
-## Find components
+**Rule of thumb:** components only use **semantic** tokens. You change the look by changing **primitives**, or by pointing a semantic token at a different primitive.
 
-TODO
+---
+
+## Step 1: Duplicate the file
+
+1. Open the [NokGridCore Community page](https://www.figma.com/community/file/1692201162310521890/nokgridcore-v1).
+2. Click **Open in Figma**.
+3. The file opens as a copy in your **Drafts**. The copy is yours: your changes don't affect the original, and the original's updates don't reach your copy (see Step 8).
+
+> **Check:** the file shows in your drafts, and you can edit it.
+
+---
+
+## Step 2: Move it into your team and rename it
+
+Drafts are private to you. To share the system with your team:
+
+1. Open the file name menu (⌄ next to the file name) → **Move file…**
+2. Choose your team, then a project (for example "Design System").
+3. Rename it so nobody confuses it with the original, for example **"Your product Design System (based on NokGridCore v1.0.0)"**.
+
+Keep the NokGridCore version in the name. You'll need it when you check for updates.
+
+---
+
+## Step 3: Check that the file is clean
+
+Do this once, before anyone builds on it.
+
+1. **Assets** (left sidebar) → **Libraries**: you should see **"Created in this file"** with the components. No other NokGridCore library should be listed.
+2. **Variables** (left sidebar): you should see **primitive tokens** and **Theme – semantic tokens**.
+3. If you use the Tokens Studio plugin: open it → **Settings**. **Local document** should be the active storage. If it shows a GitHub or Bitbucket sync, the copy is still pointing at someone else's repo: switch to **Local document** before changing anything.
+
+> If anything here points to a NokGridCore team or repo you don't own, stop and [report it on GitHub](https://github.com/nokgridcore/nokgrid/issues).
+
+---
+
+## Step 4: Publish it as your team library · *Paid plan*
+
+This makes the components and variables available in all your team's files.
+
+1. File name menu (⌄) → **Library** → **Publish library…**
+2. Review the list of components, styles and variables → **Publish**.
+3. In any other file in your team: **Assets** → **Libraries** (book icon) → turn on your new library.
+
+**Free plan?** You can't publish team libraries. Work directly in this file, or copy components into other files.
+
+---
+
+## Step 5: Use components and modes
+
+**Insert components**
+- **Assets** → search for the component (for example `Button`, `KPI`, `Table`) → drag it onto your canvas.
+- Use the variant properties in the right panel (size, state, type). Don't detach components: detached instances stop receiving updates.
+
+**Switch light and dark**
+1. Select a frame (or the whole page).
+2. Right panel → **Appearance** → the variable mode icon → **Theme – semantic tokens → dark**.
+3. Everything inside the frame switches.
+
+> **Free plan note:** Figma's free Starter plan allows only one variable mode per collection, so **dark** is visible but locked. You need Professional or above to edit or apply dark mode.
+
+**Use tokens in your own designs**
+- When you set a fill, stroke, radius or gap, pick a **semantic** variable (for example `colour/background/surface`) instead of typing a hex or a number. That's what keeps your screens themeable.
+
+---
+
+## Step 6: Rebrand it
+
+Change the brand without breaking the system.
+
+**Change colours (the safe way)**
+1. **Variables** → **primitive tokens**.
+2. Edit the values of a brand scale, for example replace the NokFlame 50–900 values with your brand's colour scale. Keep every stop.
+3. Every semantic token that points to NokFlame updates, in light and dark.
+
+**Point a semantic token at a different primitive**
+- Example: you want links in your brand colour instead of blue. **Theme – semantic tokens** → `colour/text/link` → change the alias from `Blue/700` to `NokFlame/700`.
+
+**Change typography**
+- Edit the font family primitive (for example swap Plus Jakarta Sans for your brand font). Every text style that uses it updates.
+
+**Rules**
+- ✅ Change **values** freely.
+- ✅ **Add** new tokens for your own components.
+- ❌ Don't **rename** or **delete** existing semantic, spacing, size, radius or type tokens. If your developers use the NokGridCore code package, the names must match what the components read.
+- ❌ Don't paste raw hex values into semantic tokens. Always alias a primitive, or dark mode stops working.
+
+After changing anything, publish your library again (Step 4) so other files get the change.
+
+---
+
+## Step 7: Tokens Studio (optional)
+
+Tokens Studio lets you export tokens as JSON and sync them with a code repo.
+
+1. **Resources** (Shift + I) → **Plugins** → search **Tokens Studio for Figma** → **Run**.
+2. **Settings** → keep **Local document** active.
+3. The **Tokens** tab shows the NokGridCore token sets.
+
+That's all you need if you work in Figma only. To connect Tokens Studio to your developers' repo, follow [For product teams](?path=/docs/getting-started-installation-for-product-teams--docs).
+
+---
+
+## Step 8: Getting updates
+
+Your copy does **not** update automatically when we release a new version.
+
+1. Check the Community page or the [Changelog](?path=/docs/getting-started-changelog--docs) for a newer version than the one in your file name.
+2. Read what changed (new components, fixed states, new tokens).
+3. Choose how to update:
+
+| Change in the release | What to do |
+| --- | --- |
+| A few fixed or new components | Duplicate the new version, then copy those components into your file |
+| New tokens | Add them to your variables with the same names and the values from the changelog |
+| A major version (v2, v3…) | Duplicate the new version and move your team to it. **Paid plan:** Assets → Libraries → **Swap library** moves existing designs to the new library |
+
+4. Update the version in your file name.
+
+---
+
+## Figma plan summary
+
+| Feature | Starter (free) | Professional and above |
+| --- | --- | --- |
+| Duplicate and use the file | ✅ | ✅ |
+| Light mode | ✅ | ✅ |
+| Dark mode (second variable mode) | 🔒 Locked | ✅ |
+| Publish as a team library | ❌ | ✅ |
+| Swap library | ❌ | ✅ |
+
+---
+
+## Troubleshooting
+
+| Problem | Cause | Fix |
+| --- | --- | --- |
+| Dark mode is greyed out | The free Starter plan allows one variable mode | Upgrade to Professional, or design in light only |
+| Components show as "missing" | You copied a component from another file that uses a library you don't have | Insert components from **this** file's Assets |
+| A colour change didn't reach a component | The component uses a different token, or it was detached | Select the layer, check which variable is applied in the right panel, and re-attach the instance |
+| Dark mode looks wrong after a rebrand | A semantic token got a raw hex instead of an alias | Re-alias it to a primitive in **Theme – semantic tokens** |
+| Tokens Studio shows a GitHub repo you don't own | Your copy kept the original's sync settings | Settings → **Local document** → **Apply**, then report it on GitHub |
+
+Still stuck? [Open an issue on GitHub](https://github.com/nokgridcore/nokgrid/issues).

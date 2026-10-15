@@ -1,63 +1,235 @@
 import { Meta } from '@storybook/addon-docs/blocks';
-import { Callout } from './blocks';
 
 <Meta title="Getting Started/Installation/For developers" />
 
-# Installation: for developers
+# NokGridCore for developers
 
-<Callout tone="draft">
-Draft: this page will be finalised after end-to-end QA.
-</Callout>
+Install the NokGridCore React package, load its stylesheet, and start building. Works in any React app: Vite, Next.js, or a plain single-repo project. **You don't need a monorepo, and you don't need Tailwind.**
+
+**Time:** about 10 minutes.
+
+---
+
+## Packages
+
+| Package | What it contains | Install it? |
+| --- | --- | --- |
+| `@nokgridcore/ui` | React + TypeScript components, plus one compiled stylesheet with every style and token | Yes |
+| `@nokgridcore/tokens` | The design tokens: CSS variables (light and dark), a Tailwind theme, and JavaScript constants | Comes with `ui` automatically; install it yourself only if you want the tokens without the components |
+| `@nokgridcore/cli` | The `nokgrid theme` command that turns your team's Tokens Studio file into a theme | Only for teams theming from Figma (see [For product teams](?path=/docs/getting-started-installation-for-product-teams--docs)) |
 
 ## Requirements
 
-TODO: confirm after QA
+| Tool | Version |
+| --- | --- |
+| React and React DOM | 19 |
+| Node.js | 18 or newer |
+| Package manager | npm, pnpm or yarn |
+| Tailwind CSS | Not needed. Optional for your own code (Step 4). |
 
-## Install the packages
+---
 
-TODO: confirm after QA
+## Step 1: Install
 
-```sh
-pnpm add @nokgridcore/ui @nokgridcore/tokens
-# npm install @nokgridcore/ui @nokgridcore/tokens
-# yarn add @nokgridcore/ui @nokgridcore/tokens
+```bash
+npm install @nokgridcore/ui
+# or
+pnpm add @nokgridcore/ui
 ```
 
-## Import styles
+---
 
-TODO: confirm after QA
+## Step 2: Load the stylesheet
 
-```css
-@import "@nokgridcore/tokens/dist/css/primitives.css";
-@import "@nokgridcore/tokens/dist/css/semantic-light.css";
-@import "@nokgridcore/tokens/dist/css/semantic-dark.css";
+Import it **once**, at your app's root, before your own styles.
+
+```tsx
+// Vite: src/main.tsx  ·  Next.js: app/layout.tsx
+import '@nokgridcore/ui/styles.css';
+import './index.css'; // your own styles come after
 ```
 
-## Set up Tailwind
+This one file contains every component style and every design token as a CSS variable: light values on `:root`, dark values under `[data-theme="dark"]`.
 
-TODO: confirm after QA
+> **Check:** open DevTools → Elements → `<html>` → Computed, and search for `--nok-`. You should see variables like `--nok-color-background-canvas`.
+
+> **Heads-up:** the stylesheet includes a base reset (Tailwind's Preflight). It removes default margins and browser styling from headings, lists and buttons across the whole page. In an existing app, check your own pages still look right after adding it.
+
+---
+
+## Step 3: Load the fonts
+
+The components use **Plus Jakarta Sans** and **Roboto**. The package doesn't bundle font files, so load them yourself, for example in `index.html`:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+  rel="stylesheet" />
+```
+
+In Next.js you can use `next/font/google` instead.
+
+---
+
+## Step 4: Tailwind for your own code (optional)
+
+The components don't need Tailwind: their styles are already compiled into `styles.css`. If **your own** code uses Tailwind v3, you can add the NokGridCore tokens to your theme, so your layouts use the same values:
 
 ```ts
 // tailwind.config.ts
 import { nokTailwindTheme } from '@nokgridcore/tokens/tailwind-theme';
 
-export default { theme: { extend: nokTailwindTheme } };
+export default {
+  content: ['./src/**/*.{ts,tsx}'],
+  theme: { extend: nokTailwindTheme },
+};
 ```
 
-## Render a first Button
+Classes like `bg-background-canvas`, `text-text-primary` and `rounded-md` then resolve to the token variables.
 
-TODO: confirm after QA
+---
+
+## Step 5: Use components
+
+Each component has its own import path:
 
 ```tsx
 import { Button } from '@nokgridcore/ui/button';
+import { Kpi } from '@nokgridcore/ui/kpi';
 
-export const Example = () => <Button variant="primary">Save</Button>;
+export function RevenueCard() {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <Kpi label='Revenue' value={48200} showDelta deltaValue='+12.4%' deltaDirection='positive' />
+      <Button variant='primary'>View report</Button>
+    </div>
+  );
+}
 ```
 
-## Switch themes
+Every component's props, variants and states are documented in this Storybook. Use the **Controls** panel on each story to see what's available. The full list of import paths is in the [`@nokgridcore/ui` README](https://www.npmjs.com/package/@nokgridcore/ui).
 
-TODO: confirm after QA
+Interactive components are marked `'use client'`, so they work in the Next.js App Router, including when imported from Server Components.
 
-```html
-<div data-theme="dark">…</div>
+---
+
+## Step 6: Dark mode
+
+Put `data-theme="dark"` on `<html>`, or on any element. Everything inside it switches.
+
+```tsx
+// Turn dark on
+document.documentElement.setAttribute('data-theme', 'dark');
+
+// Turn dark off
+document.documentElement.removeAttribute('data-theme');
+
+// Follow the operating system
+const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+dark
+  ? document.documentElement.setAttribute('data-theme', 'dark')
+  : document.documentElement.removeAttribute('data-theme');
 ```
+
+Components switch automatically, because they only read CSS variables.
+
+---
+
+## Step 7: Customise the theme (optional)
+
+Components never contain hard-coded colours, sizes or radii. They read `--nok-*` CSS variables. To change the look, **override the variables** in a stylesheet loaded **after** `styles.css`:
+
+```css
+/* src/theme.css, imported after '@nokgridcore/ui/styles.css' */
+:root {
+  --nok-color-action-primary-default: #2563eb;
+  --nok-color-action-primary-hover: #1d4ed8;
+  --nok-spacing-radius-md: 0.5rem;
+}
+
+[data-theme='dark'] {
+  --nok-color-action-primary-default: #60a5fa;
+}
+```
+
+The full list of variables, with their current values, is in **Foundations** (Colour, Typography, Spacing, Sizing, Radius).
+
+**Rules**
+- ✅ Override **values**.
+- ❌ Don't rename variables. Components look them up by name.
+- Anything you don't override keeps our default, including tokens we add in future releases.
+
+**Want designers to control these values from Figma?** Don't hand-write `theme.css`. Generate it from your team's Tokens Studio file with `@nokgridcore/cli`. See [For product teams](?path=/docs/getting-started-installation-for-product-teams--docs).
+
+---
+
+## Step 8: Tokens in JavaScript (optional)
+
+For values you need in JavaScript, such as a chart library or canvas drawing, prefer the CSS variable, so the value follows dark mode and your theme:
+
+```ts
+const series1 = 'var(--nok-color-chart-1)';
+```
+
+The raw palette values are also exported as constants, for places where a CSS variable can't be used:
+
+```ts
+import { ColorNokflame500, Space4 } from '@nokgridcore/tokens';
+// ColorNokflame500 === '#F05D23'
+```
+
+These are fixed values: they don't change with dark mode or with your team's theme.
+
+---
+
+## Building with AI tools
+
+AI coding tools work best when you give them the rules up front. Paste this into your project instructions (for example `CLAUDE.md` or `.cursorrules`) or your first prompt:
+
+```text
+This project uses the NokGridCore design system.
+- Components: import each one from its own path, e.g. '@nokgridcore/ui/button'.
+  Check the NokGridCore Storybook before building a new component.
+- '@nokgridcore/ui/styles.css' is imported once at the app root. Don't import it again.
+- Never hard-code colours, spacing, radius or font sizes. Use the --nok-* CSS variables
+  (or the NokGridCore Tailwind theme, if the project uses Tailwind).
+- Dark mode: data-theme="dark" on <html>.
+- To change the theme, override --nok-* variables in a stylesheet loaded after styles.css.
+  Never rename tokens.
+```
+
+---
+
+## Upgrading
+
+```bash
+npm update @nokgridcore/ui
+```
+
+`@nokgridcore/ui` brings the matching `@nokgridcore/tokens` with it. If you also installed `@nokgridcore/tokens` or `@nokgridcore/cli` directly, update them at the same time.
+
+NokGridCore is in **0.x**: the components are in active use, but the API can still change before 1.0. Read the [Changelog](?path=/docs/getting-started-changelog--docs) before updating.
+
+| Version change | What it means |
+| --- | --- |
+| Patch (0.2.1 → 0.2.2) | Fixes only. Update anytime. |
+| Minor (0.2.x → 0.3.0) | New features, and while we're in 0.x possibly breaking changes. Check the changelog first. |
+| Major (from 1.0 on) | Breaking changes, with migration notes in the changelog. |
+
+---
+
+## Troubleshooting
+
+| Problem | Cause | Fix |
+| --- | --- | --- |
+| Components render unstyled | `styles.css` isn't imported | Add `import '@nokgridcore/ui/styles.css'` at your app root (Step 2) |
+| Text shows in a Times-style font | The fonts aren't loaded | Load Plus Jakarta Sans and Roboto (Step 3) |
+| My headings and lists lost their default spacing | The base reset in `styles.css` | Expected: style them with your own CSS or the tokens |
+| Dark mode does nothing | The attribute is missing or has a different value | Set `data-theme="dark"` exactly, on `<html>` or a parent of the components |
+| My override isn't applied | Your CSS loads before `styles.css` | Import order: our `styles.css` first, your theme second |
+| "Invalid hook call" errors | Two copies of React are loaded | NokGridCore uses your app's React (it's a peer dependency). Run `npm ls react` and make sure there's only one. |
+| Install fails on React 18 | NokGridCore needs React 19 | Upgrade React and React DOM to 19 |
+
+Still stuck? [Open an issue on GitHub](https://github.com/nokgridcore/nokgrid/issues).

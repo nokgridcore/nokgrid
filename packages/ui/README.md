@@ -2,7 +2,7 @@
 
 React components for the NokGridCore design system. Styled with the design tokens from [`@nokgridcore/tokens`](https://www.npmjs.com/package/@nokgridcore/tokens), with light and dark themes built in.
 
-**[Browse every component in the Storybook](https://nokgrid-ui.vercel.app/)**
+**[Browse every component in the Storybook](https://nokgrid-ui.vercel.app/)** · **[Full installation guide](https://nokgrid-ui.vercel.app/?path=/docs/getting-started-installation-for-developers--docs)**
 
 ## Install
 
@@ -83,6 +83,8 @@ To give the components your team's colours, fonts and spacing, build a theme fro
 import '@nokgridcore/ui/styles.css';
 import './nokgrid-theme.css'; // from: npx @nokgridcore/cli theme ./tokens/brand.json
 ```
+
+The [product teams guide](https://nokgrid-ui.vercel.app/?path=/docs/getting-started-installation-for-product-teams--docs) covers the whole setup, from Figma to the app.
 
 ### Icons
 

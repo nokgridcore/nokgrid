@@ -381,6 +381,7 @@
 		"postcss-import": "^16.1.1",
 		"react": "^19.2.0",
 		"react-dom": "^19.2.0",
+		"remark-gfm": "^4.0.1",
 		"storybook": "^10.5.2",
 		"tailwindcss": "^3.4.19",
 		"typescript": "5.9.2"

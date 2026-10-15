@@ -1,0 +1,18 @@
+import { Meta, Markdown } from '@storybook/addon-docs/blocks';
+import uiChangelog from '../../CHANGELOG.md?raw';
+import tokensChangelog from '../../../tokens/CHANGELOG.md?raw';
+import cliChangelog from '../../../cli/CHANGELOG.md?raw';
+
+export const nested = (md) => md.replace(/^(#+) /gm, '#$1 ');
+
+<Meta title="Getting Started/Changelog" />
+
+# Changelog
+
+What changed in each release of the NokGridCore packages, newest version first. This page is generated from each package's own changelog, so it's always current.
+
+<Markdown>{nested(uiChangelog)}</Markdown>
+
+<Markdown>{nested(tokensChangelog)}</Markdown>
+
+<Markdown>{nested(cliChangelog)}</Markdown>

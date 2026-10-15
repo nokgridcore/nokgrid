@@ -4,6 +4,8 @@ import { dirname } from "path"
 
 import { fileURLToPath } from "url"
 
+import remarkGfm from "remark-gfm"
+
 /**
 * This function is used to resolve the absolute path of a package.
 * It is needed in projects that use Yarn PnP or are set up within a monorepo.
@@ -25,7 +27,12 @@ const config: StorybookConfig = {
   ],
   "addons": [
     getAbsolutePath('@storybook/addon-a11y'),
-    getAbsolutePath('@storybook/addon-docs'),
+    {
+      // MDX 2+ dropped GitHub-flavoured markdown, so tables and task lists in
+      // the docs pages render as raw text without this.
+      name: getAbsolutePath('@storybook/addon-docs'),
+      options: { mdxPluginOptions: { mdxCompileOptions: { remarkPlugins: [remarkGfm] } } },
+    },
     ...(isDevServer ? [getAbsolutePath('@storybook/addon-mcp')] : [])
   ],
   "core": {

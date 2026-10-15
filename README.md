@@ -4,12 +4,12 @@
 
 [![@nokgridcore/ui](https://img.shields.io/npm/v/@nokgridcore/ui?label=%40nokgridcore%2Fui&style=flat-square&color=F05D23)](https://www.npmjs.com/package/@nokgridcore/ui)
 [![@nokgridcore/tokens](https://img.shields.io/npm/v/@nokgridcore/tokens?label=%40nokgridcore%2Ftokens&style=flat-square&color=2f3d34)](https://www.npmjs.com/package/@nokgridcore/tokens)
+[![@nokgridcore/cli](https://img.shields.io/npm/v/@nokgridcore/cli?label=%40nokgridcore%2Fcli&style=flat-square&color=2f3d34)](https://www.npmjs.com/package/@nokgridcore/cli)
 [![MIT](https://img.shields.io/badge/license-MIT-2f3d34?style=flat-square)](LICENSE)
 
-**[Browse the Storybook](https://nokgrid-ui.vercel.app/)**: every component, variant and token, live.
+**[Browse the Storybook](https://nokgrid-ui.vercel.app/)**: every component, variant and token, live. · **[Get the Figma library](https://www.figma.com/community/file/1692201162310521890/nokgridcore-v1)**
 
-<!-- Add when public: Figma library link -->
-
+**Install guides:** [designers](https://nokgrid-ui.vercel.app/?path=/docs/getting-started-installation-for-designers--docs) · [developers](https://nokgrid-ui.vercel.app/?path=/docs/getting-started-installation-for-developers--docs) · [product teams](https://nokgrid-ui.vercel.app/?path=/docs/getting-started-installation-for-product-teams--docs)
 ---
 
 ## The idea
@@ -71,10 +71,12 @@ Everything is typed, including all 252 icon names, and interactive components ar
 
 The Figma library is built on the same variables the code uses, in two collections:
 
-- **Primitive**: the raw palette and scales. No modes, because they never change.
-- **Semantic**: purpose-named variables (`background/surface`, `text/primary`, `action/primary-hover`) with a **light** and a **dark** mode.
+- **primitive tokens**: the raw palette and scales. One mode, because they never change.
+- **Theme – semantic tokens**: purpose-named variables (`background/surface`, `text/primary`, `action/primary-hover`) with a **light** and a **dark** mode.
 
-To preview a design in dark, select the frame, open the Variables panel and switch the Semantic collection's mode. Everything inside follows, including nested components, with no detaching or duplicating.
+To preview a design in dark, select the frame and switch **Theme – semantic tokens** to **dark** in the variable mode menu. Everything inside follows, including nested components, with no detaching or duplicating.
+
+The [designers guide](https://nokgrid-ui.vercel.app/?path=/docs/getting-started-installation-for-designers--docs) covers duplicating the file, publishing it as your team library, rebranding it and getting updates.
 
 Components in Figma carry the same names, variants and states as their React counterparts, so a handoff note can say "Select, underlined, error state" and mean exactly one thing on both sides.
 
@@ -82,16 +84,17 @@ Components in Figma carry the same names, variants and states as their React cou
 
 NokGrid's look is only its default. Your team can give every component your own colours, type and spacing, without forking anything:
 
-1. **Designers** start from the NokGrid Tokens Studio file and change the values, keeping the token names. Rename the palettes freely.
-2. **Developers** export it and run one command in your project:
+1. **Designers** start from the NokGrid Figma file and change the values in Tokens Studio, keeping the token names. Rename the palettes freely.
+2. **Tokens Studio pushes the file to your repo** (GitHub or Bitbucket sync), or the designer exports it.
+3. **Developers** run one command in your project:
 
    ```bash
-   npx @nokgridcore/cli theme ./tokens/brand.json
+   npx @nokgridcore/cli theme ./design-tokens/tokens.json
    ```
 
-3. Import the generated `nokgrid-theme.css` after NokGrid's stylesheet. Every component, in light and dark, now wears your brand.
+4. Import the generated `nokgrid-theme.css` after NokGrid's stylesheet. Every component, in light and dark, now wears your brand.
 
-When the designers change a value, export and re-run. The command tells you if your file is missing any token NokGrid needs. Details in the [`@nokgridcore/cli` README](packages/cli/README.md).
+Run the command in your `predev` and `prebuild` scripts and it stays automatic: a designer's push from Figma reaches the app on the next build. The command tells you if your file is missing any token NokGrid needs. The [product teams guide](https://nokgrid-ui.vercel.app/?path=/docs/getting-started-installation-for-product-teams--docs) walks through the whole setup; options are in the [`@nokgridcore/cli` README](packages/cli/README.md).
 
 ## One source, every output
 
@@ -140,7 +143,7 @@ Every component is documented in [Storybook](https://nokgrid-ui.vercel.app/) wit
 
 ## Status
 
-NokGridCore is at **0.1**. The components are in active use and development, and the API may still change before 1.0. Breaking changes are called out in each package's changelog.
+NokGridCore is at **0.2**. The components are in active use and development, and the API may still change before 1.0. Breaking changes are called out in the [changelog](https://nokgrid-ui.vercel.app/?path=/docs/getting-started-changelog--docs).
 
 Next up: shadow and elevation tokens, and bringing the remaining Figma components into code.
 

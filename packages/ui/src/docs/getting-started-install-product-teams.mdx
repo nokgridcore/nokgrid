@@ -1,0 +1,327 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Getting Started/Installation/For product teams" />
+
+# NokGridCore for product teams
+
+Connect your designers and developers to **one shared set of tokens**. Your designer changes a token in Figma and pushes it, and your app picks up the new value. No hex values copied by hand, no drift between design and code.
+
+**Time:** about 45 minutes for the whole team, once.
+**Who's involved:**
+
+| Role | Does |
+| --- | --- |
+| **Product owner / dev lead** | Creates the repo, invites the designer, reviews and merges token pull requests |
+| **Designer** | Duplicates the Figma file, connects Tokens Studio, edits tokens, pushes changes |
+| **Developer** | Installs the packages, adds the theme command, reviews the result |
+
+---
+
+## How it works
+
+```text
+Figma + Tokens Studio ──push──▶ design-tokens/tokens.json   (your repo)
+                                         │
+                                         ▼  npx @nokgridcore/cli theme
+                                   src/styles/theme.css
+                                         │
+@nokgridcore/ui/styles.css ──▶ CSS cascade (ours first, yours wins) ──▶ @nokgridcore/ui components
+```
+
+- Our package ships **default** values as CSS variables.
+- Your repo holds **your** token file. Tokens Studio reads and writes it.
+- The `nokgrid theme` command turns your token file into `theme.css`, which overrides our defaults. It uses the same build as NokGridCore's own tokens, so the variable names always match what the components read.
+- Components only read CSS variables, so they pick up your values without any code change.
+
+**Your repo can be any structure.** A single app works, and so does a monorepo. You only need one agreed path for the token file.
+
+---
+
+## Before you start: checklist
+
+- [ ] A GitHub or Bitbucket account for the **product owner** and for the **designer**
+- [ ] A React 19 app (or a new one). Tailwind isn't needed.
+- [ ] The designer has a Figma account (Professional or above recommended; see the plan table at the end)
+- [ ] Everyone has read [For designers](?path=/docs/getting-started-installation-for-designers--docs) steps 1–3 or [For developers](?path=/docs/getting-started-installation-for-developers--docs) steps 1–6
+
+---
+
+## Part A: Repo and access · *Product owner*
+
+### A1. Create or choose the repo
+
+Use your product repo. Tokens Studio syncs with **GitHub** and **Bitbucket**.
+
+### A2. Create the token file
+
+Tokens Studio can't connect to a file or branch that doesn't exist yet, so add an empty token file and commit it to `main`:
+
+```text
+your-product/
+├─ design-tokens/
+│  └─ tokens.json        ← Tokens Studio will write here
+├─ src/
+│  └─ styles/
+│     └─ theme.css       ← generated in Part D (don't edit by hand)
+└─ package.json
+```
+
+```json
+{}
+```
+
+That's the whole content of `design-tokens/tokens.json` for now. In a monorepo, use something like `packages/tokens/tokens.json` instead. Whatever you choose, write the path down: the designer needs it in Part C.
+
+### A3. Protect `main`
+
+Require a pull request to merge into `main`, and block force-pushes.
+- **GitHub:** Settings → Branches → Add branch protection rule → `main` → **Require a pull request before merging**. Leave **Allow force pushes** off.
+- **Bitbucket:** Repository settings → Branch restrictions → `main` → **Prevent changes without a pull request**.
+
+Tokens should never go straight into `main`.
+
+### A4. Invite the designer
+
+- **GitHub:** Settings → Collaborators (or your organisation's teams) → invite the designer's GitHub account with **Write** access.
+- **Bitbucket:** Repository settings → User and group access → add the designer with **Write**.
+
+### A5. Send the designer these four values
+
+| Value | Example |
+| --- | --- |
+| Repository | `your-org/your-product` |
+| Default branch | `main` |
+| Token file path | `design-tokens/tokens.json` |
+| Branch naming for token changes | `tokens/short-description` |
+
+---
+
+## Part B: Accept access and create a token · *Designer*
+
+### B1. Accept the invite
+
+Open the invite email (or GitHub/Bitbucket notifications) and accept it. Check that you can open the repo in your browser.
+
+### B2. Stay signed in with the same account
+
+**Important:** in the browser you use with Figma, stay signed in to the **same** GitHub/Bitbucket account that was invited.
+
+When Tokens Studio pushes a branch and you open a pull request, the link opens in your browser. If you're signed in to a different account (a personal one, for example), the pull request fails or appears under the wrong person.
+
+### B3. Create a personal access token on **your own** account
+
+The token lets Tokens Studio read and write the token file as **you**, so commits and pull requests are credited to you.
+
+**GitHub (fine-grained token)**
+1. GitHub → your avatar → **Settings** → **Developer settings** → **Personal access tokens** → **Fine-grained tokens** → **Generate new token**.
+2. Name: `Tokens Studio – your product`. Expiration: 90 days (set a reminder to renew).
+3. **Resource owner:** the organisation or user that owns the repo. If the repo belongs to an organisation and you pick your own username here, the token can't see the repo.
+4. **Repository access:** **Only select repositories** → choose the product repo. The permission options only appear after this step.
+5. **Permissions:** click **Add permissions** (or open **Repository permissions**) → **Contents** → **Read and write**. Metadata: Read-only is added automatically. Leave everything else off.
+6. **Generate token** → copy it now. You won't see it again.
+
+If the repo belongs to an organisation, an owner may need to approve the token: **Organisation settings → Personal access tokens → Pending requests**. Until it's approved, Tokens Studio reports "not found".
+
+**Bitbucket**
+1. Create a **repository access token** (if the owner allows it), or an **app password** / API token on your account with **Repositories: Read and Write**.
+2. Copy it now.
+
+**Token safety**
+- Never paste the token into Figma comments, layer names, token descriptions or chat.
+- Tokens Studio stores it on your computer, not inside the Figma file.
+- If it leaks, delete it in GitHub/Bitbucket immediately and create a new one.
+
+---
+
+## Part C: Connect Tokens Studio to the repo · *Designer*
+
+### C1. Prepare the Figma file
+
+Follow [For designers](?path=/docs/getting-started-installation-for-designers--docs) steps 1–3: duplicate the Community file, move it into your team, check it's clean.
+
+### C2. Add the sync provider
+
+1. Run **Tokens Studio for Figma** in your file.
+2. **Settings** → **Sync providers** → **Add new sync provider** → **GitHub** (or **Bitbucket**).
+3. Fill in:
+
+| Field | Value |
+| --- | --- |
+| Name | Anything, e.g. `Your product tokens` |
+| Personal access token | The token from B3 |
+| Repository | `your-org/your-product` (no `https://`, no `.git`) |
+| Branch | `main` |
+| Token storage location | `design-tokens/tokens.json` (a single file; you don't need Pro's multi-file sync) |
+| Base URL | Leave empty (only for GitHub Enterprise or self-hosted Bitbucket) |
+
+4. Token format: **W3C DTCG**.
+5. **Save**. The provider shows as **Active**.
+
+### C3. First push (seed the repo)
+
+The repo's token file is empty, so the first push fills it with your full token set.
+
+> **If Tokens Studio asks whether to pull from the repo, say no.** Pulling the empty file would wipe the tokens in your Figma file. You want to **push**.
+
+1. Bottom-left branch selector → **Create new branch** → `tokens/initial-import` (based on `main`).
+2. Click **Push** (the upload arrow at the bottom).
+3. Commit message: `chore(tokens): import NokGridCore tokens` → **Push**.
+4. Open the pull request in your browser (Tokens Studio offers a link after pushing, or open the repo and click **Compare & pull request**).
+5. Assign the developer as reviewer.
+
+> **Check:** the pull request shows `design-tokens/tokens.json` filled with your token sets (a primitive set, and a semantic set for light and for dark).
+
+---
+
+## Part D: Add the theme command · *Developer*
+
+### D1. Install the packages
+
+Follow [For developers](?path=/docs/getting-started-installation-for-developers--docs) steps 1–6 (install, load `styles.css`, fonts, components, dark mode). Then add the CLI:
+
+```bash
+npm install -D @nokgridcore/cli
+```
+
+### D2. Add the theme scripts
+
+```json
+{
+  "scripts": {
+    "theme": "nokgrid theme design-tokens/tokens.json --out src/styles/theme.css",
+    "predev": "npm run theme",
+    "prebuild": "npm run theme"
+  }
+}
+```
+
+With `predev` and `prebuild`, the theme is regenerated every time anyone runs or builds the app, including on Vercel or Netlify. Nobody has to remember to run it, and you can add `src/styles/theme.css` to `.gitignore`.
+
+### D3. Load `theme.css` after our styles
+
+```tsx
+// app root
+import '@nokgridcore/ui/styles.css'; // 1. our defaults
+import './styles/theme.css';         // 2. your values (win)
+```
+
+Order matters. Anything you set overrides ours. Anything you didn't set, including tokens we add in later releases, falls back to our defaults.
+
+### D4. Review and merge the first pull request
+
+1. Check out the designer's branch: `git fetch && git checkout tokens/initial-import`
+2. `npm run theme` and read its output (see **What the command checks** below).
+3. Run the app or Storybook. If the designer hasn't changed any values yet, nothing should look different.
+4. Approve and merge.
+
+### What the command checks
+
+`nokgrid theme` reads your Tokens Studio file, builds the CSS, and checks it against the NokGridCore version installed in your project:
+
+| Message | What it means |
+| --- | --- |
+| `✔ Wrote … (N tokens)` and `Every NokGrid token is covered` | All good. |
+| `Read sets: primitives "…", light "…", dark "…"` | Which sets it used. Figma's names (like `Mode 1` or `Theme - semantic tokens`) are fine: sets are matched by their role, not their exact name. |
+| `⚠ N NokGrid token(s) are missing from your file` | Those parts keep NokGridCore's default look. Usually a renamed or deleted token, or a group (often typography) that wasn't included in the push. |
+| `⚠ N token(s) have no dark value` | Dark mode uses our default for those. |
+| `✖ … point at a token that doesn't exist` | A semantic token aliases something that was renamed or deleted. The message names the token to fix. The build stops. |
+| `✖ No primitive set` / `No semantic light set` / `No semantic dark set` | The file is missing a set, or the format isn't W3C DTCG. |
+
+Sizes exported from Figma as plain pixel numbers (for example `16`) are converted to rem automatically, the same way NokGridCore stores them.
+
+Add `--strict` to make missing tokens an error, for example in CI. Add `--prefix acme` if you want your own code to use `--acme-*` variables; the command maps NokGridCore's `--nok-*` names onto them so the components still follow.
+
+---
+
+## Part E: Day-to-day workflow
+
+### Designer: change a token
+
+1. In Tokens Studio, **Pull** first, so you start from the latest `main`.
+2. Branch selector → **Create new branch** → `tokens/what-changed` (for example `tokens/brand-blue`).
+3. Edit tokens (for example, change the NokFlame primitives to your brand scale).
+4. Apply the change to the Figma variables (Tokens Studio → **Styles & Variables** → export or update variables) and check your screens in light and dark.
+5. **Push** with a clear message: `feat(tokens): brand primary to blue`.
+6. Open the pull request in the **same browser account** (B2). Add before/after screenshots.
+
+### Developer: review
+
+1. Check out the branch, run `npm run theme`, then run the app. If your host builds preview deployments, the pull request's preview link already has the new theme.
+2. Check contrast, dark mode and the screens most affected.
+3. Approve and merge. Delete the branch.
+
+### Developer changes a token in code
+
+1. Edit `design-tokens/tokens.json` on a branch → pull request → merge.
+2. Tell the designer. In Tokens Studio: switch to `main` → **Pull** → apply to Figma variables.
+
+**Golden rule:** `design-tokens/tokens.json` is the single source of truth. Never edit `theme.css` by hand: it's overwritten on every run.
+
+---
+
+## Part F: The contract (rules for everyone)
+
+| ✅ Allowed | ❌ Not allowed | Why |
+| --- | --- | --- |
+| Change any token **value** | **Rename** a NokGridCore semantic, spacing, size, radius or type token | Components look tokens up by name |
+| **Add** new tokens for your own components | **Delete** a NokGridCore token | Components that use it lose their style |
+| Rename your **colour palettes** (NokFlame → your brand) | Leave semantic tokens pointing at the old palette name | Components never read palettes directly, only the semantic tokens that alias them |
+| Point a semantic token at another primitive | Put a raw hex in a semantic token | Breaks dark mode |
+| Change tokens through a pull request | Push tokens straight to `main` | No review, no preview |
+
+---
+
+## Part G: Upgrading NokGridCore
+
+1. **Developer:** update the packages (see [For developers → Upgrading](?path=/docs/getting-started-installation-for-developers--docs)).
+2. Run `npm run theme`. The command checks your file against the new version and lists any new tokens you haven't set. Those already work: they fall back to our defaults.
+3. **Designer:** to control a new token from Figma, add it to your token file with the **same name** (see the [Changelog](?path=/docs/getting-started-changelog--docs)), on a branch, through a pull request.
+4. **Breaking release:** read the migration notes. If a token was renamed, rename it in `design-tokens/tokens.json` in the same pull request that updates the packages.
+
+---
+
+## Part H: Test that it works (15 minutes)
+
+Run this once after setup.
+
+| # | Who | Do | Pass if |
+| --- | --- | --- | --- |
+| 1 | Designer | New branch → change `colour/action/primary-default` to an obvious colour (for example bright green) → Push | The commit appears on the branch |
+| 2 | Designer | Open the pull request from the browser | It's created under the designer's account |
+| 3 | Developer | Check out → `npm run theme` | `theme.css` contains the new value |
+| 4 | Developer | Run the app or Storybook | Primary buttons are green, in light and dark |
+| 5 | Developer | Edit a token in `tokens.json` → pull request → merge | Merged to `main` |
+| 6 | Designer | Tokens Studio → `main` → Pull | The developer's change appears in Tokens Studio |
+| 7 | Both | Close the test pull request without merging (or revert) | `main` is back to normal |
+
+---
+
+## Figma and Tokens Studio plans
+
+| Need | Requirement |
+| --- | --- |
+| Duplicate and use the Figma file | Any Figma plan |
+| Dark mode in Figma (second variable mode) | Figma Professional or above |
+| Publish the file as a team library | Figma Professional or above |
+| Sync tokens with GitHub/Bitbucket as a single file | Tokens Studio free plan |
+| Light/dark as Tokens Studio **themes**, or multi-file sync | Tokens Studio Pro, but not needed: the command reads light and dark from the semantic sets |
+
+---
+
+## Troubleshooting
+
+| Problem | Cause | Fix |
+| --- | --- | --- |
+| Tokens Studio: "not found" (404) | The token can't see the repo: wrong resource owner, organisation approval pending, invite not accepted, or a typo in owner/repo | Check B3 (resource owner, pending approval), accept the invite (B1), and check the A5 values |
+| Tokens Studio can't connect to an empty repo | The repo has no commits, so the branch doesn't exist | Commit the empty token file first (A2) |
+| Tokens Studio: "Unable to push" / 403 | The token lacks write access | Recreate it with **Contents: Read and write** on that repo |
+| Pull request opens under the wrong account | The browser is signed in to a different GitHub/Bitbucket account | Sign out, then sign in with the invited account (B2) |
+| Push says "protected branch" | You're pushing to `main` | Create a `tokens/…` branch first (Part E) |
+| The command says a set is missing | The file isn't in W3C DTCG format, or a collection or mode is missing | Tokens Studio Settings → **W3C DTCG**; check the file has a primitive set and semantic light and dark sets |
+| Components look unstyled after applying the theme | An old CLI version wrote sizes without units | Update with `npm install -D @nokgridcore/cli@latest` and run the theme again |
+| The command works but nothing changes in the app | `theme.css` loads before `styles.css`, or isn't imported | Fix the import order (D3) |
+| Colours change but text doesn't | Typography tokens are missing from the push; the command lists them | Make sure the typography tokens are in the Tokens Studio file before pushing |
+| Dark mode values don't change | The dark mode wasn't exported, or `data-theme="dark"` isn't set | Check the command's output for missing dark values, and the attribute (For developers, Step 6) |
+| Designer and developer edits conflict | Both changed `tokens.json` on different branches | Merge `main` into the branch, resolve the conflicts in `tokens.json`, and run the theme again |
+
+Still stuck? [Open an issue on GitHub](https://github.com/nokgridcore/nokgrid/issues).

@@ -16,7 +16,7 @@ const preview: Preview = {
 			storySort: {
 				order: [
 					'Getting Started',
-					['Overview', 'Installation', ['For designers', 'For developers'], 'Theming', ['Light & dark mode', 'Theming in Figma', 'Theming in code']],
+					['Overview', 'Installation', ['For designers', 'For developers', 'For product teams'], 'Theming', ['Light & dark mode', 'Theming in Figma', 'Theming in code'], 'Changelog'],
 					'Foundations',
 					['Overview', 'Colour', 'Typography', 'Spacing', 'Sizing', 'Radius', 'Shadow'],
 					'Components',
